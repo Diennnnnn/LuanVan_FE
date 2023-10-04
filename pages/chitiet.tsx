@@ -84,9 +84,14 @@ const chitiet = ({ id_phong, id_lp }: codeProductProps) => {
   const [tang, setTang] = useState(Number);
   const [dientich, setDientich] = useState(Number);
   const [id_CSVC, setId_CSVC] = useState(Number);
-  const [tenCSVC, setTenCSVC] = useState("");
+  // const [tenCSVC, setTenCSVC] = useState({arr[]});
+  const [tenCSVC, setTenCSVC] = useState<string[]>([]);
+
+
   const [nav1, setNav1] = useState<any>()
   const [nav2, setNav2] = useState<any>()
+  // const [tenCSVC, setNav2] = useState<any>()
+  // const tenCSVC: string[] = [""]
   const setting = {
     arrows: true,
     Infinity: true,
@@ -111,9 +116,9 @@ const chitiet = ({ id_phong, id_lp }: codeProductProps) => {
         res.map(async (res) => {
           setMota(res.mota),
             setTenphong(res.tenphong)
-          
+
           //lay vi tri
-            const params = {
+          const params = {
             id_vt: res.id_VT,
 
           };
@@ -179,21 +184,20 @@ const chitiet = ({ id_phong, id_lp }: codeProductProps) => {
           setId_CSVC(res.id_CSVC),
             console.log("id,csvc", id_CSVC)
 
-            const params = {
-              id_dmcsvc: res.id_CSVC,
-    
-            };
-            console.log(params)
-            const response = await Danhmuccsvc(params);
-            const res1: DanhmucCSVC[] = response.dmcsvc; //gán dữ liệu vào res
-            // console.log(response)
-            console.log(res1)
-            setDanhmuccsvc(res1); //gán res vào setPhong
-            res1.map((res) => {
-              setTenCSVC(res.tenCSVC)
-              // "tenmang".push(res.tenCSVC)
-            })
+          const params = {
+            id_dmcsvc: res.id_CSVC,
 
+          };
+          console.log(params)
+          const response = await Danhmuccsvc(params);
+          const res1: DanhmucCSVC[] = response.dmcsvc; //gán dữ liệu vào res
+          // console.log(response)
+          console.log(res1)
+          setDanhmuccsvc(res1); //gán res vào setPhong
+          res1.map((res) => {
+            (tenCSVC).push(res.tenCSVC)
+          })
+          console.log(tenCSVC)
         })
 
       } catch (error) {
@@ -280,21 +284,33 @@ const chitiet = ({ id_phong, id_lp }: codeProductProps) => {
             <div className=" space-y-2">
               <p className="font-semibold text-2xl">Mô tả</p>
               <p className="text-xl text-justify leading-loose">{mota}</p>
-              <li className="text-xl italic ">Số người ở: <span className="text-green-500">{songuoi} người</span></li>
-              <li className="text-xl italic ">Giá: <span className="text-green-500">{gia}/đêm</span></li>
-              <p>khu: {khu}, tầng: {tang}, diện tích: {dientich}</p>
+              <li className="text-lg italic ">Số người ở: <span className="text-green-500">{songuoi} người</span></li>
+              <li className="text-lg italic ">Giá: <span className="text-green-500">{gia}/đêm</span></li>
+              <li className="text-lg italic">Khu: {khu}; Tầng: {tang}; Diện tích: {dientich}m2</li>
             </div>
             <div className=" space-y-2 mt-3">
               <p className="font-semibold text-2xl">Tiện ích có sẵn</p>
               <div className="grid grid-cols-2  h-16 list-outside text-lg">
-                {/* {getTokenSourceMapRange.map((item, index))} */}
+
                 <div className="">
-                  <li>{tenCSVC} </li>
-                  {/* <li>Bồn tắm</li>
+                  {
+                    tenCSVC.map((item, index):React.ReactNode => {
+                      return (
+                        <><li key={index}>
+                          {tenCSVC[index]}
+                        </li>
+                        </>
+
+                      )
+                    })
+                  }
+
+                </div>
+                {/* <li>Bồn tắm</li>
                   <li>Khăn tắm</li>
                   <li>Dầu gội</li>
                   <li>Bàn chải đánh răng</li> */}
-                </div>
+
                 {/* <div className="">
                   <li>Giá treo quần áo</li>
                   <li>Bàn ủi</li>

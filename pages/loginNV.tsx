@@ -11,7 +11,7 @@ const loginNV = () =>{
 
 
   return(
-    <div>
+    <div className={roboto.className}>
         <center>
         <div className="w-96 h-64 m-auto bg-gray-200 mt-10">
             <p className="uppercase text-2xl font-semibold pt-6">đăng nhập</p>

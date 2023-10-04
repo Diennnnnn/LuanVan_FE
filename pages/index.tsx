@@ -216,9 +216,9 @@ const index = () => {
           <label className="uppercase text-3xl font-semibold">phòng</label>
           <Link href='/rooms' className="uppercase text-lg  flex justify-end pr-32 hover:text-[#33cc33]">xem đầy đủ</Link>
           <div className="grid grid-cols-3 gap-5 mt-10 m-auto h-[550px] w-10/12">
-            {/* <Rooms id_lp={1} tenphong={"A101"}/>
-            <Rooms id_lp={2} tenphong={"A302"}/>
-            <Rooms id_lp={2} tenphong={"A301"}/> */}
+            <Rooms id_lp={1} tenphong={"A101"} id_phong={1}/>
+            <Rooms id_lp={2} tenphong={"A302"} id_phong={2}/>
+            <Rooms id_lp={2} tenphong={"A301"} id_phong={3}/>
             {/* <div className="col-span-1 space-y-7 ">
               <div className="bg-cover bg-[url('../public/khuA/A101/hinh7.jpg')] h-[300px] w-full rounded-t-xl"></div>
               <p className=" ">Phòng A101</p>
@@ -284,7 +284,7 @@ const index = () => {
           <div className="col-span-1 border-2 border-black h-[550px] "></div>
         </div>
       </div> */}
-      <div className="grid grid-cols-2 gap-2 mt-20 h-[550px] w-[90%] max-w-[1170px] m-auto ">
+      <div className="grid grid-cols-2 gap-2 mt-16 h-[550px] w-[90%] max-w-[1170px] m-auto ">
         <div className="col-span-1 bg-cover bg-center bg-[url('../public/hinh6.jpg')] h-[550px] "></div>
         <div className="col-span-1 h-[550px] ">
           <div className="grid grid-rows-2 gap-2 h-[550px]">

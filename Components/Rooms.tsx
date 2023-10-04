@@ -64,7 +64,7 @@ const Rooms = ({ id_lp, tenphong, id_phong }: Props) => {
         loaiphong.map((item, index) => {
           return (
             <>
-              <div className="relative bg-white text-lg flex flex-col rounded-t-xl space-y-3">
+              <div className="relative bg-white text-lg flex flex-col rounded-t-xl space-y-3 ">
                 <div className="bg-cover bg-[url('../public/khuA/A101/hinh7.jpg')] h-72 w-full rounded-t-xl"></div>
                 <p className="text-center ">{tenphong}</p>
                 <div className="flex justify-center">
@@ -77,8 +77,8 @@ const Rooms = ({ id_lp, tenphong, id_phong }: Props) => {
                   <p className="text-2xl font-bold">{item.songuoi}</p>
                   <p className="uppercase pl-2">người</p>
                 </div>
-                <div className="">{item.tenloaiphong}</div>
-                <Link href="" onClick={handleChitiet} className="uppercase text-green-700 font-semibold text-center">xem chi tiết</Link>
+                <div className="text-center">{item.tenloaiphong}</div>
+                <Link href="" onClick={handleChitiet} className="uppercase text-green-700 font-semibold text-center pb-3">xem chi tiết</Link>
               </div>
             </>
           )

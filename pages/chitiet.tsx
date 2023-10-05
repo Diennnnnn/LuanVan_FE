@@ -9,6 +9,7 @@ import Card1 from "@/Components/Card1";
 import Footer from "@/Components/Footer";
 import { GetServerSideProps } from "next";
 import { Danhmuccsvc, Dsthietbi, Loaiphong, Phong, Vitri } from "@/Service/userService";
+import router from "next/router";
 const data = [
   { img: "/hinh3.jpg" },
   { img: "/hinh2.jpg" },
@@ -99,7 +100,14 @@ const chitiet = ({ id_phong, id_lp }: codeProductProps) => {
     slidesToShow: 4,
     slidesToScroll: 1,
   }
-
+  const handleDatphong = async () => {
+    router.push({
+      pathname: '/datphong',
+      query: {tenphong: tenphong, gia: gia, songuoi: songuoi} //ten bien: gia tri truyen vao
+      
+    })
+  }
+  
   useEffect(() => {
 
     const handlephong = async () => {
@@ -306,23 +314,12 @@ const chitiet = ({ id_phong, id_lp }: codeProductProps) => {
                   }
 
                 </div>
-                {/* <li>Bồn tắm</li>
-                  <li>Khăn tắm</li>
-                  <li>Dầu gội</li>
-                  <li>Bàn chải đánh răng</li> */}
-
-                {/* <div className="">
-                  <li>Giá treo quần áo</li>
-                  <li>Bàn ủi</li>
-                  <li>Máy sấy</li>
-                  <li>Quạt</li>
-                </div> */}
               </div>
 
             </div>
           </div>
         </div>
-        <div className="text-center mt-6"><button className="border-2 border-green-600 text-xl uppercase h-10 w-56 rounded-lg hover:bg-green-600">đặt phòng</button></div>
+        <div className="text-center mt-6"><button onClick={handleDatphong} className="border-2 border-green-600 text-xl uppercase h-10 w-56 rounded-lg hover:bg-green-600">đặt phòng</button></div>
       </div>
 
       <Footer />

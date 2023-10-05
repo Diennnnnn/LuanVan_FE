@@ -1,23 +1,3 @@
-// import { Montserrat } from "next/font/google";
-
-// const roboto = Montserrat({
-//   weight: '400',
-//   subsets: ['latin'],
-//   display: 'swap',
-// })
-// const loginuser = () =>{
-
-
-
-//   return(
-//     <div className={roboto.className }>
-
-//     </div>
-
-//   )
-// }
-// export default loginuser;
-
 
 import React, { useState } from "react";
 // import { Props } from "react-intl/src/components/message";
@@ -27,13 +7,20 @@ import { useRouter } from "next/router";
 import { render } from "react-dom";
 import App from "next/app";
 import Router from "next/router";
+import { Khachhang } from "@/Service/userService";
 
 // type Props = {
 //   sdt: String;
 // };
 
-function SignInOTP() {
-
+const SignInOTP = () => {
+  interface Khachhang{
+    id: number;
+    hotenKH: string;
+    CMND: string,
+    SDT: string,
+    email:string
+  }
   // const SignInOTP = ({sdt}: Props) => {
   // const SignInOTP = (this.props.phoneNumber) => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -41,7 +28,31 @@ function SignInOTP() {
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState("INPUT_PHONE_NUMBER");
   const [result, setResult] = useState<any>()
+  const [khachhang, setKhachhang] = useState<Khachhang[]>([]);
+
   console.log("sdt1", phoneNumber)
+
+  //lay thong tin theo sdt
+  const handleKhachhang = async (phoneNumber: string) => {
+    console.log("phoneNumber", phoneNumber)
+    try {
+      const params = {
+        SDT :phoneNumber,
+      };
+      console.log(params)  
+      const response = await Khachhang(params);
+      const res: Khachhang[] = response.khachhang;
+      console.log(res)
+      setKhachhang(res);
+
+
+          //luu khachhang len local storage
+      localStorage.setItem('khachhang', JSON.stringify(res));
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const formatSDT = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value)
@@ -58,16 +69,6 @@ function SignInOTP() {
   };
 
   const signin = () => {
-    // if (sdt === "") return;
-    // let temp: any
-    // try {
-    //   temp =sdt?.slice(1, 10)
-    //   setPhoneNumber("+84"+temp)
-  
-    // } catch (error) {
-    //   console.log(error);
-    // }   
-
     console.log("sdt", sdt)
     console.log("phoneNumber", phoneNumber)
 
@@ -98,10 +99,11 @@ function SignInOTP() {
       .confirm(otp)
       .then((result: any) => {
         setStep("VERIFY_SUCCESS");
-        router.push({
-          pathname: '/lichsu',
-          query: { phoneNumber: phoneNumber },
-        })
+        // router.push({
+        //   pathname: '/lichsu',
+        //   query: { phoneNumber: phoneNumber },
+        // })
+        handleKhachhang(sdt)
       })
       .catch((err: any) => {
         alert("Incorrect code");

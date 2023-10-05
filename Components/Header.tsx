@@ -19,7 +19,7 @@ const Header = () =>{
             <Link href="/" className="hover:text-[#33cc33]" >Trang chủ</Link>
             <Link href="/rooms" className="hover:text-[#33cc33]">Phòng</Link>
             <Link href="/noiquy" className="hover:text-[#33cc33]">Nội quy</Link>
-            <Link href="" className="hover:text-[#33cc33]">Đặt phòng</Link>
+            <Link href="/datphongg" className="hover:text-[#33cc33]">Đặt phòng</Link>
             <Link href="" className="hover:text-[#33cc33]">Liên hệ</Link>
             <div className="border-2 border-gray-400 pt-1 rounded-full h-10 w-10 hover:bg-gray-300"><Link href="/loginuser" className=""><FontAwesomeIcon icon={faUser} color="#33cc33" /></Link></div>
         </div>

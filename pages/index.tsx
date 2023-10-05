@@ -110,15 +110,16 @@ const index = () => {
       <center>
         <div className=" relative ">
           <div style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
-            className="h-[450px]  w-[80%] bg-cover bg-center bg-[url('../public/hinh2.jpg')] rounded-xl mt-4 ">
+            className="h-[450px]  w-[90%] bg-cover bg-center bg-[url('../public/hinh2.jpg')] rounded-xl mt-4 ">
             <div className="absolute inset-x-0 bottom-3">
-              <form className="flex justify-center items-center rounded-md bg-white w-[60%] h-[80px] shadow-xl">
+              <form className="flex justify-center items-center rounded-md bg-white w-[75%] h-[80px] shadow-xl">
                 <div className=" ">
                   <label className="absolute top-1 text-sm text-gray-400 ml-6 inline-block bg-white">Nhận phòng</label>
                   <input id="startDate" type="date" placeholder="Nhận phòng " className="w-52 rounded-md h-12 border-solid border-gray-300 border-2 mr-3 pl-2" />
                   <label className="absolute top-1 text-sm text-gray-400 ml-6 inline-block bg-white">Trả phòng</label>
                   <input id="endDate" type="date" placeholder="Trả phòng" className="h-12 w-52 rounded-md border-solid border-2 border-gray-300 mr-3 pl-2" />
-                  <input id="" type="number" placeholder="Số lượng khách" className=" h-12 w-52 rounded-md border-solid border-2 border-gray-300 mr-3 pl-2" />
+                  <input id="" type="number" placeholder="Số lượng khách" className=" h-12 w-44 rounded-md border-solid border-2 border-gray-300 mr-3 pl-2" />
+                  <input id="" type="number" placeholder="Số lượng phòng" className=" h-12 w-44 rounded-md border-solid border-2 border-gray-300 mr-3 pl-2" />
                   <button className="w-52 border-solid border-2 border-[#33cc33] hover:bg-[#33cc33] h-12 rounded-md">Tìm phòng</button>
                 </div>
               </form>

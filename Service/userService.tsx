@@ -53,6 +53,14 @@ export async function Vitri(params: { id_vt: any }): Promise<any> {
   return data;
 }
 
+export async function Khachhang(params: { SDT: any }): Promise<any> {
+  const { SDT } = params;
+  const response = await fetch(
+    `http://localhost:8080/api/Khachhang?keyword=${SDT}`
+  );
+  const data = await response.json();
+  return data;
+}
 // export async function DangKy_KH(params: {
 //   hten_KH: string;
 //   Ngaysinh: string;

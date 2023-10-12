@@ -31,9 +31,11 @@ const roboto = Montserrat({
 interface codeProductProps {
   id_phong: number | null;
   id_lp: number | null
+  check_in: string | null
+  check_out: string | null
 }
 
-const chitiet = ({ id_phong, id_lp }: codeProductProps) => {
+const chitiet = ({ id_phong, id_lp , check_in, check_out}: codeProductProps) => {
   // console.log(id_phong);
   // console.log(id_lp);
   interface Phong {
@@ -103,7 +105,7 @@ const chitiet = ({ id_phong, id_lp }: codeProductProps) => {
   const handleDatphong = async () => {
     router.push({
       pathname: '/datphong',
-      query: {tenphong: tenphong, gia: gia, songuoi: songuoi} //ten bien: gia tri truyen vao
+      query: {id_phong: id_phong, tenphong: tenphong, gia: gia, songuoi: songuoi, check_in: check_in, check_out:check_out} //ten bien: gia tri truyen vao
       
     })
   }
@@ -337,11 +339,17 @@ export const getServerSideProps: GetServerSideProps<codeProductProps> = async (
 
   const { id_phong } = context.query;
   const { id_lp } = context.query;
+  const { check_in } = context.query;
+  const { check_out } = context.query;
+
 
   return {
     props: {
       id_phong: id_phong as unknown as number | null,
-      id_lp: id_lp as unknown as number | null
+      id_lp: id_lp as unknown as number | null,
+      check_in: check_in as string | null,
+      check_out: check_out as string | null
+
     }
   }
 }

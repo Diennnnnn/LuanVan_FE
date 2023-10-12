@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faHouse, faPhone,faEnvelope, faGlobe,} from '@fortawesome/free-solid-svg-icons'
 import Link from "next/link";
 import { faTiktok,faFacebook,faInstagram, faYoutube } from "@fortawesome/free-brands-svg-icons";
+import D from "./D";
 
 const roboto = Montserrat({
   weight: '400',

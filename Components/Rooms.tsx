@@ -14,13 +14,15 @@ const roboto = Montserrat({
 type Props = {
   id_lp: number,
   tenphong: string,
-  id_phong: number
+  id_phong: number,
+  check_in: string,
+  check_out: string
 };
-const Rooms = ({ id_lp, tenphong, id_phong }: Props) => {
+const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
   const handleChitiet = async () => {
     router.push({
       pathname: '/chitiet',
-      query: { id_phong: id_phong, id_lp: id_lp}
+      query: { id_phong: id_phong, id_lp: id_lp, check_in, check_out}
       
     })
   }
@@ -78,7 +80,7 @@ const Rooms = ({ id_lp, tenphong, id_phong }: Props) => {
                   <p className="uppercase pl-2">người</p>
                 </div>
                 <div className="text-center">{item.tenloaiphong}</div>
-                <Link href="" onClick={handleChitiet} className="uppercase text-green-700 font-semibold text-center pb-3">xem chi tiết</Link>
+                <button  onClick={handleChitiet} className="uppercase text-green-700 font-semibold text-center pb-3">xem chi tiết</button>
               </div>
             </>
           )

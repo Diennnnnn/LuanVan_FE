@@ -8,6 +8,7 @@ import Link from "next/link";
 import Footer from "@/Components/Footer";
 import { Phong } from "@/Service/userService";
 import Rooms from "@/Components/Rooms";
+import B1 from "@/Components/B1";
 
 // import { faFaceRelieved } from '@fortawesome/pro-solid-svg-icons'
 const roboto = Montserrat({
@@ -106,6 +107,7 @@ const index = () => {
   return (
 
     <div className={roboto.className }>
+      {/* <B1 /> */}
       <Header></Header>
       <center>
         <div className=" relative ">
@@ -217,9 +219,9 @@ const index = () => {
           <label className="uppercase text-3xl font-semibold">phòng</label>
           <Link href='/rooms' className="uppercase text-lg  flex justify-end pr-32 hover:text-[#33cc33]">xem đầy đủ</Link>
           <div className="grid grid-cols-3 gap-5 mt-10 m-auto h-[550px] w-10/12">
-            <Rooms id_lp={1} tenphong={"A101"} id_phong={1}/>
-            <Rooms id_lp={2} tenphong={"A302"} id_phong={2}/>
-            <Rooms id_lp={2} tenphong={"A301"} id_phong={3}/>
+            <Rooms id_lp={1} tenphong={"A101"} id_phong={1} check_in={""} check_out={""}/>
+            <Rooms id_lp={2} tenphong={"A302"} id_phong={2} check_in={""} check_out={""}/>
+            <Rooms id_lp={2} tenphong={"A301"} id_phong={3} check_in={""} check_out={""}/>
             {/* <div className="col-span-1 space-y-7 ">
               <div className="bg-cover bg-[url('../public/khuA/A101/hinh7.jpg')] h-[300px] w-full rounded-t-xl"></div>
               <p className=" ">Phòng A101</p>

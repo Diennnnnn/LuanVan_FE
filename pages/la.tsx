@@ -25,8 +25,8 @@ const Dropdown = () => {
             <button
               className="text-black font-bold uppercase bg-slate-400 text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 bg-blueGray-500 active:bg-blueGray-600 ease-linear transition-all duration-150"
               type="button"
-              ref={btnDropdownRef}
-              onClick={() => {
+              ref={()=>btnDropdownRef}
+                            onClick={() => {
                 dropdownPopoverShow
                   ? closeDropdownPopover()
                   : openDropdownPopover();
@@ -35,7 +35,7 @@ const Dropdown = () => {
               blueGray Dropdown
             </button>
             <div
-              ref={popoverDropdownRef}
+              ref={()=>popoverDropdownRef}
               className={
                 (dropdownPopoverShow ? "block " : "hidden ") +
                 "bg-green-300 text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 min-w-48"

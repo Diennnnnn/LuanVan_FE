@@ -20,8 +20,14 @@ const rooms = () => {
         mota: string;
     }
     const [phong, setPhong] = useState<Phong[]>([]);
+    const [check_in, setCheck_in] = useState("");
+    const [check_out, setCheck_out] = useState("");
 
+    const handleClick =()=>{
+        console.log("ádfgnm", check_in)
+        console.log("cvdfg", check_out)
 
+    }
 
 
     useEffect(() => {
@@ -83,9 +89,17 @@ const rooms = () => {
                 <div className="col-span-1 pl-3 space-y-2 mt-6">
                     <p className="uppercase font-bold">bộ lọc tìm kiếm</p>
                     <p>Nhận phòng:</p>
-                    <input type="Date" className="border-2 border-gray-300" />
+                    <input type="Date" 
+                    className="border-2 border-gray-300" 
+                    value={check_in}
+                    onChange={(event) => setCheck_in(event.target.value)}
+                    />
                     <p>Trả phòng:</p>
-                    <input type="Date" className="border-2 border-gray-300" />
+                    <input type="Date" 
+                    className="border-2 border-gray-300" 
+                    value={check_out}
+                    onChange={(event) => setCheck_out(event.target.value)}
+                    />
                     <hr className=" border-black" />
                     <p>Phòng:</p>
                     <input type="checkbox" /> <label>2 người</label>
@@ -104,6 +118,7 @@ const rooms = () => {
                     <hr className=" border-black" />
                 </div>
                 <div className="col-span-5 mt-6">
+                    {/* <button onClick={handleClick}>dfghjk</button> */}
                     <div className="grid grid-cols-3 gap-5 pr-5">
                         {/* <button onClick={handlePhong}>click</button> */}
 
@@ -111,7 +126,7 @@ const rooms = () => {
                             {
                                 phong.map((phongs, indexP) => {
                                     return (
-                                        <Rooms key={indexP} tenphong={phongs.tenphong} id_lp={phongs.id_LP} id_phong={phongs.id}/>                                        
+                                        <Rooms key={indexP} tenphong={phongs.tenphong} id_lp={phongs.id_LP} id_phong={phongs.id} check_in={check_in} check_out={check_out}/>                                        
                                     )
 
                                 })

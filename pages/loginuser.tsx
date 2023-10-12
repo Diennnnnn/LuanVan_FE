@@ -99,10 +99,10 @@ const SignInOTP = () => {
       .confirm(otp)
       .then((result: any) => {
         setStep("VERIFY_SUCCESS");
-        // router.push({
-        //   pathname: '/lichsu',
-        //   query: { phoneNumber: phoneNumber },
-        // })
+        router.push({
+          pathname: '/thongtinKH',
+          query: { phoneNumber: phoneNumber },
+        })
         handleKhachhang(sdt)
       })
       .catch((err: any) => {
@@ -113,15 +113,14 @@ const SignInOTP = () => {
     // }
   };
 
-  // const handleSuccess = (phoneNumber: string) => {
-  //   console.log("sdt", phoneNumber)
-
-  //   // router.push("/lichsu");
-  //   router.push({
-  //     pathname: '/lichsu',
-  //     query: { phoneNumber: phoneNumber },
-  //   })
-  // }
+//   const handleSuccess = (phoneNumber: string) => {
+//     console.log("sdt", phoneNumber)
+// ;
+//     router.push({
+//       pathname: '/thongtinKH',
+//       // query: { phoneNumber: phoneNumber },
+//     })
+//   }
 
   return (
     <div style={{ marginTop: 100 }}>

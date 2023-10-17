@@ -13,7 +13,7 @@ const Blog = () => {
                 <div className="col-span-1 ">
                     <p className="uppercase text-2xl">Bình luận phim</p>
                     <div className="flex">
-                        <img src='https://cdn.galaxycine.vn/media/2023/9/29/750x500_1695961597860.jpg' className="w-52 h-36 mt-3"/>
+                        <img src="/hinh10.jpg" className="w-52 h-36 mt-3"/>
                         <p>dfghj</p>
                     </div>
                     <div className="flex">

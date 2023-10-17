@@ -31,11 +31,12 @@ import List from '@mui/material/List';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import MovieIcon from '@mui/icons-material/Movie';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import Blog from '@/Components/Blog';
 
 export default function LabTabs() {
   const [value, setValue] = React.useState('1');
   const [open, setOpen] = React.useState(false);
-//   const anchorRef = React.useRef<HTMLButtonElement>(null);
+  //   const anchorRef = React.useRef<HTMLButtonElement>(null);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -44,28 +45,28 @@ export default function LabTabs() {
     setOpen(!open);
   };
 
-//   const handleToggle = () => {
-//     setOpen((prevOpen) => !prevOpen);
-//   };
-//   const handleClose = (event: Event | React.SyntheticEvent) => {
-//     if (
-//       anchorRef.current &&
-//       anchorRef.current.contains(event.target as HTMLElement)
-//     ) {
-//       return;
-//     }
+  //   const handleToggle = () => {
+  //     setOpen((prevOpen) => !prevOpen);
+  //   };
+  //   const handleClose = (event: Event | React.SyntheticEvent) => {
+  //     if (
+  //       anchorRef.current &&
+  //       anchorRef.current.contains(event.target as HTMLElement)
+  //     ) {
+  //       return;
+  //     }
 
-//     setOpen(false);
-//   };
+  //     setOpen(false);
+  //   };
 
-//   function handleListKeyDown(event: React.KeyboardEvent) {
-//     if (event.key === 'Tab') {
-//       event.preventDefault();
-//       setOpen(false);
-//     } else if (event.key === 'Escape') {
-//       setOpen(false);
-//     }
-//   }
+  //   function handleListKeyDown(event: React.KeyboardEvent) {
+  //     if (event.key === 'Tab') {
+  //       event.preventDefault();
+  //       setOpen(false);
+  //     } else if (event.key === 'Escape') {
+  //       setOpen(false);
+  //     }
+  //   }
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
@@ -78,69 +79,57 @@ export default function LabTabs() {
             <Tab label="Khách hàng" value="5" />
           </TabList>
         </Box>
-        <TabPanel value="1">Item One</TabPanel>
+        <TabPanel value="1"><Blog/></TabPanel>
         <TabPanel value="2">
-            <div className="flex">
-                <div className="w-2/12 border-2 border-green-300 uppercase text-xl space-y-5">
-                    {/* <div className="space-x-3">
-                        <FontAwesomeIcon icon={faVideo} />
-                        <label>phòng chiếu</label>
-                    </div>
-                    <div className="space-x-3">
-                        <FontAwesomeIcon icon={faFilm} />
-                        <label>Phim</label>
-                    </div>
-                    <div className="space-x-3">
-                        <FontAwesomeIcon icon={faDiscourse} />
-                        <label>Khuyến mãi</label>
-                    </div> */}
+          <div className="flex">
+            <div className="w-2/12 border-2 border-green-300 uppercase text-xl space-y-5">
 
-                    <ListItemButton>
-                        <ListItemIcon>
-                        <VideocamIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Phòng chiếu" />
-                    </ListItemButton>
+              <ListItemButton>
+                <ListItemIcon>
+                  <VideocamIcon />
+                </ListItemIcon>
+                <ListItemText primary="Phòng chiếu" />
+              </ListItemButton>
 
-                    <ListItemButton onClick={handleClick}>
-                        <ListItemIcon>
-                        <MovieIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary="Phim" />
-                        {open ? <ExpandLess /> : <ExpandMore />}
+              <ListItemButton onClick={handleClick}>
+                <ListItemIcon>
+                  <MovieIcon />
+                </ListItemIcon>
+                <ListItemText primary="Phim" />
+                {open ? <ExpandLess /> : <ExpandMore />}
 
-                    </ListItemButton>
+              </ListItemButton>
 
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                        <ListItemButton sx={{ pl: 4 }}>
-                            {/* <ListItemIcon>
+              <Collapse in={open} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{ pl: 4 }}>
+                    {/* <ListItemIcon>
                                 <StarBorder />
                             </ListItemIcon> */}
-                            <ListItemText primary="Phim đang chiếu" />
+                    <ListItemText primary="Phim đang chiếu" />
 
-                        </ListItemButton>
-                        <ListItemButton sx={{ pl: 4 }}>
-                            {/* <ListItemIcon>
+                  </ListItemButton>
+                  <ListItemButton sx={{ pl: 4 }}>
+                    {/* <ListItemIcon>
                                 <StarBorder />
                             </ListItemIcon> */}
-                            <ListItemText primary="Phim sắp chiếu" />
+                    <ListItemText primary="Phim sắp chiếu" />
 
-                        </ListItemButton>
-                        </List>
-                    </Collapse>
-
-
-                    <ListItemButton >
-                        <ListItemIcon>
-                        <CalendarMonthIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Lich chiếu" />
-                    </ListItemButton>
-                    
+                  </ListItemButton>
+                </List>
+              </Collapse>
 
 
-                    {/* <Button
+              <ListItemButton >
+                <ListItemIcon>
+                  <CalendarMonthIcon />
+                </ListItemIcon>
+                <ListItemText primary="Lịch chiếu" />
+              </ListItemButton>
+
+
+
+              {/* <Button
                         ref={anchorRef}
                         id="composition-button"
                         aria-controls={open ? 'composition-menu' : undefined}
@@ -185,9 +174,9 @@ export default function LabTabs() {
             </Grow>
           )}
         </Popper> */}
-                </div>
-                <div className="w-10/12 border-2 border-red-300"></div>
             </div>
+            <div className="w-10/12 border-2 border-red-300"></div>
+          </div>
         </TabPanel>
         <TabPanel value="3">Item Three</TabPanel>
       </TabContext>

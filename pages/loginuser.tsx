@@ -100,8 +100,8 @@ const SignInOTP = () => {
       .then((result: any) => {
         setStep("VERIFY_SUCCESS");
         router.push({
-          pathname: '/thongtinKH',
-          query: { phoneNumber: phoneNumber },
+          pathname: '/',
+          // query: { phoneNumber: phoneNumber },
         })
         handleKhachhang(sdt)
       })
@@ -137,14 +137,14 @@ const SignInOTP = () => {
                 // }}
                 onChange={formatSDT}
                 placeholder="Số điện thoại"
-                className=" h-10 w-60 mt-4 border-gray-400 bg-gray-100 border-solid  border-b-2"
+                className=" h-10 w-60 mt-4 border-gray-400 bg-gray-100 border-solid outline-none  border-b-2"
               />
               <br />
               <br />
               <div id="recaptcha-container"></div>
               <button
                 onClick={signin}
-                className="bg-green-700 w-60 h-10 rounded-3xl font-semibold text-white hover:bg-indigo-700"
+                className="bg-green-700 w-60 h-10 rounded-3xl font-semibold text-white outline-none hover:bg-indigo-700"
               >
                 Send OTP
               </button>

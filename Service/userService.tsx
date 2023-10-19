@@ -7,6 +7,14 @@ export async function Phong(params: { id_phong: any }): Promise<any> {
   const data = await response.json();
   return data;
 }
+export async function Phong_tenphong(params: { tenphong: any }): Promise<any> {
+  const { tenphong } = params;
+  const response = await fetch(
+    `http://localhost:8080/api/Phong_tenphong?keyword=${tenphong}`
+  );
+  const data = await response.json();
+  return data;
+}
 export async function Noiquy(params: { id_noiquy: any }): Promise<any> {
   const { id_noiquy } = params;
   const response = await fetch(
@@ -81,6 +89,23 @@ export async function Datphong(params:{
     const data = await response.json();
     return data;
   }
+
+  export async function QLnoiquy(params:{
+    mota: string;
+    motaEN: string;
+    }): Promise<any> {
+      const response = await fetch(`http://localhost:8080/api/NoiquyQL`,
+      {
+        method:"POST",
+        headers: {
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify(params),
+      });
+      const data = await response.json();
+      return data;
+    }
+  
 // export async function DangKy_KH(params: {
 //   hten_KH: string;
 //   Ngaysinh: string;

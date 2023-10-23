@@ -94,7 +94,7 @@ export async function Datphong(params:{
     mota: string;
     motaEN: string;
     }): Promise<any> {
-      const response = await fetch(`http://localhost:8080/api/NoiquyQL`,
+      const response = await fetch(`http://localhost:8080/api/ThemNoiquyQL`,
       {
         method:"POST",
         headers: {
@@ -106,6 +106,85 @@ export async function Datphong(params:{
       return data;
     }
   
+  export async function SuaQLnoiquy(params:{
+    id: number;
+    mota: string;
+    motaEN: string;
+    }): Promise<any> {
+    const response = await fetch(`http://localhost:8080/api/SuaNoiquyQL`,
+    {
+      method:"POST",
+      headers: {
+        "Content-Type":"application/json",
+      },
+      body: JSON.stringify(params),
+    });
+    const data = await response.json();
+    return data;
+  }
+
+  export async function XoaQLnoiquy(params:{id: number;}): Promise<any> {
+    const response = await fetch(`http://localhost:8080/api/XoaNoiquyQL`,
+    {
+      method:"DELETE",
+      headers: {
+        "Content-Type":"application/json",
+      },
+      body: JSON.stringify(params),
+    });
+    const data = await response.json();
+    return data;
+  }
+  //noi quy
+  export async function ThemQLCSVC(params:{
+    tenCSVC:string;
+    giagoc:number;
+    soluong:number;
+    thoigianmua:string
+    }): Promise<any> {
+      const response = await fetch(`http://localhost:8080/api/ThemCSVCQL`,
+      {
+        method:"POST",
+        headers: {
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify(params),
+      });
+      const data = await response.json();
+      return data;
+    }
+  
+  export async function SuaQLCSVC(params:{
+    id: number;
+    tenCSVC:string;
+    giagoc:number;
+    soluong:number;
+    thoigianmua:string
+    }): Promise<any> {
+    const response = await fetch(`http://localhost:8080/api/SuaCSVCQL`,
+    {
+      method:"POST",
+      headers: {
+        "Content-Type":"application/json",
+      },
+      body: JSON.stringify(params),
+    });
+    const data = await response.json();
+    return data;
+  }
+
+  export async function XoaQLCSVC(params:{id: number;}): Promise<any> {
+    const response = await fetch(`http://localhost:8080/api/XoaCSVCQL`,
+    {
+      method:"DELETE",
+      headers: {
+        "Content-Type":"application/json",
+      },
+      body: JSON.stringify(params),
+    });
+    const data = await response.json();
+    return data;
+  }
 // export async function DangKy_KH(params: {
 //   hten_KH: string;
 //   Ngaysinh: string;

@@ -21,10 +21,10 @@ import RoomPreferencesIcon from '@mui/icons-material/RoomPreferences';
 import PanoramaIcon from '@mui/icons-material/Panorama';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import GroupIcon from '@mui/icons-material/Group';
-import CSVC from '@/Components/quanly/CSVC';
 import NoiquyQL from '@/Components/quanly/NoiquyQL';
 import { useEffect, useState } from 'react';
-import { Noiquy } from '@/Service/userService';
+import { Danhmuccsvc, Noiquy } from '@/Service/userService';
+import CSVC_QL from '@/Components/quanly/CSVC_QL';
 
 
 export default function LabTabs() {
@@ -34,7 +34,16 @@ export default function LabTabs() {
     motaEN: string;
 
   }
+  interface DanhmucCSVC {
+    id: number;
+    tenCSVC: string;
+    giagoc: number;
+    soluong:number;
+    thoigianmua: Date
+  }
   const [noiquy, setNoiquy] = useState<Noiquy[]>([]);
+  const [csvc, setCSVC] = useState<DanhmucCSVC[]>([]);
+
   const [value, setValue] = React.useState('1');
   const [open, setOpen] = React.useState(false);
   const [option, setOption] = React.useState(0)
@@ -59,40 +68,31 @@ export default function LabTabs() {
         console.log(response)
         console.log(res)
         setNoiquy(res);
-        // res.map((res)=>{
-        //   setId(res.id)
-        //   console.log("id",id)
-        // })
-        // console.log(phongs)
-  
       } catch (error) {
         console.log(error);
       }
     };
+
+    const handleCSVC = async () => {
+      try {
+        const params = {
+          id_dmcsvc: "ALL",
+        };
+        console.log(params)
+  
+        const response = await  Danhmuccsvc(params);
+        const res: DanhmucCSVC[] = response.dmcsvc;
+        console.log(response)
+        console.log(res)
+        setCSVC(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     handleNoiquy();
+    handleCSVC();
   },[])
-  //   const handleToggle = () => {
-  //     setOpen((prevOpen) => !prevOpen);
-  //   };
-  //   const handleClose = (event: Event | React.SyntheticEvent) => {
-  //     if (
-  //       anchorRef.current &&
-  //       anchorRef.current.contains(event.target as HTMLElement)
-  //     ) {
-  //       return;
-  //     }
-
-  //     setOpen(false);
-  //   };
-
-  //   function handleListKeyDown(event: React.KeyboardEvent) {
-  //     if (event.key === 'Tab') {
-  //       event.preventDefault();
-  //       setOpen(false);
-  //     } else if (event.key === 'Escape') {
-  //       setOpen(false);
-  //     }
-  //   }
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value} >
@@ -143,19 +143,19 @@ export default function LabTabs() {
               </ListItemButton>
             </div>
             {option == 1 ? (
-              <div className='w-10/12'>
-                <CSVC />
+              <div className='w-10/12 border-2 border-green-300'>
+                <CSVC_QL csvc ={csvc}/>
               </div>
             ) : null}
 
             {option == 2 ? (
-              <div className='w-8/12'>
+              <div className='w-10/12'>
                 sdfghjk
               </div>
             ) : null}
 
             {option == 5 ? (
-              <div className='w-10/12  border-2 border-green-300 '>
+              <div className='w-10/12   '>
                 <NoiquyQL noiquy={noiquy} />
               </div>
             ) : null}

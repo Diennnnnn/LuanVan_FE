@@ -70,8 +70,9 @@ const chitiet = ({ id_phong, id_lp , check_in, check_out}: codeProductProps) => 
   interface DanhmucCSVC {
     id: number;
     tenCSVC: string;
-    mota: string;
     giagoc: number;
+    soluong:number;
+    thoigianmua: Date
   }
   const [phong, setPhong] = useState<Phong[]>([]);
   const [loaiphong, setLoaiphong] = useState<Loaiphong[]>([]);

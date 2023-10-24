@@ -3,25 +3,48 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import IconButton from '@mui/material/IconButton';
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import Grow from "@mui/material/Grow";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import MenuList from "@mui/material/MenuList";
-import Paper from "@mui/material/Paper";
-import Popper from "@mui/material/Popper";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { Montserrat } from "next/font/google";
-import Head from "next/head";
 import Link from "next/link";
 import React, { useEffect } from "react";
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useState } from "react";
 import router from "next/router";
+import Badge from '@mui/material/Badge';
+import { styled } from "@mui/material/styles";
+import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    backgroundColor: '#44b700',
+    color: '#44b700',
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    '&::after': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      borderRadius: '50%',
+      animation: 'ripple 1.2s infinite ease-in-out',
+      border: '1px solid currentColor',
+      content: '""',
+    },
+  },
+  '@keyframes ripple': {
+    '0%': {
+      transform: 'scale(.8)',
+      opacity: 1,
+    },
+    '100%': {
+      transform: 'scale(2.4)',
+      opacity: 0,
+    },
+  },
+}));
+
 const roboto = Montserrat({
   weight: '400',
   subsets: ['latin'],
@@ -55,6 +78,13 @@ const Header = () => {
     router.push({
       pathname: '/datphong',
       query: { id_phong: id_phong, tenphong: tenphong, gia: gia, songuoi: songuoi, check_in: check_in, check_out: check_out } //ten bien: gia tri truyen vao
+
+    })
+  }
+  const handleInfor = async () => {
+    router.push({
+      pathname: '/thongtinKH',
+      // query: { id_phong: id_phong, tenphong: tenphong, gia: gia, songuoi: songuoi, check_in: check_in, check_out: check_out } //ten bien: gia tri truyen vao
 
     })
   }
@@ -109,9 +139,16 @@ const Header = () => {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {log === false ? (
-                  <div onClick={handleLogin}>đăng nhập</div>
+                  <div onClick={handleLogin} className="border-2 border-gray-400  h-10 w-10 rounded-full hover:bg-gray-300"><FontAwesomeIcon icon={faUser} color="#33cc33" /></div>
                 ) : (
-                  <Avatar alt="Semy Sharp" src="/hinh10.jpg" />
+                  <StyledBadge
+                    overlap="circular"
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    variant="dot"
+                  >
+                    <Avatar alt="Remy Sharp" />
+                  </StyledBadge>
+                  // <Avatar alt="Semy Sharp" src="/hinh10.jpg" />
 
                 )}
               </IconButton>
@@ -136,11 +173,18 @@ const Header = () => {
                       open={Boolean(anchorElUser)}
                       onClose={handleCloseUserMenu}
                     >
+                      <MenuItem onClick={handleInfor}>
+                        <Typography textAlign="center" sx={{ margin: 1 }}>
+                          <PermContactCalendarIcon/>Trang cá nhân
+                        </Typography>
+                      </MenuItem>
+                      <hr className="w-10/12 m-auto"/>
                       <MenuItem onClick={handleOnClick}>
                         <Typography textAlign="center" sx={{ margin: 1 }}>
                           <LogoutIcon />Đăng xuất
                         </Typography>
                       </MenuItem>
+                      
                     </Menu>
                   )
                 )

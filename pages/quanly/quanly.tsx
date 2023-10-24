@@ -57,6 +57,7 @@ export default function LabTabs() {
     mota: string;
     start: string;
     finish: string;
+    dieukien: string
   }
 
   const [noiquy, setNoiquy] = useState<Noiquy[]>([]);

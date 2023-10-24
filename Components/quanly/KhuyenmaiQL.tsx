@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import { useEffect, useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Khuyenmai, SuaQLKhuyenmai, ThemQLKhuyenmai, XoaQLKhuyenmai } from "@/Service/userService";
 const roboto = Montserrat({
     weight: '400',
     subsets: ['latin'],
@@ -11,7 +12,7 @@ const roboto = Montserrat({
 type Props = {
     khuyenmai: any,
 };
-const KhuyenmaiQL = ({khuyenmai}: Props) => {
+const KhuyenmaiQL = ({ khuyenmai }: Props) => {
     interface Khuyenmai {
         id: number;
         tenKM: string;
@@ -19,120 +20,148 @@ const KhuyenmaiQL = ({khuyenmai}: Props) => {
         mota: string;
         start: string;
         finish: string;
-      }
+        dieukien: string
+    }
     const [step, setStep] = useState("them");
     const [khuyenmaiQL, setKhuyenmaiQL] = useState<Khuyenmai[]>([]);
-    // const [tenDV, setTenDV] = useState("");
-    // const [gia, setGia] = useState(Number)
-    // const [DVT, setDVT] = useState("");
-    // const [ghichu, setGhichu] = useState("");
-    // const [id, setId] = useState(Number)
+    const [tenKM, setTenKM] = useState("");
+    const [phantram, setPhantram] = useState(Number)
+    const [mota, setMota] = useState("");
+    const [start, setStart] = useState("");
+    const [finish, setFinish] = useState("");
+    const [dieukien, setDieukien] = useState("");
 
-    // const handleThemDichvu = async () => {
+    const [id, setId] = useState(Number)
 
-    //     let res = await ThemQLDichvu(
-    //         {
-    //             tenDV: tenDV,
-    //             gia: gia,
-    //             DVT: DVT,
-    //             ghichu: ghichu
+    const handleThemKhuyenmai = async () => {
+        console.log(tenKM)
+        console.log(phantram)
 
-    //         }
-    //     );
-    //     if (res && res.errCode === 0) {
-    //         setTenDV('')
-    //         setGia(0)
-    //         setDVT('')
-    //         setGhichu('')
-    //         handleLayDichVu()
-    //         alert("Thêm dịch vụ thành công")
+        console.log(mota)
 
-    //     } else {
-    //         console.log(res)
-    //         alert("Thêm dịch vụ không thành công")
-    //     };
+        console.log(start)
 
-    // }
-    // const handleLayDichVu = async () => {
-    //     try {
-    //       const params = {
-    //         id_dv: "ALL",
-    //       };
-    //       console.log(params)
-  
-    //       const response = await Dichvu(params);
-    //       const res: Dichvu[] = response.dichvu;
-    //       console.log(response)
-    //       console.log(res)
-    //       setDichvuQL(res);
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   };
-  
-  
+        console.log(finish)
+        console.log(dieukien)
 
-    // const handleSuaDichVu = (id: number,tenDV: string, gia:number, DVT:string, ghichu:string) => {
-    //     setId(id)
-    //     setTenDV(tenDV)
-    //     setGia(gia)
-    //     setDVT(DVT)
-    //     setGhichu(ghichu)
-    //     setStep("capnhat")
-    // }
 
-    // const handleCapnhatDichVu = async () => {
-    //     // console.log("mota", mota)
-    //     // console.log("motaEN", motaEN)
+        let res = await ThemQLKhuyenmai(
+            {
+                tenKM: tenKM,
+                phantram: phantram,
+                mota: mota,
+                start: start,
+                finish: finish,
+                dieukien: dieukien,
 
-    //     let res = await SuaQLDichvu(
-    //         {
-    //             id: id,
-    //             tenDV: tenDV,
-    //             gia: gia,
-    //             DVT: DVT,
-    //             ghichu: ghichu
 
-    //         }
-    //     );
-    //     if (res && res.errCode === 0) {
-    //         setTenDV('')
-    //         setGia(0)
-    //         setDVT('')
-    //         setGhichu('')
-    //         handleLayDichVu()
-    //         setStep('them')
-    //         alert("Cập nhật dịch vụ thành công")
+            }
+        );
+        if (res && res.errCode === 0) {
+            setTenKM('')
+            setPhantram(0)
+            setMota('')
+            setStart('')
+            setFinish('')
+            setDieukien('')
+            handleLayKhuyenmai()
+            alert("Thêm khuyến mãi thành công")
 
-    //     } else {
-    //         console.log(res)
-    //         alert("Cập nhật dịch vụ không thành công")
-    //     };
+        } else {
+            console.log(res)
+            alert("Thêm khuyến mãi không thành công")
+        };
 
-    // }
-    // const handleXoaDichVu = async (iddichvu: number) => {
-    //     // console.log("mota", mota)
-    //     // console.log("motaEN", motaEN)
+    }
+    const handleLayKhuyenmai = async () => {
 
-    //     let res = await XoaQLDichvu(
-    //         {
-    //             id: iddichvu
-    //         }
-    //     );
-    //     if (res && res.errCode === 0) {
-    //         setTenDV('')
-    //         setGia(0)
-    //         setDVT('')
-    //         setGhichu('')
-    //         handleLayDichVu()
-    //         alert("Xóa dịch vụ thành công")
+        try {
+            const params = {
+                id_km: "ALL",
+            };
+            console.log(params)
 
-    //     } else {
-    //         console.log(res)
-    //         alert("Xóa dịch vụ không thành công")
-    //     };
+            const response = await Khuyenmai(params);
+            const res: Khuyenmai[] = response.khuyenmai;
+            console.log(response)
+            console.log(res)
+            setKhuyenmaiQL(res);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-    // }
+
+
+    const handleSuaKhuyenmai = (id: number, tenKM: string, phantram: number, mota: string, start: string, finish: string, dieukien: string) => {
+        setId(id)
+        setTenKM(tenKM)
+        setPhantram(phantram)
+        setMota(mota)
+        setStart(start)
+        setFinish(finish)
+        setDieukien(dieukien)
+        setStep("capnhat")
+    }
+
+    const handleCapnhatKhuyenmai = async () => {
+        // console.log("mota", mota)
+        // console.log("motaEN", motaEN)
+
+        let res = await SuaQLKhuyenmai(
+            {
+                id: id,
+                tenKM: tenKM,
+                phantram: phantram,
+                mota: mota,
+                start: start,
+                finish: finish,
+                dieukien: dieukien,
+
+            }
+        );
+        if (res && res.errCode === 0) {
+            setTenKM('')
+            setPhantram(0)
+            setMota('')
+            setStart('')
+            setFinish('')
+            setDieukien('')
+            handleLayKhuyenmai()
+            setStep('them')
+            alert("Cập nhật khuyến mãi thành công")
+
+        } else {
+            console.log(res)
+            alert("Cập nhật khuyến mãi không thành công")
+        };
+
+    }
+    const handleXoaKhuyenmai = async (idkhuyenmai: number) => {
+        // console.log("mota", mota)
+        // console.log("motaEN", motaEN)
+
+        let res = await XoaQLKhuyenmai(
+            {
+                id: idkhuyenmai
+            }
+        );
+        if (res && res.errCode === 0) {
+            setTenKM('')
+            setPhantram(0)
+            setMota('')
+            setStart('')
+            setFinish('')
+            setDieukien('')
+            handleLayKhuyenmai()
+            alert("Xóa khuyến mãi thành công")
+
+        } else {
+            console.log(res)
+            alert("Xóa khuyến mãi không thành công")
+        };
+
+    }
     useEffect(() => {
         // console.log("csvc", csvc)
         setKhuyenmaiQL(khuyenmai)
@@ -153,43 +182,43 @@ const KhuyenmaiQL = ({khuyenmai}: Props) => {
                     <div className="flex ">
                         <p className="w-4/12 ">Tên khuyến mãi:</p>
                         <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
-                       />
+                        value={tenKM} onChange={(e) => setTenKM(e.target.value)}/>
                     </div>
                     <div className="flex ">
                         <p className="w-4/12 ">Phần trăm KH:</p>
                         <input type="number" className="w-60 border-b-2 border-gray-400 outline-none"
-                        />
+                        value={phantram} onChange={(e) => setPhantram(e.target.valueAsNumber)}/>
                     </div>
                     <div className="flex ">
                         <p className="w-4/12">Mô tả:</p>
                         <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
-                         />
+                        value={mota} onChange={(e) => setMota(e.target.value)}/>
                     </div>
                     <div className="flex ">
                         <p className="w-4/12">Thời gian bắt đầu:</p>
-                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none" 
-                        />
+                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
+                        value={start} onChange={(e) => setStart(e.target.value)}/>
                     </div>
                     <div className="flex ">
                         <p className="w-4/12">Thời gian Kết thúc:</p>
-                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none" 
-                        />
+                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
+                        value={finish} onChange={(e) => setFinish(e.target.value)}/>
                     </div>
                     <div className="flex ">
                         <p className="w-4/12">Điều kiện:</p>
                         <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
-                         />
+                        value={dieukien} onChange={(e) => setDieukien(e.target.value)}/>
                     </div>
                 </div>
                 {step === "them" &&
                     (
-                        <button className="bg-green-500 w-44 h-10 rounded-lg mt-5 ">Thêm khuyến mãi</button>
+                        <button onClick={handleThemKhuyenmai} className="bg-green-500 w-44 h-10 rounded-lg mt-5 ">Thêm khuyến mãi</button>
 
                     )
                 }
                 {step === "capnhat" &&
                     (
-                        <button  className="bg-green-500 w-44 h-10 rounded-lg mt-5 ">Cập nhật khuyến mãi</button>
+                        <button onClick={handleCapnhatKhuyenmai} className="bg-green-500 w-44 h-10 rounded-lg mt-5 ">Cập nhật khuyến mãi</button>
 
                     )
                 }
@@ -204,6 +233,7 @@ const KhuyenmaiQL = ({khuyenmai}: Props) => {
                                 <th className="border border-slate-300 w-20">Mô tả</th>
                                 <th className="border border-slate-300 w-20">Thời gian bắt đầu</th>
                                 <th className="border border-slate-300 w-20">Thời gian kết thúc</th>
+                                <th className="border border-slate-300 w-20">Điều kiện</th>
                                 <th className="border border-slate-300 w-20">Tác vụ</th>
 
 
@@ -220,15 +250,15 @@ const KhuyenmaiQL = ({khuyenmai}: Props) => {
                                             <td className="border border-slate-300 p-2">{item.mota}</td>
                                             <td className="border border-slate-300 p-2">{item.start}</td>
                                             <td className="border border-slate-300 p-2">{item.finish}</td>
-
-                                            {/* <td className="border border-slate-300 text-center">
-                                                <button> 
-                                                    <EditIcon onClick={() => handleSuaDichVu(item.id, item.tenDV, item.gia, item.DVT, item.ghichu)}/>
+                                            <td className="border border-slate-300 p-2">{item.dieukien}</td>
+                                            <td className="border border-slate-300 text-center">
+                                                <button>
+                                                    <EditIcon onClick={() => handleSuaKhuyenmai(item.id, item.tenKM, item.phantram, item.mota, item.start, item.finish, item.dieukien)} />
                                                 </button>
                                                 <button>
-                                                    <DeleteIcon onClick={() => handleXoaDichVu(item.id)}/>
-                                                    </button>
-                                            </td> */}
+                                                    <DeleteIcon onClick={() => handleXoaKhuyenmai(item.id)} />
+                                                </button>
+                                            </td>
                                         </tr>
                                     )
                                 })

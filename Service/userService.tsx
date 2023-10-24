@@ -256,6 +256,62 @@ export async function Datphong(params:{
     const data = await response.json();
     return data;
   }
+
+  //khuyenmai
+  export async function ThemQLKhuyenmai(params:{
+    tenKM:string;
+    phantram:number;
+    mota:string;
+    start:string;
+    finish:string;
+    dieukien:string;
+    }): Promise<any> {
+      const response = await fetch(`http://localhost:8080/api/ThemKhuyenmaiQL`,
+      {
+        method:"POST",
+        headers: {
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify(params),
+      });
+      const data = await response.json();
+      return data;
+    }
+  
+  export async function SuaQLKhuyenmai(params:{
+    id: number;
+    tenKM:string;
+    phantram:number;
+    mota:string;
+    start:string;
+    finish:string;
+    dieukien:string;
+    }): Promise<any> {
+    const response = await fetch(`http://localhost:8080/api/SuaKhuyenmaiQL`,
+    {
+      method:"POST",
+      headers: {
+        "Content-Type":"application/json",
+      },
+      body: JSON.stringify(params),
+    });
+    const data = await response.json();
+    return data;
+  }
+
+  export async function XoaQLKhuyenmai(params:{id: number;}): Promise<any> {
+    const response = await fetch(`http://localhost:8080/api/XoaKhuyenmaiQL`,
+    {
+      method:"DELETE",
+      headers: {
+        "Content-Type":"application/json",
+      },
+      body: JSON.stringify(params),
+    });
+    const data = await response.json();
+    return data;
+  }
+
 // export async function DangKy_KH(params: {
 //   hten_KH: string;
 //   Ngaysinh: string;

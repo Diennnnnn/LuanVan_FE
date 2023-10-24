@@ -94,6 +94,7 @@ const NoiquyQL = ({ noiquy }: Props) => {
             setMota('')
             setMotaEN('')
             handleNoiquy1()
+            setStep('them')
             alert("Cập nhật nội quy thành công")
 
         } else {
@@ -136,7 +137,7 @@ const NoiquyQL = ({ noiquy }: Props) => {
                     )
                 }
                 {step === "capnhat" &&
-                    (<p className="mt-5 text-xl">Câp nhật nội quy:</p>
+                    (<p className="mt-5 text-xl">Cập nhật nội quy:</p>
                     )
                 }
                 {/* <p className="mt-5 text-xl">Thêm nội quy:</p> */}

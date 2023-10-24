@@ -23,8 +23,10 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import GroupIcon from '@mui/icons-material/Group';
 import NoiquyQL from '@/Components/quanly/NoiquyQL';
 import { useEffect, useState } from 'react';
-import { Danhmuccsvc, Noiquy } from '@/Service/userService';
+import { Danhmuccsvc, Dichvu, Khuyenmai, Noiquy } from '@/Service/userService';
 import CSVC_QL from '@/Components/quanly/CSVC_QL';
+import DichvuQL from '@/Components/quanly/DichvuQL';
+import KhuyenmaiQL from '@/Components/quanly/KhuyenmaiQL';
 
 
 export default function LabTabs() {
@@ -38,11 +40,30 @@ export default function LabTabs() {
     id: number;
     tenCSVC: string;
     giagoc: number;
-    soluong:number;
+    soluong: number;
     thoigianmua: Date
   }
+  interface Dichvu {
+    id: number;
+    tenDV: string;
+    gia: number;
+    DVT: string;
+    ghichu: string;
+  }
+  interface Khuyenmai {
+    id: number;
+    tenKM: string;
+    phantram: number;
+    mota: string;
+    start: string;
+    finish: string;
+  }
+
   const [noiquy, setNoiquy] = useState<Noiquy[]>([]);
   const [csvc, setCSVC] = useState<DanhmucCSVC[]>([]);
+  const [dichvu, setDichvu] = useState<Dichvu[]>([]);
+  const [khuyenmai, setKhuyenmai] = useState<Khuyenmai[]>([]);
+
 
   const [value, setValue] = React.useState('1');
   const [open, setOpen] = React.useState(false);
@@ -52,17 +73,17 @@ export default function LabTabs() {
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
-  const handleClick = () => {
-    setOpen(!open);
-  };
-  useEffect(()=>{
+  // const handleClick = () => {
+  //   setOpen(!open);
+  // };
+  useEffect(() => {
     const handleNoiquy = async () => {
       try {
         const params = {
           id_noiquy: "ALL",
         };
         console.log(params)
-  
+
         const response = await Noiquy(params);
         const res: Noiquy[] = response.nq;
         console.log(response)
@@ -79,8 +100,8 @@ export default function LabTabs() {
           id_dmcsvc: "ALL",
         };
         console.log(params)
-  
-        const response = await  Danhmuccsvc(params);
+
+        const response = await Danhmuccsvc(params);
         const res: DanhmucCSVC[] = response.dmcsvc;
         console.log(response)
         console.log(res)
@@ -90,9 +111,45 @@ export default function LabTabs() {
       }
     };
 
+    const handleLayDichVu = async () => {
+      try {
+        const params = {
+          id_dv: "ALL",
+        };
+        console.log(params)
+
+        const response = await Dichvu(params);
+        const res: Dichvu[] = response.dichvu;
+        console.log(response)
+        console.log(res)
+        setDichvu(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const handleLayKhuyenmai = async () => {
+      try {
+        const params = {
+          id_km: "ALL",
+        };
+        console.log(params)
+
+        const response = await Khuyenmai(params);
+        const res: Khuyenmai[] = response.khuyenmai;
+        console.log(response)
+        console.log(res)
+        setKhuyenmai(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     handleNoiquy();
     handleCSVC();
-  },[])
+    handleLayDichVu();
+    handleLayKhuyenmai();
+  }, [])
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value} >
@@ -109,7 +166,7 @@ export default function LabTabs() {
             <div className="w-2/12 border-2 border-green-300 uppercase text-xl space-y-5">
               <ListItemButton >
                 <ListItemIcon>
-                  <CategoryIcon/>
+                  <CategoryIcon />
                 </ListItemIcon>
                 <ListItemText onClick={() => setOption(1)} primary="cơ sở vật chất" />
               </ListItemButton>
@@ -125,26 +182,26 @@ export default function LabTabs() {
                 <ListItemIcon>
                   <RoomServiceIcon />
                 </ListItemIcon>
-                <ListItemText primary="Dịch vụ" />
+                <ListItemText onClick={() => setOption(3)} primary="Dịch vụ" />
               </ListItemButton>
 
               <ListItemButton>
                 <ListItemIcon>
                   <DiscountIcon />
                 </ListItemIcon>
-                <ListItemText primary="Khuyến mãi" />
+                <ListItemText onClick={() => setOption(4)} primary="Khuyến mãi" />
               </ListItemButton>
 
               <ListItemButton onClick={() => setOption(5)}>
                 <ListItemIcon>
                   <GavelIcon />
                 </ListItemIcon>
-                <ListItemText  primary="nội quy" />
+                <ListItemText primary="nội quy" />
               </ListItemButton>
             </div>
             {option == 1 ? (
               <div className='w-10/12 border-2 border-green-300'>
-                <CSVC_QL csvc ={csvc}/>
+                <CSVC_QL csvc={csvc} />
               </div>
             ) : null}
 
@@ -153,7 +210,16 @@ export default function LabTabs() {
                 sdfghjk
               </div>
             ) : null}
-
+            {option == 3 ? (
+              <div className='w-10/12   '>
+                <DichvuQL dichvu={dichvu} />
+              </div>
+            ) : null}
+            {option == 4 ? (
+              <div className='w-10/12   '>
+                <KhuyenmaiQL khuyenmai= {khuyenmai}/>
+              </div>
+            ) : null}
             {option == 5 ? (
               <div className='w-10/12   '>
                 <NoiquyQL noiquy={noiquy} />

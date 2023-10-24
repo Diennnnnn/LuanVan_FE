@@ -101,7 +101,9 @@ const CSVC_QL = ({ csvc }: Props) => {
             setSoluong(0)
             setThoigianmua('')
             handleCSVC()
+            setStep('them')
             alert("Cập nhật cơ sở vật chất thành công")
+            
 
         } else {
             console.log(res)
@@ -144,7 +146,7 @@ const CSVC_QL = ({ csvc }: Props) => {
                     )
                 }
                 {step === "capnhat" &&
-                    (<p className="mt-5 text-xl">Câp nhật cơ sơ vật chất :</p>
+                    (<p className="mt-5 text-xl">Cập nhật cơ sở vật chất :</p>
                     )
                 }
                 {/* <div className="flex w-full border-2 border-green-300">
@@ -153,7 +155,7 @@ const CSVC_QL = ({ csvc }: Props) => {
                     </div>
                     <div className="basis-1/2 border-2 border-gray-800"></div>
                 </div> */}
-                <div className="grid grid-cols-2 border-2 border-gray-300 p-3 ">
+                <div className="grid grid-cols-2 border-2 border-gray-300 p-3 gap-4">
                     <div className="flex ">
                         <p className="w-3/12 ">Tên CSVC:</p>
                         {/* <p>sdfghjk</p> */}
@@ -233,54 +235,6 @@ const CSVC_QL = ({ csvc }: Props) => {
                         </tbody>
                     </table>
                 </div>
-                {/* {step === "them" &&
-                    (
-                        <button onClick={handleThemnoiquy} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Thêm nội quy</button>
-
-                    )
-                }
-                {step === "capnhat" &&
-                    (
-                        <button onClick={handleCapnhatnoiquy} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Cập nhật nội quy</button>
-
-                    )
-                }  */}
-
-                {/* <div className="mt-8">
-                    <table className="border-separate border border-slate-400 ...">
-                        <thead>
-                            <tr>
-                                <th className="border border-slate-300 w-10 ">#</th>
-                                <th className="border border-slate-300">Mô tả</th>
-                                <th className="border border-slate-300">Mô tả EN</th>
-                                <th className="border border-slate-300 w-20">Tác vụ</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                noiquyQL.map((item, index) => {
-                                    return (
-                                        <tr key={index}>
-                                            <td className="border border-slate-300 text-center">{item.id}</td>
-                                            <td className="border border-slate-300 p-2">{item.mota}</td>
-                                            <td className="border border-slate-300 p-2">{item.motaEN}</td>
-                                            <td className="border border-slate-300 text-center">
-                                                <button onClick={() => handleSuaNQ(item.id, item.mota, item.motaEN)}><EditIcon /></button>
-                                                <button onClick={() => handleXoanoiquy(item.id)}><DeleteIcon /></button>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            }
-
-
-                        </tbody>
-                    </table>
-                </div> */}
-
-
-
             </div>
         </div>
 

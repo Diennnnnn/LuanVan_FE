@@ -70,6 +70,25 @@ export async function Khachhang(params: { SDT: any }): Promise<any> {
   return data;
 }
 
+export async function Dichvu(params: { id_dv: any }): Promise<any> {
+  const { id_dv } = params;
+  const response = await fetch(
+    `http://localhost:8080/api/Dichvu?keyword=${id_dv}`
+  );
+  const data = await response.json();
+  return data;
+}
+
+export async function Khuyenmai(params: { id_km: any }): Promise<any> {
+  const { id_km } = params;
+  const response = await fetch(
+    `http://localhost:8080/api/Khuyenmai?keyword=${id_km}`
+  );
+  const data = await response.json();
+  return data;
+}
+
+
 export async function Datphong(params:{
   id_KH: number;
   id_phong: number;
@@ -89,7 +108,7 @@ export async function Datphong(params:{
     const data = await response.json();
     return data;
   }
-
+ //noi quy
   export async function QLnoiquy(params:{
     mota: string;
     motaEN: string;
@@ -135,7 +154,7 @@ export async function Datphong(params:{
     const data = await response.json();
     return data;
   }
-  //noi quy
+ //csvc
   export async function ThemQLCSVC(params:{
     tenCSVC:string;
     giagoc:number;
@@ -175,6 +194,58 @@ export async function Datphong(params:{
 
   export async function XoaQLCSVC(params:{id: number;}): Promise<any> {
     const response = await fetch(`http://localhost:8080/api/XoaCSVCQL`,
+    {
+      method:"DELETE",
+      headers: {
+        "Content-Type":"application/json",
+      },
+      body: JSON.stringify(params),
+    });
+    const data = await response.json();
+    return data;
+  }
+
+
+  //dich vụ
+  export async function ThemQLDichvu(params:{
+    tenDV:string;
+    gia:number;
+    DVT:string;
+    ghichu:string;
+    }): Promise<any> {
+      const response = await fetch(`http://localhost:8080/api/ThemDichvuQL`,
+      {
+        method:"POST",
+        headers: {
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify(params),
+      });
+      const data = await response.json();
+      return data;
+    }
+  
+  export async function SuaQLDichvu(params:{
+    id: number;
+    tenDV:string;
+    gia:number;
+    DVT:string;
+    ghichu:string;
+    }): Promise<any> {
+    const response = await fetch(`http://localhost:8080/api/SuaDichvuQL`,
+    {
+      method:"POST",
+      headers: {
+        "Content-Type":"application/json",
+      },
+      body: JSON.stringify(params),
+    });
+    const data = await response.json();
+    return data;
+  }
+
+  export async function XoaQLDichvu(params:{id: number;}): Promise<any> {
+    const response = await fetch(`http://localhost:8080/api/XoaDichvuQL`,
     {
       method:"DELETE",
       headers: {

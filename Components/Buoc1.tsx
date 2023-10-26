@@ -1,7 +1,7 @@
 import B1 from "@/Components/B1";
 import Footer from "@/Components/Footer";
 import Header from "@/Components/Header";
-import { Datphong, Loaiphong, Phong, Phong_tenphong } from "@/Service/userService";
+import { Datphong, Loaiphong, Loaiphong_tenLP, Phong, Phong_idLP, Phong_tenphong } from "@/Service/userService";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { GetServerSideProps } from "next";
@@ -20,12 +20,15 @@ type Props = {
   check_out: string,
   gia: number,
   songuoi: number
+  tenloaiphong: any
 };
-const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi }: Props) => {
+const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaiphong }: Props) => {
 
   interface Khachhang {
     id: number;
     hotenKH: string;
+    gioitinh: string,
+    ngaysinh: string,
     CMND: string,
     SDT: string,
     email: string
@@ -45,7 +48,6 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi }: Props)
     songuoi: number;
     gia: number;
   }
-
   //   interface Khachhang1 {
   //     id: number;
   //     hotenKH: string;
@@ -55,23 +57,23 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi }: Props)
   //   }
   const [roll, setRoll] = useState('')
   const [khachhang, setKhachhang] = useState<Khachhang[]>([]);
-  //   const [step, setStep] = useState("Buoc1");
   const [id_KH, setId_KH] = useState(Number);
-  //   const [id_Phong, setId_Phong] = useState(Number);
-  //   const [ngaydat, setNgaydat] = useState(new Date);
-  // const [check_in, setCheck_in] = useState("");
-  // const [check_out, setCheck_out] = useState("");
   const [songuoi1, setSonguoi1] = useState(Number);
   const [hotenKH, setHotenKH] = useState("")
+  const [ngaysinh, setNgaysinh] = useState("")
+  const [gioitinh, setGioitinh] = useState("")
   const [CMND, setCMND] = useState("")
   const [SDT, setSDT] = useState("")
   const [email, setEmail] = useState("")
   const [phong, setPhong] = useState<Phong[]>([]);
   const [phong2, setPhong2] = useState<Phong[]>([]);
   const [loaiphong, setLoaiphong] = useState<Loaiphong[]>([]);
+  const [loaiphong1, setLoaiphong1] = useState<Loaiphong[]>([]);
+
 
   // const [tenP, setTenP] = useState<string[]>([]);
   const [valueCombobox, setValueCombobox] = useState("")
+  const [valueCombobox1, setValueCombobox1] = useState("")
 
 
   //   const handleDatphong = async () => {
@@ -116,6 +118,7 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi }: Props)
   }
 
   const handleLayttphongtheoten = async (value: string) => {
+    setValueCombobox(value)
     try {
       const params = {
         tenphong: value,
@@ -143,6 +146,37 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi }: Props)
 
 
   }
+  const handleLayLoaiphongtheoTenLP = async (tenloaiphong: string) => {
+    setValueCombobox1(tenloaiphong)
+
+    try {   
+      const params = {
+        lp_tenloai: tenloaiphong,
+      };
+      console.log(params)
+
+      const response = await Loaiphong_tenLP(params);
+      const res: Loaiphong[] = response.lp_tenloai;
+      console.log(response)
+      console.log(res)
+      setLoaiphong1(res);
+      res.map(async (item)=>{
+        const params = {
+          phong_idLP: item.id,
+        };
+        console.log(params)
+  
+        const response = await Phong_idLP(params);
+        const res: Phong[] = response.phong_idLP;
+        console.log(response)
+        console.log(res)
+        setPhong(res);
+
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 
   useEffect(() => {
@@ -175,16 +209,24 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi }: Props)
     const handlephong = async () => {
       try {
         const params = {
-          id_phong: 'ALL',
+          id_phong: id_phong,
         };
         console.log(params)
         const response = await Phong(params);
         const res: Phong[] = response.phong; //gán dữ liệu vào res
         console.log(response)
         setPhong(res); //gán res vào setPhong
-        // res.map((res) => {
-        //   tenP.push(res.tenphong)
-        // })
+        res.map(async (res) => {
+          const params = {
+            id_lp: res.id_LP,
+          };
+          console.log(params)
+          const response = await Loaiphong(params);
+          const res2: Loaiphong[] = response.loaiphong;
+          console.log(response)
+          setLoaiphong(res2);
+
+        })
 
       } catch (error) {
         console.log(error);
@@ -192,8 +234,53 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi }: Props)
 
 
     };
-    handlephong();
+    const handlephong2 = async () => {
+      try {
+        const params = {
+          id_phong: "ALL",
+        };
+        console.log(params)
+        const response = await Phong(params);
+        const res: Phong[] = response.phong; //gán dữ liệu vào res
+        console.log(response)
+        setPhong(res); //gán res vào setPhong
 
+
+      } catch (error) {
+        console.log(error);
+      }
+
+
+    };
+
+    const handleLoaiphong = async () => {
+      try {
+        const params = {
+          id_lp: "ALL",
+        };
+        console.log(params)
+        const response = await Loaiphong(params);
+        const res: Loaiphong[] = response.loaiphong;
+        console.log(response)
+        setLoaiphong(res);
+        res.map((res) => {
+          // setId_loaiphong(res.id)
+          // console.log("id", id)
+        })
+  
+      } catch (error) {
+        console.log(error);
+      }
+  
+  
+    };
+
+    if (id_phong != 0) {
+      handlephong()
+    } else {
+      handlephong2()
+    }
+handleLoaiphong()
   }, []);
 
 
@@ -290,11 +377,39 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi }: Props)
                 {/* <p className="text-base">{check_out}, Trước 12:00</p> */}
               </div>
             </div>
+            <div className=" m-5 text-lg flex">
+              <p className="basis-40 font-semibold">Loại phòng</p>
+
+              {tenphong ?
+                <p className="  text-lg"> {tenloaiphong}</p>
+                :
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={loaiphong.map((option) => option.tenloaiphong)}
+                  value={valueCombobox1}
+                  onChange={(event: any, newValue: string | null) => {
+                    {
+
+                      newValue ?
+                        handleLayLoaiphongtheoTenLP(newValue)
+                        : null
+                    }
+                  }}
+                  sx={{ width: 300 }}
+
+                  renderInput={(params) => <TextField {...params}
+                    label="Tên loại phòng"
+                  />}
+                />
+              }
+            </div>
+
             <div className="font-semibold m-5 text-lg flex">
               <p className="basis-40 ">Phòng</p>
 
               {tenphong ?
-                <p className="font-semibold m-5 text-lg"> {tenphong}</p>
+                <p className="font-semibold  text-lg"> {tenphong}</p>
                 :
                 <Autocomplete
                   disablePortal
@@ -306,24 +421,20 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi }: Props)
 
                       newValue ?
                         handleLayttphongtheoten(newValue)
-                        // setValueCombobox(newValue) 
                         : null
                     }
                   }}
                   sx={{ width: 300 }}
-                  // onChange={()=>setTemp()}
-                  // renderInput={(params)=>setTemp(params)}
 
                   renderInput={(params) => <TextField {...params}
                     label="Tên phòng"
                   />}
                 />
-                // <input type="" className="border-green-300 border-2 w-32"></input>
               }
             </div>
 
             {/* <p className="font-semibold m-5 text-lg">Phòng {tenphong}</p> */}
-            {loaiphong.map((item, index) => {
+            {loaiphong1.map((item, index) => {
               return (
                 <>
                   <div className="flex m-5">

@@ -28,12 +28,16 @@ interface codeProductProps {
   songuoi: number | null
   check_in: string | null
   check_out: string | null
+  tenloaiphong: string | null
+
 
 }
-const datphong = ({ id_phong, tenphong, gia, songuoi, check_in, check_out }: codeProductProps) => {
+const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, check_out }: codeProductProps) => {
   interface Khachhang {
     id: number;
     hotenKH: string;
+    gioitinh: string,
+    ngaysinh: string,
     CMND: string,
     SDT: string,
     email: string
@@ -41,6 +45,8 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, check_in, check_out }: cod
   interface Khachhang1 {
     id: number;
     hotenKH: string;
+    gioitinh: string,
+    ngaysinh: string,
     CMND: string,
     SDT: string,
     email: string
@@ -78,7 +84,8 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, check_in, check_out }: cod
           ngaydat: ngaydat,
           check_in: check_in,
           check_out: check_out,
-          songuoi: songuoi
+          songuoi: songuoi,
+
 
         }
       );
@@ -180,7 +187,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, check_in, check_out }: cod
       
         {activeStep == 0 ? (
           <div>
-            <Buoc1 tenphong={tenphong || ''} gia={gia || 0} songuoi={songuoi || 0} id_phong={id_phong || 0} check_in={check_in || ''} check_out={check_out || ''} />
+            <Buoc1 tenphong={tenphong || ''} gia={gia || 0} songuoi={songuoi || 0} id_phong={id_phong || 0} check_in={check_in || ''} check_out={check_out || ''} tenloaiphong={tenloaiphong || ''} />
             <Box sx={{ display: 'flex', flexDirection: 'row', width: '70%', paddingTop:'2%', margin:'auto'}}>
               <Button
                 color="inherit"
@@ -412,6 +419,8 @@ export const getServerSideProps: GetServerSideProps<codeProductProps> = async (
   const { songuoi } = context.query;
   const { check_in } = context.query;
   const { check_out } = context.query;
+  const { tenloaiphong } = context.query;
+
 
   return {
     props: {
@@ -420,7 +429,9 @@ export const getServerSideProps: GetServerSideProps<codeProductProps> = async (
       gia: gia as unknown as number | null,
       songuoi: songuoi as unknown as number | null,
       check_in: check_in as string | null,
-      check_out: check_out as string | null
+      check_out: check_out as string | null,
+      tenloaiphong: tenloaiphong as string | null
+
     }
   }
 }

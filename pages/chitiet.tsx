@@ -82,6 +82,7 @@ const chitiet = ({ id_phong, id_lp , check_in, check_out}: codeProductProps) => 
   const [id_VT1, setId_VT1] = useState(Number);
   const [mota, setMota] = useState("");
   const [tenphong, setTenphong] = useState("");
+  const [tenloaiphong, setTenloaiphong] = useState("");
   const [gia, setGia] = useState(Number);
   const [songuoi, setSonguoi] = useState(Number);
   const [khu, setKhu] = useState("");
@@ -106,7 +107,7 @@ const chitiet = ({ id_phong, id_lp , check_in, check_out}: codeProductProps) => 
   const handleDatphong = async () => {
     router.push({
       pathname: '/datphong',
-      query: {id_phong: id_phong, tenphong: tenphong, gia: gia, songuoi: songuoi, check_in: check_in, check_out:check_out} //ten bien: gia tri truyen vao
+      query: {id_phong: id_phong, tenphong: tenphong, gia: gia, songuoi: songuoi, tenloaiphong:tenloaiphong, check_in: check_in, check_out:check_out} //ten bien: gia tri truyen vao
       
     })
   }
@@ -166,6 +167,7 @@ const chitiet = ({ id_phong, id_lp , check_in, check_out}: codeProductProps) => 
         res.map((res) => {
           setGia(res.gia)
           setSonguoi(res.songuoi)
+          setTenloaiphong(res.tenloaiphong)
           // console.log("id", id)
         })
 
@@ -295,7 +297,8 @@ const chitiet = ({ id_phong, id_lp , check_in, check_out}: codeProductProps) => 
             <div className=" space-y-2">
               <p className="font-semibold text-2xl">Mô tả</p>
               <p className="text-xl text-justify leading-loose">{mota}</p>
-              <li className="text-lg italic ">Số người ở: <span className="text-green-500">{songuoi} người</span></li>
+              <li className="text-lg italic ">Số người ở: <span className="text-green-500">{songuoi}người</span></li>
+              <li className="text-lg italic ">Loại phòng: <span className="text-green-500">{tenloaiphong}</span></li>
               <li className="text-lg italic ">Giá: <span className="text-green-500">{gia}/đêm</span></li>
               <li className="text-lg italic">Khu: {khu}; Tầng: {tang}; Diện tích: {dientich}m2</li>
             </div>

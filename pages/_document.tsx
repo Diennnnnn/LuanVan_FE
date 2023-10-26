@@ -20,6 +20,7 @@ class MainDocument extends Document {
     return { ...initialProps };
   }
 
+
   render() {
     return (
       <Html>

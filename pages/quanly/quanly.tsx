@@ -23,10 +23,11 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import GroupIcon from '@mui/icons-material/Group';
 import NoiquyQL from '@/Components/quanly/NoiquyQL';
 import { useEffect, useState } from 'react';
-import { Danhmuccsvc, Dichvu, Khuyenmai, Noiquy } from '@/Service/userService';
+import { AllKhachhang, Danhmuccsvc, Dichvu, Khuyenmai, Noiquy } from '@/Service/userService';
 import CSVC_QL from '@/Components/quanly/CSVC_QL';
 import DichvuQL from '@/Components/quanly/DichvuQL';
 import KhuyenmaiQL from '@/Components/quanly/KhuyenmaiQL';
+import KhachhangQL from '@/Components/quanly/KhachhangQL';
 
 
 export default function LabTabs() {
@@ -59,11 +60,21 @@ export default function LabTabs() {
     finish: string;
     dieukien: string
   }
+  interface Khachhang {
+    id: number;
+    hotenKH: string;
+    gioitinh: string,
+    ngaysinh: string,
+    CMND: string,
+    SDT: string,
+    email: string
+  }
 
   const [noiquy, setNoiquy] = useState<Noiquy[]>([]);
   const [csvc, setCSVC] = useState<DanhmucCSVC[]>([]);
   const [dichvu, setDichvu] = useState<Dichvu[]>([]);
   const [khuyenmai, setKhuyenmai] = useState<Khuyenmai[]>([]);
+  const [allkh, setAllkh] = useState<Khachhang[]>([]);
 
 
   const [value, setValue] = React.useState('1');
@@ -146,10 +157,28 @@ export default function LabTabs() {
       }
     };
 
+    const handleLayAllKhachhang = async () => {
+      try {
+        const params = {
+          id_allkh: "ALL",
+        };
+        console.log(params)
+
+        const response = await AllKhachhang(params);
+        const res: Khachhang[] = response.allkh;
+        console.log(response)
+        console.log(res)
+        setAllkh(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     handleNoiquy();
     handleCSVC();
     handleLayDichVu();
     handleLayKhuyenmai();
+    handleLayAllKhachhang();
   }, [])
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -218,7 +247,7 @@ export default function LabTabs() {
             ) : null}
             {option == 4 ? (
               <div className='w-10/12   '>
-                <KhuyenmaiQL khuyenmai= {khuyenmai}/>
+                <KhuyenmaiQL khuyenmai={khuyenmai} />
               </div>
             ) : null}
             {option == 5 ? (
@@ -253,29 +282,6 @@ export default function LabTabs() {
                 </ListItemIcon>
                 <ListItemText primary="phòng" />
               </ListItemButton>
-              {/* <ListItemButton onClick={handleClick}>
-                <ListItemIcon>
-                  <MovieIcon />
-                </ListItemIcon>
-                <ListItemText primary="Phim" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-
-              </ListItemButton> */}
-
-              {/* <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItemButton sx={{ pl: 4 }}>
-
-                    <ListItemText primary="Phim đang chiếu" />
-
-                  </ListItemButton>
-                  <ListItemButton sx={{ pl: 4 }}>
-
-                    <ListItemText primary="Phim sắp chiếu" />
-
-                  </ListItemButton>
-                </List>
-              </Collapse> */}
 
             </div>
             <div className="w-10/12 border-2 border-red-300"></div>
@@ -335,7 +341,7 @@ export default function LabTabs() {
                 <ListItemText primary="nhân viên" />
               </ListItemButton>
 
-              <ListItemButton>
+              <ListItemButton onClick={() => setOption(9)}>
                 <ListItemIcon>
                   <AccountBoxIcon />
                 </ListItemIcon>
@@ -343,6 +349,11 @@ export default function LabTabs() {
               </ListItemButton>
 
             </div>
+            {option == 9 ? (
+              <div className='w-10/12 border-2 border-green-300'>
+                <KhachhangQL allkh={allkh}/>
+              </div>
+            ) : null}
           </div>
         </TabPanel>
       </TabContext>

@@ -4,6 +4,11 @@ import { useEffect, useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Danhmuccsvc, SuaQLCSVC, ThemQLCSVC, XoaQLCSVC } from "@/Service/userService";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import dayjs from 'dayjs'
+
+
 const roboto = Montserrat({
     weight: '400',
     subsets: ['latin'],
@@ -18,19 +23,19 @@ const CSVC_QL = ({ csvc }: Props) => {
         tenCSVC: string;
         giagoc: number;
         soluong: number;
-        thoigianmua: string
+        thoigianmua: Date;
     }
     const [step, setStep] = useState("them");
     const [csvcQL, setCsvcQL] = useState<DanhmucCSVC[]>([]);
     const [tenCSVC, setTenCSVC] = useState("");
     const [giagoc, setGiagoc] = useState(Number)
     const [soluong, setSoluong] = useState(Number)
-    const [thoigianmua, setThoigianmua] = useState("");
+    const [thoigianmua, setThoigianmua] = useState(new Date());
     const [id, setId] = useState(Number)
 
     const handleThemCSVC = async () => {
         // console.log("mota", mota)
-        // console.log("motaEN", motaEN)
+        console.log("motaEN", thoigianmua)
 
         let res = await ThemQLCSVC(
             {
@@ -45,7 +50,7 @@ const CSVC_QL = ({ csvc }: Props) => {
             setTenCSVC('')
             setGiagoc(0)
             setSoluong(0)
-            setThoigianmua('')
+            setThoigianmua(new Date())
             handleCSVC()
             alert("Thêm cơ sở vật chất thành công")
 
@@ -72,7 +77,7 @@ const CSVC_QL = ({ csvc }: Props) => {
         }
     };
 
-    const handleSuaCSVC = (id: number,tenCSVC: string, giagoc:number, soluong:number, thoigianmua:string) => {
+    const handleSuaCSVC = (id: number,tenCSVC: string, giagoc:number, soluong:number, thoigianmua:Date) => {
         setId(id)
         setTenCSVC(tenCSVC)
         setGiagoc(giagoc)
@@ -99,11 +104,11 @@ const CSVC_QL = ({ csvc }: Props) => {
             setTenCSVC('')
             setGiagoc(0)
             setSoluong(0)
-            setThoigianmua('')
+            setThoigianmua(new Date())
             handleCSVC()
             setStep('them')
             alert("Cập nhật cơ sở vật chất thành công")
-            
+
 
         } else {
             console.log(res)
@@ -124,7 +129,7 @@ const CSVC_QL = ({ csvc }: Props) => {
             setTenCSVC('')
             setGiagoc(0)
             setSoluong(0)
-            setThoigianmua('')
+            setThoigianmua(new Date())
             handleCSVC()
             alert("Xóa cơ sở vật chất thành công")
 
@@ -142,7 +147,7 @@ const CSVC_QL = ({ csvc }: Props) => {
         <div className={roboto.className}>
             <div className="w-11/12 m-auto">
                 {step === "them" &&
-                    (<p className="mt-5 text-xl">Thêm cơ sơ vật chất:</p>
+                    (<p className="mt-5 text-xl">Thêm cơ sở vật chất:</p>
                     )
                 }
                 {step === "capnhat" &&
@@ -155,7 +160,7 @@ const CSVC_QL = ({ csvc }: Props) => {
                     </div>
                     <div className="basis-1/2 border-2 border-gray-800"></div>
                 </div> */}
-                <div className="grid grid-cols-2 border-2 border-gray-300 p-3 gap-4">
+                <div className="grid grid-cols-2 p-3 gap-4">
                     <div className="flex ">
                         <p className="w-3/12 ">Tên CSVC:</p>
                         {/* <p>sdfghjk</p> */}
@@ -177,8 +182,13 @@ const CSVC_QL = ({ csvc }: Props) => {
 
                     <div className="flex ">
                         <p className="w-4/12">Thời gian mua:</p>
-                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
-                            value={thoigianmua} onChange={(e) => setThoigianmua(e.target.value)} />
+                        {/* <input type="date" className="w-60 border-b-2 border-gray-400 outline-none"
+                            value={thoigianmua} onChange={(e) => setThoigianmua(e.target.value)} /> */}
+                        <DatePicker
+                            dateFormat='dd/MM/yyyy'
+                            selected={thoigianmua}
+                            onChange={(date: Date) => setThoigianmua(date)} />
+
                     </div>
                 </div>
                 {step === "them" &&
@@ -216,15 +226,19 @@ const CSVC_QL = ({ csvc }: Props) => {
                                             <td className="border border-slate-300 p-2">{item.tenCSVC}</td>
                                             <td className="border border-slate-300 p-2">{item.giagoc}</td>
                                             <td className="border border-slate-300 p-2">{item.soluong}</td>
-                                            <td className="border border-slate-300 p-2">{item.thoigianmua}</td>
+                                            <td className="border border-slate-300 p-2">
+                                            {
+                                                dayjs(item.thoigianmua).format("DD/MM/YYYY")                                            
+                                            }
+                                            </td>
 
                                             <td className="border border-slate-300 text-center">
-                                                <button> 
+                                                {/* <button> 
                                                     <EditIcon onClick={() => handleSuaCSVC(item.id, item.tenCSVC, item.giagoc, item.soluong, item.thoigianmua)}/>
-                                                </button>
+                                                </button> */}
                                                 <button>
                                                     <DeleteIcon onClick={() => handleXoaCSVC(item.id)}/>
-                                                    </button>
+                                                </button>
                                             </td>
                                         </tr>
                                     )

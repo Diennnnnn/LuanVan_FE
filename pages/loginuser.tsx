@@ -17,6 +17,8 @@ const SignInOTP = () => {
   interface Khachhang{
     id: number;
     hotenKH: string;
+    gioitinh: string,
+    ngaysinh: string,
     CMND: string,
     SDT: string,
     email:string

@@ -15,6 +15,8 @@ import { useState } from "react";
 import router from "next/router";
 import Badge from '@mui/material/Badge';
 import { styled } from "@mui/material/styles";
+import EditIcon from '@mui/icons-material/Edit';
+
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -77,7 +79,9 @@ const Header = () => {
   const handleDatphong = async () => {
     router.push({
       pathname: '/datphong',
-      query: { id_phong: id_phong, tenphong: tenphong, gia: gia, songuoi: songuoi, check_in: check_in, check_out: check_out } //ten bien: gia tri truyen vao
+      // query: { id_phong: id_phong, tenphong: tenphong, gia: gia, songuoi: songuoi, check_in: check_in, check_out: check_out } //ten bien: gia tri truyen vao
+      // tenphong={tenphong || ''} gia={gia  ||0} songuoi={songuoi || 0} id_phong={id_phong || 0} check_in={check_in || ''} check_out={check_out || ''}
+      query: { id_phong: null, tenphong: null, gia: null, songuoi: null, check_in: null, check_out: null, tenloaiphong: null  } //ten bien: gia tri truyen vao
 
     })
   }
@@ -176,6 +180,11 @@ const Header = () => {
                       <MenuItem onClick={handleInfor}>
                         <Typography textAlign="center" sx={{ margin: 1 }}>
                           <PermContactCalendarIcon/>Trang cá nhân
+                        </Typography>
+                      </MenuItem>
+                      <MenuItem onClick={handleInfor}>
+                        <Typography textAlign="center" sx={{ margin: 1 }}>
+                          <EditIcon/>Cập nhật thông tin
                         </Typography>
                       </MenuItem>
                       <hr className="w-10/12 m-auto"/>

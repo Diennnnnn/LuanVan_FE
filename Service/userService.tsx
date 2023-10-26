@@ -15,6 +15,22 @@ export async function Phong_tenphong(params: { tenphong: any }): Promise<any> {
   const data = await response.json();
   return data;
 }
+export async function Phong_idLP(params: { phong_idLP: any }): Promise<any> {
+  const { phong_idLP } = params;
+  const response = await fetch(
+    `http://localhost:8080/api/Phong_idLP?keyword=${phong_idLP}`
+  );
+  const data = await response.json();
+  return data;
+}
+export async function Loaiphong_tenLP(params: { lp_tenloai: any }): Promise<any> {
+  const { lp_tenloai } = params;
+  const response = await fetch(
+    `http://localhost:8080/api/Loaiphong_tenloai?keyword=${lp_tenloai}`
+  );
+  const data = await response.json();
+  return data;
+}
 export async function Noiquy(params: { id_noiquy: any }): Promise<any> {
   const { id_noiquy } = params;
   const response = await fetch(
@@ -65,6 +81,15 @@ export async function Khachhang(params: { SDT: any }): Promise<any> {
   const { SDT } = params;
   const response = await fetch(
     `http://localhost:8080/api/Khachhang?keyword=${SDT}`
+  );
+  const data = await response.json();
+  return data;
+}
+
+export async function AllKhachhang(params: { id_allkh: any }): Promise<any> {
+  const { id_allkh } = params;
+  const response = await fetch(
+    `http://localhost:8080/api/ALLKhachhang?keyword=${id_allkh}`
   );
   const data = await response.json();
   return data;
@@ -159,7 +184,7 @@ export async function Datphong(params:{
     tenCSVC:string;
     giagoc:number;
     soluong:number;
-    thoigianmua:string
+    thoigianmua:Date
     }): Promise<any> {
       const response = await fetch(`http://localhost:8080/api/ThemCSVCQL`,
       {
@@ -178,7 +203,7 @@ export async function Datphong(params:{
     tenCSVC:string;
     giagoc:number;
     soluong:number;
-    thoigianmua:string
+    thoigianmua:Date
     }): Promise<any> {
     const response = await fetch(`http://localhost:8080/api/SuaCSVCQL`,
     {
@@ -262,8 +287,8 @@ export async function Datphong(params:{
     tenKM:string;
     phantram:number;
     mota:string;
-    start:string;
-    finish:string;
+    start:Date;
+    finish:Date;
     dieukien:string;
     }): Promise<any> {
       const response = await fetch(`http://localhost:8080/api/ThemKhuyenmaiQL`,
@@ -283,8 +308,8 @@ export async function Datphong(params:{
     tenKM:string;
     phantram:number;
     mota:string;
-    start:string;
-    finish:string;
+    start:Date;
+    finish:Date;
     dieukien:string;
     }): Promise<any> {
     const response = await fetch(`http://localhost:8080/api/SuaKhuyenmaiQL`,

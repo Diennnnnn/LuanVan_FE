@@ -78,11 +78,12 @@ const CSVC_QL = ({ csvc }: Props) => {
     };
 
     const handleSuaCSVC = (id: number,tenCSVC: string, giagoc:number, soluong:number, thoigianmua:Date) => {
+        let date1 = new Date(thoigianmua)
         setId(id)
         setTenCSVC(tenCSVC)
         setGiagoc(giagoc)
         setSoluong(soluong)
-        setThoigianmua(thoigianmua)
+        setThoigianmua(date1)
         setStep("capnhat")
     }
 
@@ -199,7 +200,7 @@ const CSVC_QL = ({ csvc }: Props) => {
                 }
                 {step === "capnhat" &&
                     (
-                        <button onClick={handleCapnhatCSVC} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Cập nhật nội quy</button>
+                        <button onClick={handleCapnhatCSVC} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Cập nhật CSVC</button>
 
                     )
                 }
@@ -233,9 +234,9 @@ const CSVC_QL = ({ csvc }: Props) => {
                                             </td>
 
                                             <td className="border border-slate-300 text-center">
-                                                {/* <button> 
+                                                <button> 
                                                     <EditIcon onClick={() => handleSuaCSVC(item.id, item.tenCSVC, item.giagoc, item.soluong, item.thoigianmua)}/>
-                                                </button> */}
+                                                </button>
                                                 <button>
                                                     <DeleteIcon onClick={() => handleXoaCSVC(item.id)}/>
                                                 </button>

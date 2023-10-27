@@ -23,19 +23,31 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import GroupIcon from '@mui/icons-material/Group';
 import NoiquyQL from '@/Components/quanly/NoiquyQL';
 import { useEffect, useState } from 'react';
-import { AllKhachhang, Danhmuccsvc, Dichvu, Khuyenmai, Noiquy } from '@/Service/userService';
+import { AllKhachhang, Danhmuccsvc, Dichvu, Dsthietbi, Khuyenmai, Noiquy, Phong, Vitri } from '@/Service/userService';
 import CSVC_QL from '@/Components/quanly/CSVC_QL';
 import DichvuQL from '@/Components/quanly/DichvuQL';
 import KhuyenmaiQL from '@/Components/quanly/KhuyenmaiQL';
 import KhachhangQL from '@/Components/quanly/KhachhangQL';
+import Thietbi_QL from '@/Components/quanly/Thietbi_QL';
+import Vitri_QL from '@/Components/quanly/Vitri_QL';
 
 
 export default function LabTabs() {
-  interface Noiquy {
+  interface Phong {
+    //tên giống csdl
     id: number;
+    id_LP: number;
+    id_VT: number;
+    tenphong: string;
+    trangthai: string;
     mota: string;
-    motaEN: string;
-
+  }
+  interface Dsthietbi {
+    id: number;
+    id_CSVC: number;
+    id_Phong: number;
+    soluong: number;
+    thoigianbatdau: Date;
   }
   interface DanhmucCSVC {
     id: number;
@@ -44,6 +56,13 @@ export default function LabTabs() {
     soluong: number;
     thoigianmua: Date
   }
+  interface Noiquy {
+    id: number;
+    mota: string;
+    motaEN: string;
+
+  }
+  
   interface Dichvu {
     id: number;
     tenDV: string;
@@ -69,9 +88,19 @@ export default function LabTabs() {
     SDT: string,
     email: string
   }
+  interface Vitri {
+    id: number;
+    khu: string;
+    tang: number;
+    // dientich: number;
+  }
 
   const [noiquy, setNoiquy] = useState<Noiquy[]>([]);
   const [csvc, setCSVC] = useState<DanhmucCSVC[]>([]);
+  const [phong, setPhong] = useState<Phong[]>([]);
+  const [thietbi, setThietbi] = useState<Dsthietbi[]>([]);
+  const [vitri, setVitri] = useState<Vitri[]>([]);
+
   const [dichvu, setDichvu] = useState<Dichvu[]>([]);
   const [khuyenmai, setKhuyenmai] = useState<Khuyenmai[]>([]);
   const [allkh, setAllkh] = useState<Khachhang[]>([]);
@@ -122,6 +151,58 @@ export default function LabTabs() {
         console.log(error);
       }
     };
+
+    const handlePhong = async () => {
+      try {
+        const params = {
+          id_phong: "ALL",
+        };
+        console.log(params)
+
+        const response = await Phong(params);
+        const res: Phong[] = response.phong;
+        console.log(response)
+        console.log(res)
+        setPhong(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+
+    const handleThietbi = async () => {
+      try {
+        const params = {
+          id_phong: "ALL",
+        };
+        console.log(params)
+
+        const response = await Dsthietbi(params);
+        const res: Dsthietbi[] = response.dstb;
+        console.log(response)
+        console.log(res)
+        setThietbi(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const handleVitri = async () => {
+      try {
+        const params = {
+          id_vt: "ALL",
+        };
+        console.log(params)
+
+        const response = await Vitri(params);
+        const res: Vitri[] = response.vt;
+        console.log(response)
+        console.log(res)
+        setVitri(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
 
     const handleLayDichVu = async () => {
       try {
@@ -179,6 +260,9 @@ export default function LabTabs() {
     handleLayDichVu();
     handleLayKhuyenmai();
     handleLayAllKhachhang();
+    handlePhong();
+    handleThietbi();
+    handleVitri();
   }, [])
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -237,7 +321,7 @@ export default function LabTabs() {
 
             {option == 2 ? (
               <div className='w-10/12'>
-                sdfghjk
+                <Thietbi_QL phong={phong} thietbi={thietbi} csvc={csvc}/>
               </div>
             ) : null}
             {option == 3 ? (
@@ -262,7 +346,7 @@ export default function LabTabs() {
           <div className="flex">
             <div className="w-2/12 border-2 border-green-300 uppercase text-xl space-y-5">
 
-              <ListItemButton>
+              <ListItemButton onClick={() => setOption(5)}>
                 <ListItemIcon>
                   <MyLocationIcon />
                 </ListItemIcon>
@@ -284,11 +368,15 @@ export default function LabTabs() {
               </ListItemButton>
 
             </div>
-            <div className="w-10/12 border-2 border-red-300"></div>
+            {option == 5 ? (
+              <div className='w-10/12   '>
+                <Vitri_QL vitri={vitri} />
+              </div>
+            ) : null}
           </div>
         </TabPanel>
 
-        <TabPanel value="3">
+        {/* <TabPanel value="3">
           <div className='flex border-2 border-green-400 h-96  overflow-scroll'>
             <div className='w-8/12'></div>
             <table className=''>
@@ -318,7 +406,6 @@ export default function LabTabs() {
                   <td className="border border-slate-300 text-center">dfcv</td>
                   <td className="border border-slate-300 text-center">sdfcv</td>
                   <td className="border border-slate-300 text-center">sdcfv</td>
-                  {/* <td className="border border-slate-300 text-center">{valueRap ? valueRap : }</td> */}
 
                   <td className="border border-slate-300 text-center">
                     dfghjk
@@ -329,7 +416,7 @@ export default function LabTabs() {
             </table>
 
           </div>
-        </TabPanel>
+        </TabPanel> */}
 
         <TabPanel value="4">
           <div className="flex">

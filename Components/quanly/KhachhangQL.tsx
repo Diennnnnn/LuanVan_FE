@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import { useEffect, useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import dayjs from "dayjs";
 const roboto = Montserrat({
     weight: '400',
     subsets: ['latin'],
@@ -53,7 +54,11 @@ const KhachhangQL = ({ allkh }: Props) => {
                                             <td className="border border-slate-300 text-center">{item.id}</td>
                                             <td className="border border-slate-300 p-2">{item.hotenKH}</td>
                                             <td className="border border-slate-300 p-2">{item.gioitinh}</td>
-                                            <td className="border border-slate-300 p-2">{item.ngaysinh}</td>
+                                            <td className="border border-slate-300 p-2">
+                                                {
+                                                    dayjs(item.ngaysinh).format("DD/MM/YYYY")
+                                                }
+                                            </td>
                                             <td className="border border-slate-300 p-2">{item.CMND}</td>
                                             <td className="border border-slate-300 p-2">{item.SDT}</td>
                                             <td className="border border-slate-300 p-2">{item.email}</td>

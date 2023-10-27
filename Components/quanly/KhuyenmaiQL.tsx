@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Khuyenmai, SuaQLKhuyenmai, ThemQLKhuyenmai, XoaQLKhuyenmai } from "@/Service/userService";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+import dayjs from "dayjs";
 
 
 const roboto = Montserrat({
@@ -22,8 +23,8 @@ const KhuyenmaiQL = ({ khuyenmai }: Props) => {
         tenKM: string;
         phantram: number;
         mota: string;
-        start: string;
-        finish: string;
+        start: Date;
+        finish: Date;
         dieukien: string
     }
     const [step, setStep] = useState("them");
@@ -98,12 +99,15 @@ const KhuyenmaiQL = ({ khuyenmai }: Props) => {
 
 
     const handleSuaKhuyenmai = (id: number, tenKM: string, phantram: number, mota: string, start: Date, finish: Date, dieukien: string) => {
+       let date1 = new Date(start)
+       let date2 = new Date(finish)
+
         setId(id)
         setTenKM(tenKM)
         setPhantram(phantram)
         setMota(mota)
-        setStart(start)
-        setFinish(finish)
+        setStart(date1)
+        setFinish(date2)
         setDieukien(dieukien)
         setStep("capnhat")
     }
@@ -262,13 +266,22 @@ const KhuyenmaiQL = ({ khuyenmai }: Props) => {
                                             <td className="border border-slate-300 p-2">{item.tenKM}</td>
                                             <td className="border border-slate-300 p-2">{item.phantram}</td>
                                             <td className="border border-slate-300 p-2">{item.mota}</td>
-                                            <td className="border border-slate-300 p-2">{item.start}</td>
-                                            <td className="border border-slate-300 p-2">{item.finish}</td>
+                                            <td className="border border-slate-300 p-2">
+                                                {
+                                                    dayjs(item.start).format("DD/MM/YYYY")
+                                                }
+
+                                            </td>
+                                            <td className="border border-slate-300 p-2">
+                                                {
+                                                    dayjs(item.finish).format("DD/MM/YYYY")
+                                                }
+                                            </td>
                                             <td className="border border-slate-300 p-2">{item.dieukien}</td>
                                             <td className="border border-slate-300 text-center">
-                                                {/* <button>
+                                                <button>
                                                     <EditIcon onClick={() => handleSuaKhuyenmai(item.id, item.tenKM, item.phantram, item.mota, item.start, item.finish, item.dieukien)} />
-                                                </button> */}
+                                                </button>
                                                 <button>
                                                     <DeleteIcon onClick={() => handleXoaKhuyenmai(item.id)} />
                                                 </button>

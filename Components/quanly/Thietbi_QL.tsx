@@ -3,10 +3,12 @@ import { Montserrat } from "next/font/google";
 import { useEffect, useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Danhmuccsvc, SuaQLCSVC, ThemQLCSVC, XoaQLCSVC } from "@/Service/userService";
+import { Danhmuccsvc, Dsthietbi, SuaQLCSVC, SuaQLThietbi, ThemQLCSVC, ThemQLThietbi, XoaQLCSVC, XoaQLThietbi } from "@/Service/userService";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from 'dayjs'
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 
 
 const roboto = Montserrat({
@@ -16,10 +18,9 @@ const roboto = Montserrat({
 })
 type Props = {
     csvc: any,
-    thietbi: any,
     phong: any
 };
-const Thietbi_QL = ({ csvc, thietbi, phong }: Props) => {
+const Thietbi_QL = ({ csvc, phong }: Props) => {
     interface Phong {
         //tên giống csdl
         id: number;
@@ -47,183 +48,275 @@ const Thietbi_QL = ({ csvc, thietbi, phong }: Props) => {
     const [csvcQL, setCsvcQL] = useState<DanhmucCSVC[]>([]);
     const [phongQL, setPhongQL] = useState<Phong[]>([]);
     const [thietbiQL, setThietbiQL] = useState<Dsthietbi[]>([]);
-    // const [step, setStep] = useState("them");
+    const [step, setStep] = useState("them");
+    const [valueCSVC, setValueCSVC] = useState("");
+    const [valuePhong, setValuePhong] = useState("");
+    const [thietbi, setThietbi] = useState<Dsthietbi[]>([]);
+    const [id_csvc, setId_csvc] = useState(Number)
+    const [id_Phong, setId_Phong] = useState(Number)
+    const [soluong, setSoluong] = useState(Number)
+
     // const [tenCSVC, setTenCSVC] = useState("");
     // const [giagoc, setGiagoc] = useState(Number)
     // const [soluong, setSoluong] = useState(Number)
-    // const [thoigianmua, setThoigianmua] = useState(new Date());
-    // const [id, setId] = useState(Number)
-
-    // const handleThemCSVC = async () => {
-    //     // console.log("mota", mota)
-    //     console.log("motaEN", thoigianmua)
-
-    //     let res = await ThemQLCSVC(
-    //         {
-    //             tenCSVC: tenCSVC,
-    //             giagoc: giagoc,
-    //             soluong: soluong,
-    //             thoigianmua: thoigianmua
-
-    //         }
-    //     );
-    //     if (res && res.errCode === 0) {
-    //         setTenCSVC('')
-    //         setGiagoc(0)
-    //         setSoluong(0)
-    //         setThoigianmua(new Date())
-    //         handleCSVC()
-    //         alert("Thêm cơ sở vật chất thành công")
-
-    //     } else {
-    //         console.log(res)
-    //         alert("Thêm cơ sở vật chất không thành công")
-    //     };
-
-    // }
-    // const handleCSVC = async () => {
-    //     try {
-    //         const params = {
-    //             id_dmcsvc: "ALL",
-    //         };
-    //         console.log(params)
-
-    //         const response = await Danhmuccsvc(params);
-    //         const res: DanhmucCSVC[] = response.dmcsvc;
-    //         console.log(response)
-    //         console.log(res)
-    //         setCsvcQL(res);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
-
-    // const handleSuaCSVC = (id: number,tenCSVC: string, giagoc:number, soluong:number, thoigianmua:Date) => {
-    //     setId(id)
-    //     setTenCSVC(tenCSVC)
-    //     setGiagoc(giagoc)
-    //     setSoluong(soluong)
-    //     setThoigianmua(thoigianmua)
-    //     setStep("capnhat")
-    // }
-
-    // const handleCapnhatCSVC = async () => {
-    //     // console.log("mota", mota)
-    //     // console.log("motaEN", motaEN)
-
-    //     let res = await SuaQLCSVC(
-    //         {
-    //             id: id,
-    //             tenCSVC: tenCSVC,
-    //             giagoc: giagoc,
-    //             soluong: soluong,
-    //             thoigianmua: thoigianmua
-
-    //         }
-    //     );
-    //     if (res && res.errCode === 0) {
-    //         setTenCSVC('')
-    //         setGiagoc(0)
-    //         setSoluong(0)
-    //         setThoigianmua(new Date())
-    //         handleCSVC()
-    //         setStep('them')
-    //         alert("Cập nhật cơ sở vật chất thành công")
+    const [thoigianbatdau, setThoigianbatdau] = useState(new Date());
+    const [id, setId] = useState(Number)
 
 
-    //     } else {
-    //         console.log(res)
-    //         alert("Cập nhật cơ sở vật chất không thành công")
-    //     };
 
-    // }
-    // const handleXoaCSVC = async (idcsvc: number) => {
-    //     // console.log("mota", mota)
-    //     // console.log("motaEN", motaEN)
+    const handleLayID_CSVC = (value: string) => {
+        setValueCSVC(value)
 
-    //     let res = await XoaQLCSVC(
-    //         {
-    //             id: idcsvc
-    //         }
-    //     );
-    //     if (res && res.errCode === 0) {
-    //         setTenCSVC('')
-    //         setGiagoc(0)
-    //         setSoluong(0)
-    //         setThoigianmua(new Date())
-    //         handleCSVC()
-    //         alert("Xóa cơ sở vật chất thành công")
+        csvcQL.map(async (item) => {
+            if (value === item.tenCSVC) {
+                setId_csvc(item.id)
+            }
 
-    //     } else {
-    //         console.log(res)
-    //         alert("Xóa cơ sở vật chất không thành công")
-    //     };
+        })
 
-    // }
+    }
+    const handleLayID_Phong = (value: string) => {
+        setValuePhong(value)
+
+        phongQL.map(async (item) => {
+            if (value === item.tenphong) {
+                setId_Phong(item.id)
+            }
+
+        })
+
+    }
+    const handleThemThietbi = async () => {
+        // console.log("mota", mota)
+        // console.log("motaEN", thoigianmua)
+
+        let res = await ThemQLThietbi(
+            {
+                id_CSVC: id_csvc,
+                id_Phong: id_Phong,
+                soluong: soluong,
+                thoigianbatdau: thoigianbatdau
+
+            }
+        );
+        if (res && res.errCode === 0) {
+            setId_csvc(0)
+            setId_Phong(0)
+            setSoluong(0)
+            setThoigianbatdau(new Date())
+            handleLayThietbi()
+            alert("Thêm thiết bị thành công")
+
+        } else {
+            console.log(res)
+            alert("Thêm thiết bị không thành công")
+        };
+
+    }
+    const handleLayThietbi = async () => {
+        try {
+            const params = {
+                id_phong: "ALL",
+            };
+            console.log(params)
+
+            const response = await Dsthietbi(params);
+            const res: Dsthietbi[] = response.dstb;
+            console.log(response)
+            console.log(res)
+            setThietbi(res);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleSuaThietbi = (id: number,id_CSVC: number, id_Phong:number, soluong:number, thoigianbatdau:Date) => {
+        let date = new Date(thoigianbatdau)
+        // console.log("id", id)
+        // console.log("csvc", id_CSVC)
+        // console.log("id_Phong", id_Phong)
+        // console.log("soluong", soluong)
+        // console.log("thoigianbatdau", thoigianbatdau)
+
+        csvcQL.map((item) => {
+            if (id_CSVC === item.id) {
+                setValueCSVC(item.tenCSVC)
+                setId_csvc(item.id)
+            }
+        })
+        phongQL.map((item) => {
+            if (id_Phong === item.id) {
+                setValuePhong(item.tenphong)
+                setId_Phong(item.id)
+            }
+        })
+
+        setId(id) 
+        setSoluong(soluong)
+        setThoigianbatdau(date)
+        setStep("capnhat")
+    }
+
+    const handleCapnhatThietbi = async () => {
+        // console.log("mota", mota)
+        // console.log("motaEN", motaEN)
+
+        let res = await SuaQLThietbi(
+            {
+                id: id,
+                id_CSVC: id_csvc,
+                id_Phong: id_Phong,
+                soluong: soluong,
+                thoigianbatdau: thoigianbatdau
+
+            }
+        );
+        if (res && res.errCode === 0) {
+            setId_csvc(0)
+            setId_Phong(0)
+            setSoluong(0)
+            setThoigianbatdau(new Date())
+            setValueCSVC('')
+            setValuePhong('')
+            handleLayThietbi()
+            setStep('them')
+            alert("Cập nhật thiết bị thành công")
+
+
+        } else {
+            console.log(res)
+            alert("Cập nhật thiết bị không thành công")
+        };
+
+    }
+    const handleXoaThietbi = async (idthietbi: number) => {
+        // console.log("mota", mota)
+        // console.log("motaEN", motaEN)
+
+        let res = await XoaQLThietbi(
+            {
+                id: idthietbi
+            }
+        );
+        if (res && res.errCode === 0) {
+            setId_csvc(0)
+            setId_Phong(0)
+            setSoluong(0)
+            setThoigianbatdau(new Date())
+            handleLayThietbi()
+            alert("Xóa thiết bị thành công")
+
+        } else {
+            console.log(res)
+            alert("Xóa thiết bị không thành công")
+        };
+
+    }
+
+
     useEffect(() => {
+        const handleLayThietbi = async () => {
+            try {
+                const params = {
+                    id_phong: "ALL",
+                };
+                console.log(params)
+
+                const response = await Dsthietbi(params);
+                const res: Dsthietbi[] = response.dstb;
+                console.log(response)
+                console.log(res)
+                setThietbi(res);
+            } catch (error) {
+                console.log(error);
+            }
+        };
         // console.log("csvc", csvc)
         setCsvcQL(csvc)
         setPhongQL(phong)
-        setThietbiQL(thietbi)
+        handleLayThietbi();
     }, [])
     return (
         <div className={roboto.className}>
             <div className="w-11/12 m-auto">
-                {/* {step === "them" &&
-                    (<p className="mt-5 text-xl">Thêm cơ sở vật chất:</p>
+                {step === "them" &&
+                    (<p className="mt-5 text-xl">Thêm thiết bị:</p>
                     )
                 }
                 {step === "capnhat" &&
-                    (<p className="mt-5 text-xl">Cập nhật cơ sở vật chất :</p>
+                    (<p className="mt-5 text-xl">Cập nhật thiết bị:</p>
                     )
-                } */}
-                {/* <div className="flex w-full border-2 border-green-300">
-                    <div className="basis-1/2 border-2 border-gray-300">
+                }
+
+                <div className="grid grid-cols-2 p-3 gap-6">
+                    <div className="flex">
+                        <p className="w-3/12 pt-4">Tên CSVC:</p>
+                        <Autocomplete
+                            value={valueCSVC}
+                            disablePortal
+                            id="combo-box-demo"
+                            options={csvcQL.map((option) => option.tenCSVC)}
+                            // options={}
+                            onChange={(event: any, newValue: string | null) => {
+                                { newValue ? handleLayID_CSVC(newValue) : null }
+
+                            }}
+                            sx={{ width: 300 }}
+                            renderInput={(params) => <TextField {...params} label="CSVC" variant="standard" />}
+                        />
 
                     </div>
-                    <div className="basis-1/2 border-2 border-gray-800"></div>
-                </div> */}
-                {/* <div className="grid grid-cols-2 p-3 gap-4">
-                    <div className="flex ">
-                        <p className="w-3/12 ">Tên CSVC:</p>
-                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
-                            value={tenCSVC} onChange={(e) => setTenCSVC(e.target.value)} />
-                    </div>
 
                     <div className="flex ">
-                        <p className="w-4/12">Số lượng:</p>
-                        <input type="number" className="w-60 border-b-2 border-gray-400 outline-none"
-                            value={soluong} onChange={(e) => setSoluong(e.target.valueAsNumber)} />
+                        <p className="w-4/12 pt-4">Tên phòng:</p>
+                        <Autocomplete
+                            value={valuePhong}
+                            clearOnEscape
+                            id="clear-on-escape"
+                            options={phongQL.map((option) => option.tenphong)}
+                            // options={}
+                            onChange={(event: any, newValue: string | null) => {
+                                { newValue ?handleLayID_Phong(newValue) : null }
+
+                            }}
+                            sx={{ width: 300 }}
+                            renderInput={(params) => <TextField {...params} label="Phòng" variant="standard" />}
+                        />
+
                     </div>
 
                     <div className="flex  ">
-                        <p className="w-3/12">Giá:</p>
-                        <input type="number" className="w-60 border-b-2 border-gray-400 outline-none"
-                            value={giagoc} onChange={(e) => setGiagoc(e.target.valueAsNumber)} />
+                        <p className="w-3/12">Số lượng:</p>
+                        <input type="number" className="w-60 border-b-2 border-gray-400 outline-none pl-1"
+                        value={soluong} onChange={(e) => setSoluong(e.target.valueAsNumber)}
+                        />
                     </div>
 
                     <div className="flex ">
-                        <p className="w-4/12">Thời gian mua:</p>
-                        
+                        <p className="w-4/12">Thời gian để vào:</p>
+
                         <DatePicker
+                            className="outline-none border-b-2 border-gray-400 pl-1"
                             dateFormat='dd/MM/yyyy'
-                            selected={thoigianmua}
-                            onChange={(date: Date) => setThoigianmua(date)} />
+                            selected={thoigianbatdau}
+                            onChange={(date: Date) => setThoigianbatdau(date)}
+
+                        />
 
                     </div>
-                </div> */}
-                {/* {step === "them" &&
+                </div>
+                {step === "them" &&
                     (
-                        <button onClick={handleThemCSVC} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Thêm CSVC</button>
+                        <button onClick={handleThemThietbi} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Thêm CSVC</button>
 
                     )
                 }
                 {step === "capnhat" &&
                     (
-                        <button onClick={handleCapnhatCSVC} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Cập nhật nội quy</button>
+                        <button onClick={handleCapnhatThietbi} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Cập nhật nội quy</button>
 
                     )
-                } */}
+                }
 
                 <div className="mt-8">
                     <table className="border-separate border border-slate-400 ...">
@@ -240,7 +333,7 @@ const Thietbi_QL = ({ csvc, thietbi, phong }: Props) => {
                         </thead>
                         <tbody>
                             {
-                                thietbiQL.map((item, index) => {
+                                thietbi.map((item, index) => {
                                     return (
                                         <tr key={index}>
                                             <td className="border border-slate-300 text-center">{item.id}</td>
@@ -262,12 +355,12 @@ const Thietbi_QL = ({ csvc, thietbi, phong }: Props) => {
                                             </td>
 
                                             <td className="border border-slate-300 text-center">
-                                                {/* <button> 
-                                                    <EditIcon onClick={() => handleSuaCSVC(item.id, item.tenCSVC, item.giagoc, item.soluong, item.thoigianmua)}/>
-                                                </button> */}
-                                                {/* <button>
-                                                    <DeleteIcon onClick={() => handleXoaCSVC(item.id)} />
-                                                </button> */}
+                                                <button> 
+                                                    <EditIcon onClick={() => handleSuaThietbi(item.id, item.id_CSVC, item.id_Phong, item.soluong, item.thoigianbatdau)}/>
+                                                </button>
+                                                 <button>
+                                                    <DeleteIcon onClick={() => handleXoaThietbi(item.id)} />
+                                                </button>
                                             </td>
                                         </tr>
                                     )

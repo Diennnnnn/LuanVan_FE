@@ -23,13 +23,15 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import GroupIcon from '@mui/icons-material/Group';
 import NoiquyQL from '@/Components/quanly/NoiquyQL';
 import { useEffect, useState } from 'react';
-import { AllKhachhang, Danhmuccsvc, Dichvu, Dsthietbi, Khuyenmai, Noiquy, Phong, Vitri } from '@/Service/userService';
+import { AllKhachhang, Danhmuccsvc, Dichvu, Dsthietbi, Khuyenmai, Loaiphong, Noiquy, Phong, Vitri } from '@/Service/userService';
 import CSVC_QL from '@/Components/quanly/CSVC_QL';
 import DichvuQL from '@/Components/quanly/DichvuQL';
 import KhuyenmaiQL from '@/Components/quanly/KhuyenmaiQL';
 import KhachhangQL from '@/Components/quanly/KhachhangQL';
 import Thietbi_QL from '@/Components/quanly/Thietbi_QL';
 import Vitri_QL from '@/Components/quanly/Vitri_QL';
+import LoaiphongQL from '@/Components/quanly/LoaiphongQL ';
+import Phong_QL from '@/Components/quanly/Phong_QL';
 
 
 export default function LabTabs() {
@@ -62,7 +64,7 @@ export default function LabTabs() {
     motaEN: string;
 
   }
-  
+
   interface Dichvu {
     id: number;
     tenDV: string;
@@ -94,12 +96,18 @@ export default function LabTabs() {
     tang: number;
     // dientich: number;
   }
-
+  interface Loaiphong {
+    id: number;
+    tenloaiphong: string;
+    songuoi: number;
+    gia: number;
+  }
   const [noiquy, setNoiquy] = useState<Noiquy[]>([]);
   const [csvc, setCSVC] = useState<DanhmucCSVC[]>([]);
   const [phong, setPhong] = useState<Phong[]>([]);
   const [thietbi, setThietbi] = useState<Dsthietbi[]>([]);
   const [vitri, setVitri] = useState<Vitri[]>([]);
+  const [loaiphong, setLoaiphong] = useState<Loaiphong[]>([]);
 
   const [dichvu, setDichvu] = useState<Dichvu[]>([]);
   const [khuyenmai, setKhuyenmai] = useState<Khuyenmai[]>([]);
@@ -170,22 +178,22 @@ export default function LabTabs() {
     };
 
 
-    const handleThietbi = async () => {
-      try {
-        const params = {
-          id_phong: "ALL",
-        };
-        console.log(params)
+    // const handleThietbi = async () => {
+    //   try {
+    //     const params = {
+    //       id_phong: "ALL",
+    //     };
+    //     console.log(params)
 
-        const response = await Dsthietbi(params);
-        const res: Dsthietbi[] = response.dstb;
-        console.log(response)
-        console.log(res)
-        setThietbi(res);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    //     const response = await Dsthietbi(params);
+    //     const res: Dsthietbi[] = response.dstb;
+    //     console.log(response)
+    //     console.log(res)
+    //     setThietbi(res);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
     const handleVitri = async () => {
       try {
         const params = {
@@ -203,6 +211,22 @@ export default function LabTabs() {
       }
     };
 
+    const handleLoaiphong = async () => {
+      try {
+        const params = {
+          id_lp: "ALL",
+        };
+        console.log(params)
+
+        const response = await Loaiphong(params);
+        const res: Loaiphong[] = response.loaiphong;
+        console.log(response)
+        console.log(res)
+        setLoaiphong(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
     const handleLayDichVu = async () => {
       try {
@@ -261,8 +285,8 @@ export default function LabTabs() {
     handleLayKhuyenmai();
     handleLayAllKhachhang();
     handlePhong();
-    handleThietbi();
     handleVitri();
+    handleLoaiphong();
   }, [])
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -321,7 +345,7 @@ export default function LabTabs() {
 
             {option == 2 ? (
               <div className='w-10/12'>
-                <Thietbi_QL phong={phong} thietbi={thietbi} csvc={csvc}/>
+                <Thietbi_QL phong={phong}  csvc={csvc} />
               </div>
             ) : null}
             {option == 3 ? (
@@ -353,14 +377,14 @@ export default function LabTabs() {
                 <ListItemText primary="Vị trí" />
               </ListItemButton>
 
-              <ListItemButton >
+              <ListItemButton onClick={() => setOption(6)}>
                 <ListItemIcon>
                   <PanoramaIcon />
                 </ListItemIcon>
                 <ListItemText primary="loại phòng" />
               </ListItemButton>
 
-              <ListItemButton >
+              <ListItemButton onClick={() => setOption(7)}>
                 <ListItemIcon>
                   <RoomPreferencesIcon />
                 </ListItemIcon>
@@ -371,6 +395,16 @@ export default function LabTabs() {
             {option == 5 ? (
               <div className='w-10/12   '>
                 <Vitri_QL vitri={vitri} />
+              </div>
+            ) : null}
+            {option == 6 ? (
+              <div className='w-10/12   '>
+                <LoaiphongQL loaiphong = {loaiphong}/>
+              </div>
+            ) : null}
+            {option == 7 ? (
+              <div className='w-10/12   '>
+                <Phong_QL/>
               </div>
             ) : null}
           </div>
@@ -438,7 +472,7 @@ export default function LabTabs() {
             </div>
             {option == 9 ? (
               <div className='w-10/12 border-2 border-green-300'>
-                <KhachhangQL allkh={allkh}/>
+                <KhachhangQL allkh={allkh} />
               </div>
             ) : null}
           </div>

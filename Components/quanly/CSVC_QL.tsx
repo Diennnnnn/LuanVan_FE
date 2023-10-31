@@ -77,7 +77,7 @@ const CSVC_QL = ({ csvc }: Props) => {
         }
     };
 
-    const handleSuaCSVC = (id: number,tenCSVC: string, giagoc:number, soluong:number, thoigianmua:Date) => {
+    const handleSuaCSVC = (id: number, tenCSVC: string, giagoc: number, soluong: number, thoigianmua: Date) => {
         let date1 = new Date(thoigianmua)
         setId(id)
         setTenCSVC(tenCSVC)
@@ -147,6 +147,8 @@ const CSVC_QL = ({ csvc }: Props) => {
     return (
         <div className={roboto.className}>
             <div className="w-11/12 m-auto">
+                <p className="font-semibold uppercase text-2xl text-center mt-5">Danh sách cơ sở vật chất</p>
+
                 {step === "them" &&
                     (<p className="mt-5 text-xl">Thêm cơ sở vật chất:</p>
                     )
@@ -194,27 +196,29 @@ const CSVC_QL = ({ csvc }: Props) => {
                 </div>
                 {step === "them" &&
                     (
-                        <button onClick={handleThemCSVC} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Thêm CSVC</button>
-
+                        <div className=" text-right w-10/12">
+                            <button onClick={handleThemCSVC} className="bg-green-400 w-36 h-10 rounded-lg mt-5 hover:bg-green-500">Thêm CSVC</button>
+                        </div>
                     )
                 }
                 {step === "capnhat" &&
                     (
-                        <button onClick={handleCapnhatCSVC} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Cập nhật CSVC</button>
-
+                        <div className=" text-right w-10/12">
+                            <button onClick={handleCapnhatCSVC} className="bg-green-400 w-36 h-10 rounded-lg mt-5 hover:bg-green-500">Cập nhật CSVC</button>
+                        </div>
                     )
                 }
 
                 <div className="mt-8">
-                    <table className="border-separate border border-slate-400 ...">
+                    <table className="border-separate border border-slate-400 m-auto text-center w-11/12">
                         <thead>
                             <tr>
-                                <th className="border border-slate-300 w-10 ">#</th>
+                                <th className="border border-slate-300 w-10">#</th>
                                 <th className="border border-slate-300">Tên CSVC</th>
                                 <th className="border border-slate-300">Giá</th>
-                                <th className="border border-slate-300 w-20">Số lượng</th>
-                                <th className="border border-slate-300 w-20">Thời gian mua</th>
-                                <th className="border border-slate-300 w-20">Tác vụ</th>
+                                <th className="border border-slate-300 ">Số lượng</th>
+                                <th className="border border-slate-300 ">Thời gian mua</th>
+                                <th className="border border-slate-300 ">Tác vụ</th>
 
                             </tr>
                         </thead>
@@ -228,17 +232,17 @@ const CSVC_QL = ({ csvc }: Props) => {
                                             <td className="border border-slate-300 p-2">{item.giagoc}</td>
                                             <td className="border border-slate-300 p-2">{item.soluong}</td>
                                             <td className="border border-slate-300 p-2">
-                                            {
-                                                dayjs(item.thoigianmua).format("DD/MM/YYYY")                                            
-                                            }
+                                                {
+                                                    dayjs(item.thoigianmua).format("DD/MM/YYYY")
+                                                }
                                             </td>
 
                                             <td className="border border-slate-300 text-center">
-                                                <button> 
-                                                    <EditIcon onClick={() => handleSuaCSVC(item.id, item.tenCSVC, item.giagoc, item.soluong, item.thoigianmua)}/>
+                                                <button>
+                                                    <EditIcon onClick={() => handleSuaCSVC(item.id, item.tenCSVC, item.giagoc, item.soluong, item.thoigianmua)} />
                                                 </button>
                                                 <button>
-                                                    <DeleteIcon onClick={() => handleXoaCSVC(item.id)}/>
+                                                    <DeleteIcon onClick={() => handleXoaCSVC(item.id)} />
                                                 </button>
                                             </td>
                                         </tr>

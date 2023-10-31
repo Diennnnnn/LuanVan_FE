@@ -130,7 +130,7 @@ const Thietbi_QL = ({ csvc, phong }: Props) => {
         }
     };
 
-    const handleSuaThietbi = (id: number,id_CSVC: number, id_Phong:number, soluong:number, thoigianbatdau:Date) => {
+    const handleSuaThietbi = (id: number, id_CSVC: number, id_Phong: number, soluong: number, thoigianbatdau: Date) => {
         let date = new Date(thoigianbatdau)
         // console.log("id", id)
         // console.log("csvc", id_CSVC)
@@ -151,7 +151,7 @@ const Thietbi_QL = ({ csvc, phong }: Props) => {
             }
         })
 
-        setId(id) 
+        setId(id)
         setSoluong(soluong)
         setThoigianbatdau(date)
         setStep("capnhat")
@@ -239,6 +239,8 @@ const Thietbi_QL = ({ csvc, phong }: Props) => {
     return (
         <div className={roboto.className}>
             <div className="w-11/12 m-auto">
+                <p className="font-semibold uppercase text-2xl text-center mt-5">Danh sách thiết bị của phòng</p>
+
                 {step === "them" &&
                     (<p className="mt-5 text-xl">Thêm thiết bị:</p>
                     )
@@ -261,7 +263,7 @@ const Thietbi_QL = ({ csvc, phong }: Props) => {
                                 { newValue ? handleLayID_CSVC(newValue) : null }
 
                             }}
-                            sx={{ width: 300 }}
+                            sx={{ width: 290 }}
                             renderInput={(params) => <TextField {...params} label="CSVC" variant="standard" />}
                         />
 
@@ -276,10 +278,10 @@ const Thietbi_QL = ({ csvc, phong }: Props) => {
                             options={phongQL.map((option) => option.tenphong)}
                             // options={}
                             onChange={(event: any, newValue: string | null) => {
-                                { newValue ?handleLayID_Phong(newValue) : null }
+                                { newValue ? handleLayID_Phong(newValue) : null }
 
                             }}
-                            sx={{ width: 300 }}
+                            sx={{ width: 290 }}
                             renderInput={(params) => <TextField {...params} label="Phòng" variant="standard" />}
                         />
 
@@ -287,8 +289,8 @@ const Thietbi_QL = ({ csvc, phong }: Props) => {
 
                     <div className="flex  ">
                         <p className="w-3/12">Số lượng:</p>
-                        <input type="number" className="w-60 border-b-2 border-gray-400 outline-none pl-1"
-                        value={soluong} onChange={(e) => setSoluong(e.target.valueAsNumber)}
+                        <input type="number" className="w-72 border-b-2 border-gray-400 outline-none pl-1"
+                            value={soluong} onChange={(e) => setSoluong(e.target.valueAsNumber)}
                         />
                     </div>
 
@@ -296,7 +298,7 @@ const Thietbi_QL = ({ csvc, phong }: Props) => {
                         <p className="w-4/12">Thời gian để vào:</p>
 
                         <DatePicker
-                            className="outline-none border-b-2 border-gray-400 pl-1"
+                            className="outline-none border-b-2 w-72 border-gray-400 pl-1"
                             dateFormat='dd/MM/yyyy'
                             selected={thoigianbatdau}
                             onChange={(date: Date) => setThoigianbatdau(date)}
@@ -307,27 +309,29 @@ const Thietbi_QL = ({ csvc, phong }: Props) => {
                 </div>
                 {step === "them" &&
                     (
-                        <button onClick={handleThemThietbi} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Thêm CSVC</button>
-
+                        <div className=" text-right w-10/12">
+                            <button onClick={handleThemThietbi} className="bg-green-400 w-36 h-10 rounded-lg mt-5 hover:bg-green-500">Thêm thiết bị</button>
+                        </div>
                     )
                 }
                 {step === "capnhat" &&
                     (
-                        <button onClick={handleCapnhatThietbi} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Cập nhật nội quy</button>
-
+                        <div className=" text-right w-10/12">
+                            <button onClick={handleCapnhatThietbi} className="bg-green-400 w-48 h-10 rounded-lg mt-5 hover:bg-green-500">Cập nhật thiết bị</button>
+                        </div>
                     )
                 }
 
                 <div className="mt-8">
-                    <table className="border-separate border border-slate-400 ...">
+                    <table className="border-separate border border-slate-400 text-center m-auto w-11/12">
                         <thead>
                             <tr>
                                 <th className="border border-slate-300 w-10 ">#</th>
                                 <th className="border border-slate-300">Tên CSVC</th>
                                 <th className="border border-slate-300">Tên phòng</th>
-                                <th className="border border-slate-300 w-20">Số lượng</th>
-                                <th className="border border-slate-300 w-20">Thời gian để vào</th>
-                                <th className="border border-slate-300 w-20">Tác vụ</th>
+                                <th className="border border-slate-300 ">Số lượng</th>
+                                <th className="border border-slate-300 ">Thời gian để vào</th>
+                                <th className="border border-slate-300 ">Tác vụ</th>
 
                             </tr>
                         </thead>
@@ -355,10 +359,10 @@ const Thietbi_QL = ({ csvc, phong }: Props) => {
                                             </td>
 
                                             <td className="border border-slate-300 text-center">
-                                                <button> 
-                                                    <EditIcon onClick={() => handleSuaThietbi(item.id, item.id_CSVC, item.id_Phong, item.soluong, item.thoigianbatdau)}/>
+                                                <button>
+                                                    <EditIcon onClick={() => handleSuaThietbi(item.id, item.id_CSVC, item.id_Phong, item.soluong, item.thoigianbatdau)} />
                                                 </button>
-                                                 <button>
+                                                <button>
                                                     <DeleteIcon onClick={() => handleXoaThietbi(item.id)} />
                                                 </button>
                                             </td>

@@ -154,14 +154,16 @@ const NoiquyQL = ({ noiquy }: Props) => {
                 </div>
                 {step === "them" &&
                     (
-                        <button onClick={handleThemnoiquy} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Thêm nội quy</button>
-
+                        <div className=" text-right w-10/12">
+                            <button onClick={handleThemnoiquy} className="bg-green-400 w-36 h-10 rounded-lg mt-5 hover:bg-green-500">Thêm nội quy</button>
+                        </div>
                     )
                 }
                 {step === "capnhat" &&
                     (
-                        <button onClick={handleCapnhatnoiquy} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Cập nhật nội quy</button>
-
+                        <div className=" text-right w-10/12">
+                            <button onClick={handleCapnhatnoiquy} className="bg-green-400 w-48 h-10 rounded-lg mt-5 hover:bg-green-500">Cập nhật nội quy</button>
+                        </div>
                     )
                 }
 
@@ -182,8 +184,8 @@ const NoiquyQL = ({ noiquy }: Props) => {
                                     return (
                                         <tr key={index}>
                                             <td className="border border-slate-300 text-center">{item.id}</td>
-                                            <td className="border border-slate-300 p-2">{item.mota}</td>
-                                            <td className="border border-slate-300 p-2">{item.motaEN}</td>
+                                            <td className="border border-slate-300 p-3 text-justify">{item.mota}</td>
+                                            <td className="border border-slate-300 p-3 text-justify">{item.motaEN}</td>
                                             <td className="border border-slate-300 text-center">
                                                 <button onClick={() => handleSuaNQ(item.id, item.mota, item.motaEN)}><EditIcon /></button>
                                                 {/* <EditIcon/> */}

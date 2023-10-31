@@ -19,8 +19,8 @@ const DichvuQL = ({ dichvu }: Props) => {
         gia: number;
         DVT: string;
         ghichu: string;
-    
-      }
+
+    }
     const [step, setStep] = useState("them");
     const [dichvuQL, setDichvuQL] = useState<Dichvu[]>([]);
 
@@ -57,24 +57,24 @@ const DichvuQL = ({ dichvu }: Props) => {
     }
     const handleLayDichVu = async () => {
         try {
-          const params = {
-            id_dv: "ALL",
-          };
-          console.log(params)
-  
-          const response = await Dichvu(params);
-          const res: Dichvu[] = response.dichvu;
-          console.log(response)
-          console.log(res)
-          setDichvuQL(res);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-  
-  
+            const params = {
+                id_dv: "ALL",
+            };
+            console.log(params)
 
-    const handleSuaDichVu = (id: number,tenDV: string, gia:number, DVT:string, ghichu:string) => {
+            const response = await Dichvu(params);
+            const res: Dichvu[] = response.dichvu;
+            console.log(response)
+            console.log(res)
+            setDichvuQL(res);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+
+
+    const handleSuaDichVu = (id: number, tenDV: string, gia: number, DVT: string, ghichu: string) => {
         setId(id)
         setTenDV(tenDV)
         setGia(gia)
@@ -154,48 +154,50 @@ const DichvuQL = ({ dichvu }: Props) => {
                 <div className="grid grid-cols-2 p-3 gap-4">
                     <div className="flex ">
                         <p className="w-3/12 ">Tên dịch vụ:</p>
-                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
-                        value={tenDV} onChange={(e) => setTenDV(e.target.value)}/>
+                        <input type="text" className="w-72 border-b-2 border-gray-400 outline-none"
+                            value={tenDV} onChange={(e) => setTenDV(e.target.value)} />
                     </div>
                     <div className="flex ">
                         <p className="w-3/12 ">Ghi chú:</p>
-                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
-                        value={ghichu} onChange={(e) => setGhichu(e.target.value)}/>
+                        <input type="text" className="w-72 border-b-2 border-gray-400 outline-none"
+                            value={ghichu} onChange={(e) => setGhichu(e.target.value)} />
                     </div>
                     <div className="flex ">
                         <p className="w-3/12">Giá:</p>
-                        <input type="number" className="w-60 border-b-2 border-gray-400 outline-none"
-                         value={gia} onChange={(e) => setGia(e.target.valueAsNumber)} />
+                        <input type="number" className="w-72 border-b-2 border-gray-400 outline-none"
+                            value={gia} onChange={(e) => setGia(e.target.valueAsNumber)} />
                     </div>
                     <div className="flex ">
                         <p className="w-3/12">Đơn vị tính:</p>
-                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none" 
-                        value={DVT} onChange={(e) => setDVT(e.target.value)}/>
+                        <input type="text" className="w-72 border-b-2 border-gray-400 outline-none"
+                            value={DVT} onChange={(e) => setDVT(e.target.value)} />
                     </div>
                 </div>
                 {step === "them" &&
                     (
-                        <button onClick={handleThemDichvu} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Thêm dịch vụ</button>
-
+                        <div className=" text-right w-10/12">
+                            <button onClick={handleThemDichvu} className="bg-green-400 w-36 h-10 rounded-lg mt-5 hover:bg-green-500">Thêm dịch vụ</button>
+                        </div>
                     )
                 }
                 {step === "capnhat" &&
                     (
-                        <button onClick={handleCapnhatDichVu} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Cập nhật dịch vụ</button>
-
+                        <div className=" text-right w-10/12">
+                            <button onClick={handleCapnhatDichVu} className="bg-green-400 w-48 h-10 rounded-lg mt-5 hover:bg-green-500">Cập nhật dịch vụ</button>
+                        </div>
                     )
                 }
 
                 <div className="mt-8">
-                    <table className="border-separate border border-slate-400 ...">
+                    <table className="border-separate border border-slate-400 m-auto text-center w-11/12">
                         <thead>
                             <tr>
                                 <th className="border border-slate-300 w-10 ">#</th>
                                 <th className="border border-slate-300">Tên CSVC</th>
                                 <th className="border border-slate-300">Giá</th>
-                                <th className="border border-slate-300 w-20">DVT</th>
-                                <th className="border border-slate-300 w-20">Ghi chú</th>
-                                <th className="border border-slate-300 w-20">Tác vụ</th>
+                                <th className="border border-slate-300 ">DVT</th>
+                                <th className="border border-slate-300 ">Ghi chú</th>
+                                <th className="border border-slate-300 ">Tác vụ</th>
 
                             </tr>
                         </thead>
@@ -211,12 +213,12 @@ const DichvuQL = ({ dichvu }: Props) => {
                                             <td className="border border-slate-300 p-2">{item.ghichu}</td>
 
                                             <td className="border border-slate-300 text-center">
-                                                <button> 
-                                                    <EditIcon onClick={() => handleSuaDichVu(item.id, item.tenDV, item.gia, item.DVT, item.ghichu)}/>
+                                                <button>
+                                                    <EditIcon onClick={() => handleSuaDichVu(item.id, item.tenDV, item.gia, item.DVT, item.ghichu)} />
                                                 </button>
                                                 <button>
-                                                    <DeleteIcon onClick={() => handleXoaDichVu(item.id)}/>
-                                                    </button>
+                                                    <DeleteIcon onClick={() => handleXoaDichVu(item.id)} />
+                                                </button>
                                             </td>
                                         </tr>
                                     )

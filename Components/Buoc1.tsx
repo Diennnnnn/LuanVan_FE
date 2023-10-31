@@ -8,6 +8,9 @@ import { GetServerSideProps } from "next";
 import { Montserrat } from "next/font/google";
 import Router from "next/router";
 import { useEffect, useState } from "react";
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 const roboto = Montserrat({
   weight: '400',
   subsets: ['latin'],
@@ -69,6 +72,9 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
   const [phong2, setPhong2] = useState<Phong[]>([]);
   const [loaiphong, setLoaiphong] = useState<Loaiphong[]>([]);
   const [loaiphong1, setLoaiphong1] = useState<Loaiphong[]>([]);
+  const [checkin, setCheckin] = useState(new Date())
+  const [checkout, setCheckout] = useState(new Date())
+  const [mincheckout, setMincheckout] = useState(new Date())
 
 
   // const [tenP, setTenP] = useState<string[]>([]);
@@ -106,7 +112,13 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
   //     }
 
   //   }
-
+  const handleCheckDate = (checki : Date)=>{
+    setCheckin(checki)
+    let datecheckout = new Date(checki)
+    datecheckout.setDate(datecheckout.getDate() + 1)
+    setMincheckout(datecheckout)
+    setCheckout(datecheckout)
+  }
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // e.preventDefault();
     // if (e.target.value === roll) {
@@ -149,7 +161,7 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
   const handleLayLoaiphongtheoTenLP = async (tenloaiphong: string) => {
     setValueCombobox1(tenloaiphong)
 
-    try {   
+    try {
       const params = {
         lp_tenloai: tenloaiphong,
       };
@@ -160,12 +172,12 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
       console.log(response)
       console.log(res)
       setLoaiphong1(res);
-      res.map(async (item)=>{
+      res.map(async (item) => {
         const params = {
           phong_idLP: item.id,
         };
         console.log(params)
-  
+
         const response = await Phong_idLP(params);
         const res: Phong[] = response.phong_idLP;
         console.log(response)
@@ -180,6 +192,13 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
 
 
   useEffect(() => {
+    const handleCheckDate = (checki : Date)=>{
+      setCheckin(checki)
+      let datecheckout = new Date(checki)
+      datecheckout.setDate(datecheckout.getDate() + 1)
+      setMincheckout(datecheckout)
+      setCheckout(datecheckout)
+    }
     if (songuoi) {
       setSonguoi1(songuoi)
     }
@@ -267,20 +286,21 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
           // setId_loaiphong(res.id)
           // console.log("id", id)
         })
-  
+
       } catch (error) {
         console.log(error);
       }
-  
-  
+
+
     };
+    handleCheckDate(new Date())
 
     if (id_phong != 0) {
       handlephong()
     } else {
       handlephong2()
     }
-handleLoaiphong()
+    handleLoaiphong()
   }, []);
 
 
@@ -356,7 +376,17 @@ handleLoaiphong()
 
                   :
                   <div className="space-y-1">
-                    <input type="Date" className="text-base" />
+                    <DatePicker
+                      className=""
+                      // type="datetime"
+                      selected={checkin}
+                      minDate={new Date()}
+                      // maxDate={new Date("10-30-2023")}
+                      // onChange={(date: Date) => setStartDate(date)}
+                      onChange={(date: Date) =>handleCheckDate((date))}
+                      dateFormat="dd/MM/yyyy"
+                    />
+                    {/* <input type="Date" className="text-base" /> */}
                     <p className="text-xs font-semibold">Từ 14:00</p>
                   </div>
                 }
@@ -369,8 +399,19 @@ handleLoaiphong()
                   <p className="text-base font-semibold">{check_out}, Trước 12:00</p>
 
                   :
+
                   <div className="space-y-1">
-                    <input type="Date" className="text-base" />
+                    <DatePicker
+                      className=""
+                      // type="datetime"
+                      selected={checkout}
+                      minDate={mincheckout}
+                      // maxDate={new Date("10-30-2023")}
+                      // onChange={(date: Date) => setStartDate(date)}
+                      onChange={(date: Date) =>setCheckout((date))}
+                      dateFormat="dd/MM/yyyy"
+                    />
+                    {/* <input type="Date" className="text-base" /> */}
                     <p className="text-xs font-semibold">Trước 12:00</p>
                   </div>
                 }

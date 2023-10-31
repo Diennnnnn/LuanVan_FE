@@ -189,23 +189,23 @@ const KhuyenmaiQL = ({ khuyenmai }: Props) => {
                 <div className="grid grid-cols-2 p-3 gap-4">
                     <div className="flex ">
                         <p className="w-4/12 ">Tên khuyến mãi:</p>
-                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
+                        <input type="text" className="w-72 border-b-2 border-gray-400 outline-none"
                             value={tenKM} onChange={(e) => setTenKM(e.target.value)} />
                     </div>
                     <div className="flex ">
                         <p className="w-4/12 ">Phần trăm KH:</p>
-                        <input type="number" className="w-60 border-b-2 border-gray-400 outline-none"
+                        <input type="number" className="w-72 border-b-2 border-gray-400 outline-none"
                             value={phantram} onChange={(e) => setPhantram(e.target.valueAsNumber)} />
                     </div>
                     <div className="flex ">
                         <p className="w-4/12">Mô tả:</p>
-                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
+                        <input type="text" className="w-72 border-b-2 border-gray-400 outline-none"
                             value={mota} onChange={(e) => setMota(e.target.value)} />
                     </div>
                     <div className="flex ">
                         <p className="w-4/12">Thời gian bắt đầu:</p>
                         <DatePicker
-                            className="w-60 border-b-2 border-gray-400 outline-none"
+                            className="w-72 border-b-2 border-gray-400 outline-none"
                             dateFormat='dd/MM/yyyy'
                             selected={start}
                             onChange={(date: Date) => setStart(date)} />
@@ -213,9 +213,9 @@ const KhuyenmaiQL = ({ khuyenmai }: Props) => {
                         value={start} onChange={(e) => setStart(e.target.value)}/> */}
                     </div>
                     <div className="flex ">
-                        <p className="w-4/12">Thời gian Kết thúc:</p>
+                        <p className="w-4/12">Thời gian kết thúc:</p>
                         <DatePicker
-                            className="w-60 border-b-2 border-gray-400 outline-none"
+                            className="w-72 border-b-2 border-gray-400 outline-none"
                             dateFormat='dd/MM/yyyy'
                             selected={finish}
                             onChange={(date: Date) => setFinish(date)} />
@@ -224,35 +224,37 @@ const KhuyenmaiQL = ({ khuyenmai }: Props) => {
                     </div>
                     <div className="flex ">
                         <p className="w-4/12">Điều kiện:</p>
-                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
+                        <input type="text" className="w-72 border-b-2 border-gray-400 outline-none"
                             value={dieukien} onChange={(e) => setDieukien(e.target.value)} />
                     </div>
                 </div>
                 {step === "them" &&
                     (
-                        <button onClick={handleThemKhuyenmai} className="bg-green-500 w-44 h-10 rounded-lg mt-5 ">Thêm khuyến mãi</button>
-
+                        <div className=" text-right w-10/12">
+                        <button onClick={handleThemKhuyenmai} className="bg-green-400 w-44 h-10 rounded-lg mt-5 hover:bg-green-500">Thêm khuyến mãi</button>
+</div>
                     )
                 }
                 {step === "capnhat" &&
                     (
-                        <button onClick={handleCapnhatKhuyenmai} className="bg-green-500 w-44 h-10 rounded-lg mt-5 ">Cập nhật khuyến mãi</button>
-
+                        <div className=" text-right w-10/12">
+                        <button onClick={handleCapnhatKhuyenmai} className="bg-green-400 w-48 h-10 rounded-lg mt-5 hover:bg-green-500">Cập nhật khuyến mãi</button>
+</div>
                     )
                 }
 
                 <div className="mt-8">
-                    <table className="border-separate border border-slate-400 ...">
+                    <table className="border-separate border border-slate-400 m-auto text-center w-11/12">
                         <thead>
                             <tr>
                                 <th className="border border-slate-300 w-10 ">#</th>
                                 <th className="border border-slate-300">Tên khuyến mãi</th>
                                 <th className="border border-slate-300">Phần trăm</th>
-                                <th className="border border-slate-300 w-20">Mô tả</th>
-                                <th className="border border-slate-300 w-20">Thời gian bắt đầu</th>
-                                <th className="border border-slate-300 w-20">Thời gian kết thúc</th>
-                                <th className="border border-slate-300 w-20">Điều kiện</th>
-                                <th className="border border-slate-300 w-20">Tác vụ</th>
+                                <th className="border border-slate-300 ">Mô tả</th>
+                                <th className="border border-slate-300 ">Thời gian bắt đầu</th>
+                                <th className="border border-slate-300 ">Thời gian kết thúc</th>
+                                <th className="border border-slate-300 ">Điều kiện</th>
+                                <th className="border border-slate-300 ">Tác vụ</th>
 
 
                             </tr>

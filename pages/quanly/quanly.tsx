@@ -32,6 +32,7 @@ import Thietbi_QL from '@/Components/quanly/Thietbi_QL';
 import Vitri_QL from '@/Components/quanly/Vitri_QL';
 import LoaiphongQL from '@/Components/quanly/LoaiphongQL ';
 import Phong_QL from '@/Components/quanly/Phong_QL';
+import NhanvienQL from '@/Components/quanly/Nhanvien_QL';
 
 
 export default function LabTabs() {
@@ -301,33 +302,33 @@ export default function LabTabs() {
         </Box>
         <TabPanel value="1">
           <div className="flex">
-            <div className="w-2/12 border-2 border-green-300 uppercase text-xl space-y-5">
-              <ListItemButton >
+            <div className="w-2/12 border-r-2 border-black uppercase text-xl space-y-5">
+              <ListItemButton  onClick={() => setOption(1)} >
                 <ListItemIcon>
                   <CategoryIcon />
                 </ListItemIcon>
-                <ListItemText onClick={() => setOption(1)} primary="cơ sở vật chất" />
+                <ListItemText primary="cơ sở vật chất"/>
               </ListItemButton>
 
-              <ListItemButton>
+              <ListItemButton onClick={() => setOption(2)}>
                 <ListItemIcon>
                   <ExtensionIcon />
                 </ListItemIcon>
-                <ListItemText onClick={() => setOption(2)} primary="Thiết bị" />
+                <ListItemText  primary="Thiết bị" />
               </ListItemButton>
 
-              <ListItemButton>
+              <ListItemButton onClick={() => setOption(3)}>
                 <ListItemIcon>
                   <RoomServiceIcon />
                 </ListItemIcon>
-                <ListItemText onClick={() => setOption(3)} primary="Dịch vụ" />
+                <ListItemText primary="Dịch vụ" />
               </ListItemButton>
 
-              <ListItemButton>
+              <ListItemButton onClick={() => setOption(4)}>
                 <ListItemIcon>
                   <DiscountIcon />
                 </ListItemIcon>
-                <ListItemText onClick={() => setOption(4)} primary="Khuyến mãi" />
+                <ListItemText  primary="Khuyến mãi" />
               </ListItemButton>
 
               <ListItemButton onClick={() => setOption(5)}>
@@ -338,7 +339,7 @@ export default function LabTabs() {
               </ListItemButton>
             </div>
             {option == 1 ? (
-              <div className='w-10/12 border-2 border-green-300'>
+              <div className='w-10/12 '>
                 <CSVC_QL csvc={csvc} />
               </div>
             ) : null}
@@ -455,7 +456,7 @@ export default function LabTabs() {
         <TabPanel value="4">
           <div className="flex">
             <div className="w-2/12 border-2 border-green-300 uppercase text-xl space-y-5">
-              <ListItemButton>
+              <ListItemButton onClick={() => setOption(8)}>
                 <ListItemIcon>
                   <GroupIcon />
                 </ListItemIcon>
@@ -470,6 +471,11 @@ export default function LabTabs() {
               </ListItemButton>
 
             </div>
+            {option == 8 ? (
+              <div className='w-10/12 border-2 border-green-300'>
+                <NhanvienQL/>
+              </div>
+            ) : null}
             {option == 9 ? (
               <div className='w-10/12 border-2 border-green-300'>
                 <KhachhangQL allkh={allkh} />

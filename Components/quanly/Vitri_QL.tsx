@@ -23,7 +23,7 @@ const Vitri_QL = ({ vitri }: Props) => {
         khu: string;
         tang: number;
         // dientich: number;
-      }
+    }
     const [step, setStep] = useState("them");
     const [vitriQL, setVitriQL] = useState<Vitri[]>([]);
 
@@ -45,7 +45,7 @@ const Vitri_QL = ({ vitri }: Props) => {
         if (res && res.errCode === 0) {
             setKhu('')
             setTang(0)
-            
+
             handleVitri()
             alert("Thêm vị trí thành công")
 
@@ -57,22 +57,22 @@ const Vitri_QL = ({ vitri }: Props) => {
     }
     const handleVitri = async () => {
         try {
-          const params = {
-            id_vt: "ALL",
-          };
-          console.log(params)
-  
-          const response = await Vitri(params);
-          const res: Vitri[] = response.vt;
-          console.log(response)
-          console.log(res)
-          setVitriQL(res);
-        } catch (error) {
-          console.log(error);
-        }
-      };
+            const params = {
+                id_vt: "ALL",
+            };
+            console.log(params)
 
-    const handleSuaVitri = (id: number,khu: string, tang:number) => {
+            const response = await Vitri(params);
+            const res: Vitri[] = response.vt;
+            console.log(response)
+            console.log(res)
+            setVitriQL(res);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleSuaVitri = (id: number, khu: string, tang: number) => {
         setId(id)
         setKhu(khu)
         setTang(tang)
@@ -151,39 +151,41 @@ const Vitri_QL = ({ vitri }: Props) => {
                 <div className="grid grid-cols-2 p-3 gap-4">
                     <div className="flex ">
                         <p className="w-3/12 ">Tên Khu:</p>
-                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
+                        <input type="text" className="w-72 border-b-2 border-gray-400 outline-none"
                             value={khu} onChange={(e) => setKhu(e.target.value)} />
                     </div>
 
                     <div className="flex ">
                         <p className="w-4/12">Tầng:</p>
-                        <input type="number" className="w-60 border-b-2 border-gray-400 outline-none"
+                        <input type="number" className="w-72 border-b-2 border-gray-400 outline-none"
                             value={tang} onChange={(e) => setTang(e.target.valueAsNumber)} />
                     </div>
 
-                    
+
                 </div>
                 {step === "them" &&
                     (
-                        <button onClick={handleThemVitri} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Thêm vị trí</button>
-
+                        <div className=" text-right w-10/12">
+                            <button onClick={handleThemVitri} className="bg-green-400 w-36 h-10 rounded-lg mt-5 hover:bg-green-500">Thêm vị trí</button>
+                        </div>
                     )
                 }
                 {step === "capnhat" &&
                     (
-                        <button onClick={handleCapnhatVitri} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Cập nhật vị trí</button>
-
+                        <div className=" text-right w-10/12">
+                            <button onClick={handleCapnhatVitri} className="bg-green-400 w-36 h-10 rounded-lg mt-5 hover:bg-green-500">Cập nhật vị trí</button>
+                        </div>
                     )
                 }
 
                 <div className="mt-8">
-                    <table className="border-separate border border-slate-400 ...">
+                    <table className="border-separate border border-slate-400 m-auto text-center w-11/12">
                         <thead>
                             <tr>
-                                <th className="border border-slate-300 w-10 ">#</th>
+                                <th className="border border-slate-300 w-20 ">#</th>
                                 <th className="border border-slate-300">Khu</th>
                                 <th className="border border-slate-300">Tầng</th>
-                                <th className="border border-slate-300 w-20">Tác vụ</th>
+                                <th className="border border-slate-300">Tác vụ</th>
 
                             </tr>
                         </thead>
@@ -196,11 +198,11 @@ const Vitri_QL = ({ vitri }: Props) => {
                                             <td className="border border-slate-300 p-2">{item.khu}</td>
                                             <td className="border border-slate-300 p-2">{item.tang}</td>
                                             <td className="border border-slate-300 text-center">
-                                                <button> 
-                                                    <EditIcon onClick={() => handleSuaVitri(item.id, item.khu, item.tang)}/>
+                                                <button>
+                                                    <EditIcon onClick={() => handleSuaVitri(item.id, item.khu, item.tang)} />
                                                 </button>
                                                 <button>
-                                                    <DeleteIcon onClick={() => handleXoaVitri(item.id)}/>
+                                                    <DeleteIcon onClick={() => handleXoaVitri(item.id)} />
                                                 </button>
                                             </td>
                                         </tr>

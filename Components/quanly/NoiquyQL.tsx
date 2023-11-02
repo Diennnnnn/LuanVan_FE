@@ -171,7 +171,7 @@ const NoiquyQL = ({ noiquy }: Props) => {
                     <table className="border-separate border border-slate-400 ...">
                         <thead>
                             <tr>
-                                <th className="border border-slate-300 w-10 ">#</th>
+                                <th className="border border-slate-300 w-20 ">#</th>
                                 <th className="border border-slate-300">Mô tả</th>
                                 <th className="border border-slate-300">Mô tả EN</th>
                                 <th className="border border-slate-300 w-20">Tác vụ</th>

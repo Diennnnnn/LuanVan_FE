@@ -60,14 +60,16 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
   //   }
   const [roll, setRoll] = useState('')
   const [khachhang, setKhachhang] = useState<Khachhang[]>([]);
-  const [id_KH, setId_KH] = useState(Number);
-  const [songuoi1, setSonguoi1] = useState(Number);
-  const [hotenKH, setHotenKH] = useState("")
-  const [ngaysinh, setNgaysinh] = useState("")
-  const [gioitinh, setGioitinh] = useState("")
   const [CMND, setCMND] = useState("")
   const [SDT, setSDT] = useState("")
   const [email, setEmail] = useState("")
+  const [id_KH, setId_KH] = useState(Number);
+  const [hotenKH, setHotenKH] = useState("")
+  const [songuoi1, setSonguoi1] = useState(Number);
+
+  const [ngaysinh, setNgaysinh] = useState("")
+  const [gioitinh, setGioitinh] = useState("")
+
   const [phong, setPhong] = useState<Phong[]>([]);
   const [phong2, setPhong2] = useState<Phong[]>([]);
   const [loaiphong, setLoaiphong] = useState<Loaiphong[]>([]);
@@ -76,6 +78,9 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
   const [checkout, setCheckout] = useState(new Date())
   const [mincheckout, setMincheckout] = useState(new Date())
 
+  const [hotenkhacho, setHotenkhacho] = useState("")
+  const [CCCDkhacho, setCCCDkhacho] = useState("")
+  const [SDTkhacho, setSDTkhacho] = useState("")
 
   // const [tenP, setTenP] = useState<string[]>([]);
   const [valueCombobox, setValueCombobox] = useState("")
@@ -112,7 +117,7 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
   //     }
 
   //   }
-  const handleCheckDate = (checki : Date)=>{
+  const handleCheckDate = (checki: Date) => {
     setCheckin(checki)
     let datecheckout = new Date(checki)
     datecheckout.setDate(datecheckout.getDate() + 1)
@@ -192,7 +197,7 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
 
 
   useEffect(() => {
-    const handleCheckDate = (checki : Date)=>{
+    const handleCheckDate = (checki: Date) => {
       setCheckin(checki)
       let datecheckout = new Date(checki)
       datecheckout.setDate(datecheckout.getDate() + 1)
@@ -347,21 +352,28 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
               roll === 'datchonguoithan' ? (
                 <div className="pt-5">
                   <p className="text-xl font-semibold">Thông tin khách:</p>
-                  <div className="shadow-md rounded-b-lg p-5">
-                    <p className="font-semibold">Họ và tên:</p>
-                    <input type="text" className="border-gray-300 border-2 mt-2 w-10/12 h-8 pl-2 rounded-md" />
-                    <div className="flex mt-4 ">
-                      <p className="pr-[1%] font-semibold">Số CMND: </p>
-                      <input className="border-gray-300 border-2 h-8 rounded-md pl-2" />
-                      <p className="pl-[3%] pr-[1%] font-semibold">Số điện thoại:</p>
-                      <input type="tel" className="border-gray-300 border-2 h-8 rounded-md pl-2" />
+                  <div className="shadow-md rounded-b-lg p-4 space-y-3">
+                    <div className="flex space-x-10">
+                      <p className="font-semibold pt-3">Họ và tên:</p>
+                      <input type="text" className="border-gray-300 border-2 mt-2 w-8/12 h-8 pl-2 rounded-md outline-none" 
+                      value={hotenkhacho} onChange={(e) => setHotenkhacho(e.target.value)}/>
                     </div>
-                    <p className="mt-4 font-semibold ">Email: <input type="text" className="border-gray-300 pl-2 border-2 rounded-md h-8 w-5/12" /></p>
+
+                    <div className="flex space-x-10">
+                      <p className="font-semibold pt-1">Số CMND: </p>
+                      <input className="border-gray-300 border-2 h-8 rounded-md pl-2 outline-none" 
+                      value={CCCDkhacho} onChange={(e) => setCCCDkhacho(e.target.value)}/>
+
+                    </div>
+                    <div className="flex space-x-3 pt-3">
+                      <p className=" font-semibold">Số điện thoại:</p>
+                      <input type="tel" className="border-gray-300 border-2 h-8 rounded-md pl-2 outline-none" 
+                      value={SDTkhacho} onChange={(e) => setSDTkhacho(e.target.value)}/>
+                    </div>
                   </div>
                 </div>
               ) : ""
             }
-            <input type="checkbox" className="mt-10 ml-5 mr-2 text-slate-700 font-bold" /><label className="text-slate-500 font-bold">Chắn chắn rằng tất cả thông tin trên trang này là chính xác trước khi thanh toán.</label>
           </div>
           <div className="col-span-2 shadow-inner bg-gray-50 rounded-md">
             <div className="text-center pt-5">
@@ -383,7 +395,7 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
                       minDate={new Date()}
                       // maxDate={new Date("10-30-2023")}
                       // onChange={(date: Date) => setStartDate(date)}
-                      onChange={(date: Date) =>handleCheckDate((date))}
+                      onChange={(date: Date) => handleCheckDate((date))}
                       dateFormat="dd/MM/yyyy"
                     />
                     {/* <input type="Date" className="text-base" /> */}
@@ -408,7 +420,7 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
                       minDate={mincheckout}
                       // maxDate={new Date("10-30-2023")}
                       // onChange={(date: Date) => setStartDate(date)}
-                      onChange={(date: Date) =>setCheckout((date))}
+                      onChange={(date: Date) => setCheckout((date))}
                       dateFormat="dd/MM/yyyy"
                     />
                     {/* <input type="Date" className="text-base" /> */}
@@ -423,6 +435,7 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
 
               {tenphong ?
                 <p className="  text-lg"> {tenloaiphong}</p>
+
                 :
                 <Autocomplete
                   disablePortal
@@ -450,7 +463,10 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
               <p className="basis-40 ">Phòng</p>
 
               {tenphong ?
-                <p className="font-semibold  text-lg"> {tenphong}</p>
+                <>
+                  <p className="font-semibold  text-lg"> {tenphong}</p>
+
+                </>
                 :
                 <Autocomplete
                   disablePortal
@@ -498,6 +514,28 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
                 </>
               )
             })}
+            {tenphong ?
+              <>
+                <div className="flex m-5">
+                  <p className="basis-40 text-slate-500">Khách/phòng</p>
+                  <p className="">{songuoi} khách</p>
+                </div>
+                <div className="flex m-5">
+                  <p className="basis-40 text-slate-500">Giá</p>
+                  <p className="">{gia}đ</p>
+                </div>
+                <div className="flex m-5">
+                  <p className="basis-40 text-slate-500">Giảm giá</p>
+                  <p className="">10%</p>
+                </div>
+
+                <div className="flex m-5">
+                  <p className="basis-40 font-semibold text-lg">Tổng tiền</p>
+                  <p className="font-semibold text-lg">1.080.000đ</p>
+                </div>
+              </>
+              : null
+            }
 
           </div>
         </div>

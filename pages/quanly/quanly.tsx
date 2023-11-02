@@ -298,6 +298,8 @@ export default function LabTabs() {
             <Tab icon={<MeetingRoom />} iconPosition="start" label="phòng" sx={{ color: 'green' }} value="2" />
             <Tab icon={<AssignmentIndIcon />} iconPosition="start" label="thông tin" sx={{ color: 'green' }} value="4" />
             <Tab icon={<ListIcon />} iconPosition="start" label="Phiếu đặt" sx={{ color: 'green' }} value="5" />
+            <Tab icon={<ListIcon />} iconPosition="start" label="Doanh thu" sx={{ color: 'green' }} value="6" />
+
           </TabList>
         </Box>
         <TabPanel value="1">
@@ -369,7 +371,7 @@ export default function LabTabs() {
 
         <TabPanel value="2">
           <div className="flex">
-            <div className="w-2/12 border-2 border-green-300 uppercase text-xl space-y-5">
+            <div className="w-2/12 border-r-2 border-black uppercase text-xl space-y-5">
 
               <ListItemButton onClick={() => setOption(5)}>
                 <ListItemIcon>
@@ -455,7 +457,7 @@ export default function LabTabs() {
 
         <TabPanel value="4">
           <div className="flex">
-            <div className="w-2/12 border-2 border-green-300 uppercase text-xl space-y-5">
+            <div className="w-2/12 border-r-2 border-black uppercase text-xl space-y-5">
               <ListItemButton onClick={() => setOption(8)}>
                 <ListItemIcon>
                   <GroupIcon />
@@ -472,12 +474,12 @@ export default function LabTabs() {
 
             </div>
             {option == 8 ? (
-              <div className='w-10/12 border-2 border-green-300'>
+              <div className='w-10/12'>
                 <NhanvienQL/>
               </div>
             ) : null}
             {option == 9 ? (
-              <div className='w-10/12 border-2 border-green-300'>
+              <div className='w-10/12'>
                 <KhachhangQL allkh={allkh} />
               </div>
             ) : null}

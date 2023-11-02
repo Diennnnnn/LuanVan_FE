@@ -226,7 +226,8 @@ const Phong_QL = () => {
         };
 
     }
-    const handleXoaPhong = async (id: number) => {` `
+    const handleXoaPhong = async (id: number) => {
+        ` `
         // console.log("mota", mota)
         // console.log("motaEN", motaEN)
 
@@ -322,7 +323,7 @@ const Phong_QL = () => {
                 <div className="grid grid-cols-2 p-3 gap-6">
                     <div className="flex ">
                         <p className="w-3/12">Tên phòng:</p>
-                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
+                        <input type="text" className="w-72 border-b-2 border-gray-400 outline-none"
                             value={tenphong} onChange={(e) => setTenphong(e.target.value)}
                         />
 
@@ -330,7 +331,7 @@ const Phong_QL = () => {
 
                     <div className="flex  ">
                         <p className="w-3/12">Diện tích:</p>
-                        <input type="number" className="w-60 border-b-2 border-gray-400 outline-none pl-1"
+                        <input type="number" className="w-72 border-b-2 border-gray-400 outline-none pl-1"
                             value={dientich} onChange={(e) => setDientich(e.target.valueAsNumber)}
                         />
                     </div>
@@ -350,7 +351,7 @@ const Phong_QL = () => {
                                 { newValue ? handleLayID_LP(newValue) : null }
 
                             }}
-                            sx={{ width: 240 }}
+                            sx={{ width: 290 }}
                             renderInput={(params) => <TextField {...params} label="Loại phòng - Số người" variant="standard" />}
                         />
 
@@ -368,7 +369,7 @@ const Phong_QL = () => {
                                 { newValue ? handleLayID_VT(newValue) : null }
 
                             }}
-                            sx={{ width: 240 }}
+                            sx={{ width: 290 }}
                             renderInput={(params) => <TextField {...params} label="Khu - Tầng" variant="standard" />}
                         />
                     </div>
@@ -377,7 +378,7 @@ const Phong_QL = () => {
 
                     <div className="flex  ">
                         <p className="w-3/12">Mô tả:</p>
-                        <textarea className="resize-y rounded-md w-96 border-2 border-gray-400 outline-none p-3"
+                        <textarea className="resize-y rounded-md w-72 border-2 border-gray-400 outline-none p-3"
                             value={mota} onChange={(e) => setMota(e.target.value)}
                         ></textarea>
                     </div>
@@ -385,31 +386,33 @@ const Phong_QL = () => {
             </div>
             {step === "them" &&
                 (
-                    <button onClick={handleThemPhong} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Thêm Phòng</button>
-
+                    <div className=" text-right w-10/12">
+                        <button onClick={handleThemPhong} className="bg-green-400 w-36 h-10 rounded-lg mt-5 hover:bg-green-500">Thêm Phòng</button>
+                    </div>
                 )
             }
             {step === "capnhat" &&
-                    (
-                        <button onClick={handleCapnhatPhong} className="bg-green-500 w-36 h-10 rounded-lg mt-5 ">Cập nhật phòng</button>
-
-                    )
-                }
+                (
+                    <div className=" text-right w-10/12">
+                        <button onClick={handleCapnhatPhong} className="bg-green-400 w-48 h-10 rounded-lg mt-5 hover:bg-green-500">Cập nhật phòng</button>
+                    </div>
+                )
+            }
 
             <div className="mt-8">
-                <table className="border-separate border border-slate-400 ...">
+                <table className="border-separate border border-slate-400 m-auto text-center w-11/12">
                     <thead>
                         <tr>
-                            <th className="border border-slate-300 w-10 ">#</th>
+                            <th className="border border-slate-300 w-14 ">#</th>
                             <th className="border border-slate-300">Tên phòng</th>
-                            <th className="border border-slate-300 w-20">Loại phòng</th>
-                            <th className="border border-slate-300 w-20">Số người</th>
-                            <th className="border border-slate-300">Mô tả</th>
-                            <th className="border border-slate-300 w-20">Giá</th>
-                            <th className="border border-slate-300 w-20">Diện tích</th>
-                            <th className="border border-slate-300 w-20">Khu</th>
-                            <th className="border border-slate-300 w-20">Tầng</th>
-                            <th className="border border-slate-300 w-20">Tác vụ</th>
+                            <th className="border border-slate-300 ">Loại phòng</th>
+                            <th className="border border-slate-300 ">Số người</th>
+                            <th className="border border-slate-300 w-80">Mô tả</th>
+                            <th className="border border-slate-300 ">Giá</th>
+                            <th className="border border-slate-300 ">Diện tích</th>
+                            <th className="border border-slate-300 ">Khu</th>
+                            <th className="border border-slate-300 ">Tầng</th>
+                            <th className="border border-slate-300 ">Tác vụ</th>
 
                         </tr>
                     </thead>
@@ -452,8 +455,8 @@ const Phong_QL = () => {
                                                 <EditIcon onClick={() => handleSuaPhong(item.id, item.tenphong, item.id_LP, item.id_VT, item.mota, item.dientich)} />
                                             </button>
                                             <button>
-                                                    <DeleteIcon onClick={() => handleXoaPhong(item.id)} />
-                                                </button>
+                                                <DeleteIcon onClick={() => handleXoaPhong(item.id)} />
+                                            </button>
                                         </td>
                                     </tr>
                                 )

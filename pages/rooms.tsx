@@ -4,6 +4,10 @@ import { Loaiphong, Phong } from "@/Service/userService";
 import { Montserrat } from "next/font/google";
 import Router from "next/router";
 import React, { useEffect, useState } from "react";
+
+
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 const roboto = Montserrat({
     weight: '400',
     subsets: ['latin'],
@@ -22,15 +26,32 @@ const rooms = () => {
     const [phong, setPhong] = useState<Phong[]>([]);
     const [check_in, setCheck_in] = useState("");
     const [check_out, setCheck_out] = useState("");
-
+    const [checkin, setCheckin] = useState(new Date())
+    const [checkout, setCheckout] = useState(new Date())
+    const [mincheckout, setMincheckout] = useState(new Date())
     const handleClick =()=>{
         console.log("ádfgnm", check_in)
         console.log("cvdfg", check_out)
 
     }
-
+    const handleCheckDate = (checki : Date)=>{
+        setCheckin(checki)
+        let datecheckout = new Date(checki)
+        datecheckout.setDate(datecheckout.getDate() + 1)
+        setMincheckout(datecheckout)
+        console.log(datecheckout)
+        setCheckout(datecheckout)
+      }
 
     useEffect(() => {
+        const handleCheckDate = (checki : Date)=>{
+            setCheckin(checki)
+            let datecheckout = new Date(checki)
+            datecheckout.setDate(datecheckout.getDate() + 1)
+            setMincheckout(datecheckout)
+            console.log(datecheckout)
+            setCheckout(datecheckout)
+          }
         const handlephong = async () => {
             try {
                 const params = {
@@ -52,6 +73,7 @@ const rooms = () => {
 
 
         };
+        handleCheckDate(new Date())
         handlephong();
         // handleLoaiphong()
     }, [])
@@ -89,17 +111,37 @@ const rooms = () => {
                 <div className="col-span-1 pl-3 space-y-2 mt-6">
                     <p className="uppercase font-bold">bộ lọc tìm kiếm</p>
                     <p>Nhận phòng:</p>
-                    <input type="Date" 
+                    <DatePicker
+                      className=""
+                      // type="datetime"
+                      selected={checkin}
+                      minDate={new Date()}
+                      // maxDate={new Date("10-30-2023")}
+                      // onChange={(date: Date) => setStartDate(date)}
+                      onChange={(date: Date) =>handleCheckDate((date))}
+                      dateFormat="dd/MM/yyyy"
+                    />
+                    {/* <input type="Date" 
                     className="border-2 border-gray-300" 
                     value={check_in}
                     onChange={(event) => setCheck_in(event.target.value)}
-                    />
+                    /> */}
                     <p>Trả phòng:</p>
-                    <input type="Date" 
+                    <DatePicker
+                      className=""
+                      // type="datetime"
+                      selected={checkout}
+                      minDate={mincheckout}
+                      // maxDate={new Date("10-30-2023")}
+                      // onChange={(date: Date) => setStartDate(date)}
+                      onChange={(date: Date) =>setCheckout((date))}
+                      dateFormat="dd/MM/yyyy"
+                    />
+                    {/* <input type="Date" 
                     className="border-2 border-gray-300" 
                     value={check_out}
                     onChange={(event) => setCheck_out(event.target.value)}
-                    />
+                    /> */}
                     <hr className=" border-black" />
                     <p>Phòng:</p>
                     <input type="checkbox" /> <label>2 người</label>

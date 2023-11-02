@@ -247,7 +247,7 @@ const KhuyenmaiQL = ({ khuyenmai }: Props) => {
                     <table className="border-separate border border-slate-400 m-auto text-center w-11/12">
                         <thead>
                             <tr>
-                                <th className="border border-slate-300 w-10 ">#</th>
+                                <th className="border border-slate-300 w-20 ">#</th>
                                 <th className="border border-slate-300">Tên khuyến mãi</th>
                                 <th className="border border-slate-300">Phần trăm</th>
                                 <th className="border border-slate-300 ">Mô tả</th>

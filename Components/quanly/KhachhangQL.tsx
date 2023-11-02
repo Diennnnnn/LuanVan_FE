@@ -34,7 +34,7 @@ const KhachhangQL = ({ allkh }: Props) => {
                 <p className="font-semibold uppercase text-2xl text-center mt-5">Danh sách khách hàng</p>
 
                 <div className="mt-8">
-                    <table className="border-separate border border-slate-400 ...">
+                    <table className="border-separate border border-slate-400  m-auto text-center w-full">
                         <thead>
                             <tr>
                                 <th className="border border-slate-300 w-10 ">#</th>

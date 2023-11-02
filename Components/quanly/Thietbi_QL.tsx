@@ -326,7 +326,7 @@ const Thietbi_QL = ({ csvc, phong }: Props) => {
                     <table className="border-separate border border-slate-400 text-center m-auto w-11/12">
                         <thead>
                             <tr>
-                                <th className="border border-slate-300 w-10 ">#</th>
+                                <th className="border border-slate-300 w-20 ">#</th>
                                 <th className="border border-slate-300">Tên CSVC</th>
                                 <th className="border border-slate-300">Tên phòng</th>
                                 <th className="border border-slate-300 ">Số lượng</th>

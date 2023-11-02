@@ -7,7 +7,7 @@ import { Danhmuccsvc, SuaQLCSVC, ThemQLCSVC, XoaQLCSVC } from "@/Service/userSer
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import dayjs from 'dayjs'
-
+import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 
 const roboto = Montserrat({
     weight: '400',
@@ -167,30 +167,32 @@ const CSVC_QL = ({ csvc }: Props) => {
                     <div className="flex ">
                         <p className="w-3/12 ">Tên CSVC:</p>
                         {/* <p>sdfghjk</p> */}
-                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
+                        <input type="text" className="w-72 border-b-2 border-gray-400 outline-none"
                             value={tenCSVC} onChange={(e) => setTenCSVC(e.target.value)} />
                     </div>
 
                     <div className="flex ">
                         <p className="w-4/12">Số lượng:</p>
-                        <input type="number" className="w-60 border-b-2 border-gray-400 outline-none"
+                        <input type="number" className="w-72 border-b-2 border-gray-400 outline-none"
                             value={soluong} onChange={(e) => setSoluong(e.target.valueAsNumber)} />
                     </div>
 
                     <div className="flex  ">
                         <p className="w-3/12">Giá:</p>
-                        <input type="number" className="w-60 border-b-2 border-gray-400 outline-none"
+                        <input type="number" className="w-72 border-b-2 border-gray-400 outline-none"
                             value={giagoc} onChange={(e) => setGiagoc(e.target.valueAsNumber)} />
                     </div>
 
                     <div className="flex ">
-                        <p className="w-4/12">Thời gian mua:</p>
+                        <p className="w-4/12 ">Thời gian mua:</p>
                         {/* <input type="date" className="w-60 border-b-2 border-gray-400 outline-none"
                             value={thoigianmua} onChange={(e) => setThoigianmua(e.target.value)} /> */}
                         <DatePicker
+                            className="w-72 outline-none border-b-2 border-gray-400"
                             dateFormat='dd/MM/yyyy'
                             selected={thoigianmua}
-                            onChange={(date: Date) => setThoigianmua(date)} />
+                            onChange={(date: Date) => setThoigianmua(date)}
+                        />
 
                     </div>
                 </div>
@@ -213,7 +215,7 @@ const CSVC_QL = ({ csvc }: Props) => {
                     <table className="border-separate border border-slate-400 m-auto text-center w-11/12">
                         <thead>
                             <tr>
-                                <th className="border border-slate-300 w-10">#</th>
+                                <th className="border border-slate-300 w-20">#</th>
                                 <th className="border border-slate-300">Tên CSVC</th>
                                 <th className="border border-slate-300">Giá</th>
                                 <th className="border border-slate-300 ">Số lượng</th>

@@ -18,7 +18,7 @@ type Props = {
     loaiphong: any,
 };
 // 
-const LoaiphongQL  = ({ loaiphong }: Props) => {
+const LoaiphongQL = ({ loaiphong }: Props) => {
     interface Loaiphong {
         id: number;
         tenloaiphong: string;
@@ -30,7 +30,7 @@ const LoaiphongQL  = ({ loaiphong }: Props) => {
     const [tenloaiphong, setTenloaiphong] = useState("");
     const [songuoi, setSonguoi] = useState(Number)
     const [gia, setGia] = useState(Number);
-  
+
     const [id, setId] = useState(Number)
 
     const handleThemLoaiphong = async () => {
@@ -47,7 +47,7 @@ const LoaiphongQL  = ({ loaiphong }: Props) => {
             setTenloaiphong('')
             setSonguoi(0)
             setGia(0)
-           
+
             handleLayLoaiphong()
             alert("Thêm loại phòng thành công")
 
@@ -83,7 +83,7 @@ const LoaiphongQL  = ({ loaiphong }: Props) => {
         setTenloaiphong(tenloaiphong)
         setSonguoi(songuoi)
         setGia(gia)
-        
+
         setStep("capnhat")
     }
 
@@ -109,7 +109,7 @@ const LoaiphongQL  = ({ loaiphong }: Props) => {
             setTenloaiphong('')
             setGia(0)
             setSonguoi(0)
-            
+
             handleLayLoaiphong()
             setStep('them')
             alert("Cập nhật loại phòng thành công")
@@ -161,43 +161,45 @@ const LoaiphongQL  = ({ loaiphong }: Props) => {
                 <div className="grid grid-cols-2 p-3 gap-4">
                     <div className="flex ">
                         <p className="w-4/12 ">Tên loại phòng:</p>
-                        <input type="text" className="w-60 border-b-2 border-gray-400 outline-none"
+                        <input type="text" className="w-72 border-b-2 border-gray-400 outline-none"
                             value={tenloaiphong} onChange={(e) => setTenloaiphong(e.target.value)} />
                     </div>
                     <div className="flex ">
                         <p className="w-4/12 ">Số người:</p>
-                        <input type="number" className="w-60 border-b-2 border-gray-400 outline-none"
+                        <input type="number" className="w-72 border-b-2 border-gray-400 outline-none"
                             value={songuoi} onChange={(e) => setSonguoi(e.target.valueAsNumber)} />
                     </div>
                     <div className="flex ">
                         <p className="w-4/12">Giá:</p>
-                        <input type="number" className="w-60 border-b-2 border-gray-400 outline-none"
+                        <input type="number" className="w-72 border-b-2 border-gray-400 outline-none"
                             value={gia} onChange={(e) => setGia(e.target.valueAsNumber)} />
                     </div>
-                    
+
                 </div>
                 {step === "them" &&
                     (
-                        <button onClick={handleThemLoaiphong} className="bg-green-500 w-44 h-10 rounded-lg mt-5 ">Thêm loại phòng</button>
-
+                        <div className=" text-right w-10/12">
+                            <button onClick={handleThemLoaiphong} className="bg-green-400 w-44 h-10 rounded-lg mt-5 hover:bg-green-500">Thêm loại phòng</button>
+                        </div>
                     )
                 }
                 {step === "capnhat" &&
                     (
-                        <button onClick={handleCapnhatLoaiphong} className="bg-green-500 w-44 h-10 rounded-lg mt-5 ">Cập nhật loại phòng</button>
-
+                        <div className=" text-right w-10/12">
+                            <button onClick={handleCapnhatLoaiphong} className="bg-green-400 w-48 h-10 rounded-lg mt-5 hover:bg-green-500">Cập nhật loại phòng</button>
+                        </div>
                     )
                 }
 
                 <div className="mt-8">
-                    <table className="border-separate border border-slate-400 ...">
+                    <table className="border-separate border border-slate-400 m-auto text-center w-11/12">
                         <thead>
                             <tr>
-                                <th className="border border-slate-300 w-10 ">#</th>
+                                <th className="border border-slate-300 w-20 ">#</th>
                                 <th className="border border-slate-300">Tên loại phòng</th>
                                 <th className="border border-slate-300">Số người</th>
-                                <th className="border border-slate-300 w-20">Giá</th>
-                                <th className="border border-slate-300 w-20">Tác vụ</th>
+                                <th className="border border-slate-300 ">Giá</th>
+                                <th className="border border-slate-300">Tác vụ</th>
 
 
                             </tr>
@@ -211,7 +213,7 @@ const LoaiphongQL  = ({ loaiphong }: Props) => {
                                             <td className="border border-slate-300 p-2">{item.tenloaiphong}</td>
                                             <td className="border border-slate-300 p-2">{item.songuoi}</td>
                                             <td className="border border-slate-300 p-2">{item.gia}</td>
-                                            
+
                                             <td className="border border-slate-300 text-center">
                                                 <button>
                                                     <EditIcon onClick={() => handleSuaLoaiphong(item.id, item.tenloaiphong, item.songuoi, item.gia)} />
@@ -236,4 +238,4 @@ const LoaiphongQL  = ({ loaiphong }: Props) => {
     )
 }
 
-export default LoaiphongQL ;
+export default LoaiphongQL;

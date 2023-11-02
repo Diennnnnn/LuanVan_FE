@@ -1,5 +1,6 @@
 import B1 from "@/Components/B1";
 import Buoc1 from "@/Components/Buoc1";
+import Buoc2 from "@/Components/Buoc2";
 import Footer from "@/Components/Footer";
 import Header from "@/Components/Header";
 import { Datphong } from "@/Service/userService";
@@ -30,9 +31,16 @@ interface codeProductProps {
   check_out: string | null
   tenloaiphong: string | null
 
+  // hotenkhacho: string | null
+  // CCCDkhacho: string | null
+  // SDTkhacho: string | null
+  // roll: string | null
+
 
 }
-const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, check_out }: codeProductProps) => {
+const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, check_out
+  // , hotenkhacho, SDTkhacho, CCCDkhacho, roll
+}: codeProductProps) => {
   interface Khachhang {
     id: number;
     hotenKH: string;
@@ -51,7 +59,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
     SDT: string,
     email: string
   }
-  const [roll, setRoll] = useState('')
+  // const [roll, setRoll] = useState('')
   const [khachhang, setKhachhang] = useState<Khachhang[]>([]);
   const [step, setStep] = useState("Buoc1");
   const [hoten, setHoten] = useState("");
@@ -205,7 +213,9 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
           </div>
         ) : (
           <div>
-            <div className='bg-red-400'>cfvgbhjk</div>
+            <Buoc2 
+            // hotenkhacho={hotenkhacho || ''} CCCDkhacho={CCCDkhacho || ''} SDTkhacho={SDTkhacho || ''} roll={roll || ''}
+            />
             <Box sx={{ display: 'flex', flexDirection: 'row', width: '70%', paddingTop:'2%', margin:'auto'}}>
               <Button
                 color="inherit"
@@ -224,183 +234,8 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
         )
         }
 
-        {/* {activeStep == 1 ? (
-          <div>
-            <div className='bg-red-400'>cfvgbhjk</div>
-            <Box sx={{ display: 'flex', flexDirection: 'row', width: '70%', paddingTop:'2%', margin:'auto'}}>
-              <Button
-                color="inherit"
-                disabled={activeStep == 1}
-                onClick={handleBack}
-                sx={{ mr: 5 }}
-              >
-                Trở về
-              </Button>
-              <Box sx={{ flex: '1 1 auto' }} />
-              <Button onClick={handleNext} sx={{color:'#33cc33'}}>
-                {activeStep === steps.length - 1 ? 'Finish' : 'Tiếp theo'}
-              </Button>
-            </Box>
-          </div>
-        ) : ''
-        } */}
-        {/* {activeStep == 2 ? (
-          <div>
-            <div className='bg-blue-400'>cfvgbhjk</div>
-            <Box sx={{ display: 'flex', flexDirection: 'row', width: '70%', paddingTop:'2%', margin:'auto'}}>
-              <Button
-                color="inherit"
-                disabled={activeStep == 2}
-                onClick={handleBack}
-                sx={{ mr: 5 }}
-              >
-                Trở về
-              </Button>
-              <Box sx={{ flex: '1 1 auto' }} />
-              <Button onClick={handleNext} sx={{color:'#33cc33'}}>
-                {activeStep === steps.length - 1 ? 'Finish' : 'Tiếp theo'}
-              </Button>
-            </Box>
-          </div>
-        ) : ''
-        }
-        {activeStep == 3 ? (
-          <div>
-            <div className='bg-gray-400'>cfvgbhjk</div>
-            <Box sx={{ display: 'flex', flexDirection: 'row', width: '70%', paddingTop:'2%', margin:'auto'}}>
-              <Button
-                color="inherit"
-                disabled={activeStep ==3}
-                onClick={handleBack}
-                sx={{ mr: 5 }}
-              >
-                Trở về
-              </Button>
-              <Box sx={{ flex: '1 1 auto' }} />
-              <Button onClick={handleNext} sx={{color:'#33cc33'}}>
-                {activeStep === steps.length - 1 ? 'Finish' : 'Tiếp theo'}
-              </Button>
-            </Box>
-          </div>
-        ) : ''
-        }
-        {activeStep === steps.length ? (
-          <div>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-              <Box sx={{ flex: '1 1 auto' }} />
-              <Button onClick={handleReset}>Reset</Button>
-            </Box>
-          </div>
-        ) : ''
-        } */}
 
       </Box>
-
-      {/* <Buoc1  tenphong={tenphong || ''} gia={gia || 0} songuoi={songuoi || 0} id_phong={id_phong || 0} check_in={check_in || ''} check_out={check_out || ''} /> */}
-
-      {/* <div className="grid w-8/12 m-auto mt-6">
-          <div className="grid grid-cols-6 mt-5 ">
-            <div className="col-span-4 m-3 ">
-              <p className="font-semibold text-2xl">Chi tiết liên hệ</p>
-              <div className="shadow-lg  p-5">
-                {
-                  khachhang.map((item, index) => {
-                    return (
-                      <div key={index}>
-                        <p className="font-semibold">Họ và tên:</p>
-                        <input
-                          type="text"
-                          className="border-gray-300 border-2 mt-2 pl-2 w-10/12 h-8 rounded-md"
-                          value={item.hotenKH}
-                        />
-                        <div className="flex mt-4 ">
-                          <p className="pr-[1%] font-semibold">Số CMND: </p>
-                          <input className="border-gray-300 border-2 h-8 rounded-md pl-2 w-40" value={item.CMND} />
-                          <p className="pl-[3%] pr-[1%] font-semibold">Số điện thoại:</p>
-                          <input type="tel" className="border-gray-300 border-2 h-8 rounded-md pl-2 w-40" value={item.SDT} />
-                        </div>
-                        <p className="mt-4 font-semibold ">Email: <input type="text" className="border-gray-300 pl-2 border-2 rounded-md font-normal h-8 w-5/12" value={item.email} /></p>
-                      </div>
-                    )
-                  })
-                }
-              </div>
-              <div className="bg-gray-200 h-14 shadow-md rounded-b-lg space-y-5 space-x-10 pl-5 ">
-                <input onChange={onChange} type="radio" value="datchominh" name='roll' checked={roll === "datchominh"} /> Đặt cho mình
-                <input onChange={onChange} type="radio" value="datchonguoithan" name='roll' checked={roll === "datchonguoithan"} /> Đặt cho người khác
-              </div>
-
-
-              {
-                roll === 'datchonguoithan' ? (
-                  <div className="pt-5">
-                    <p className="text-xl font-semibold">Thông tin khách:</p>
-                    <div className="shadow-md rounded-b-lg p-5">
-                      <p className="font-semibold">Họ và tên:</p>
-                      <input type="text" className="border-gray-300 border-2 mt-2 w-10/12 h-8 pl-2 rounded-md" />
-                      <div className="flex mt-4 ">
-                        <p className="pr-[1%] font-semibold">Số CMND: </p>
-                        <input className="border-gray-300 border-2 h-8 rounded-md pl-2" />
-                        <p className="pl-[3%] pr-[1%] font-semibold">Số điện thoại:</p>
-                        <input type="tel" className="border-gray-300 border-2 h-8 rounded-md pl-2" />
-                      </div>
-                      <p className="mt-4 font-semibold ">Email: <input type="text" className="border-gray-300 pl-2 border-2 rounded-md h-8 w-5/12" /></p>
-                    </div>
-                  </div>
-                ) : ""
-              }
-              <input type="checkbox" className="mt-10 ml-5 mr-2 text-slate-700 font-bold" /><label className="text-slate-500 font-bold">Chắn chắn rằng tất cả thông tin trên trang này là chính xác trước khi thanh toán.</label>
-            </div>
-            <div className="col-span-2 shadow-inner bg-gray-50 rounded-md">
-              <div className="text-center pt-5">
-                <p className="font-semibold text-lg">The Kupid Homestay</p>
-                <p className="text-sm">47 Đặng Thái Thân, Phường 3, Đà Lạt</p>
-              </div>
-              <div className="bg-gray-200 mt-5 p-[3%] h-32 text-slate-700 text-base space-y-2">
-                <div className="flex">
-                  <p className="text-sm basis-40">Ngày nhận phòng: </p>
-                  {check_in ?
-                    <p className="text-base">{check_in}, Từ 14:00</p>
-
-                    :
-                    <input type="Date" className="text-base" />
-
-                  }
-                </div>
-
-                <div className="flex">
-                  <p className="text-sm basis-44">Ngày trả phòng: </p>
-                  <p className="text-base">{check_out}, Trước 12:00</p>
-                </div>
-              </div>
-              <p className="font-semibold m-5 text-lg">Phòng {tenphong}</p>
-              <div className="flex m-5">
-                <p className="basis-40 text-slate-500">Khách/phòng</p>
-                <p className="">{songuoi} khách</p>
-              </div>
-              <div className="flex m-5">
-                <p className="basis-40 text-slate-500">Giá</p>
-                <p className="">{gia}đ</p>
-              </div>
-              <div className="flex m-5">
-                <p className="basis-40 text-slate-500">Giảm giá</p>
-                <p className="">10%</p>
-              </div>
-
-              <div className="flex m-5">
-                <p className="basis-40 font-semibold text-lg">Tổng tiền</p>
-                <p className="font-semibold text-lg">1.080.000đ</p>
-              </div>
-
-            </div>
-          </div>
-
-        </div> */}
-      {/* onClick={()=>setStep("Buoc2")} */}
-      {/* <div className="text-center mt-6"><button onClick={handleDatphong} className="border-2 border-green-600 text-xl uppercase h-10 w-56 rounded-lg hover:bg-green-600">Tiếp tục</button></div> */}
 
       <Footer />
     </div>
@@ -420,7 +255,10 @@ export const getServerSideProps: GetServerSideProps<codeProductProps> = async (
   const { check_in } = context.query;
   const { check_out } = context.query;
   const { tenloaiphong } = context.query;
-
+  const { hotenkhacho } = context.query;
+  const { CCCDkhacho } = context.query;
+  const { SDTkhacho } = context.query;
+  const { roll } = context.query;
 
   return {
     props: {
@@ -431,6 +269,12 @@ export const getServerSideProps: GetServerSideProps<codeProductProps> = async (
       check_in: check_in as string | null,
       check_out: check_out as string | null,
       tenloaiphong: tenloaiphong as string | null
+
+      // hotenkhacho: hotenkhacho as string | null,
+      // CCCDkhacho: CCCDkhacho as string | null,
+      // SDTkhacho: SDTkhacho as string | null,
+      // roll: roll as string | null
+
 
     }
   }

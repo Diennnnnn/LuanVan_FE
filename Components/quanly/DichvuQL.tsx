@@ -142,7 +142,7 @@ const DichvuQL = ({ dichvu }: Props) => {
     return (
         <div className={roboto.className}>
             <div className="w-11/12 m-auto">
-                <p className="font-semibold uppercase text-2xl text-center mt-5">Dịch vụ của Homstay</p>
+                <p className="font-semibold uppercase text-2xl text-center mt-5">Dịch vụ của Homestay</p>
                 {step === "them" &&
                     (<p className="mt-5 text-xl">Thêm dịch vụ:</p>
                     )
@@ -192,7 +192,7 @@ const DichvuQL = ({ dichvu }: Props) => {
                     <table className="border-separate border border-slate-400 m-auto text-center w-11/12">
                         <thead>
                             <tr>
-                                <th className="border border-slate-300 w-10 ">#</th>
+                                <th className="border border-slate-300 w-20 ">#</th>
                                 <th className="border border-slate-300">Tên CSVC</th>
                                 <th className="border border-slate-300">Giá</th>
                                 <th className="border border-slate-300 ">DVT</th>

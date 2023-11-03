@@ -19,6 +19,9 @@ type Props = {
   check_out: string
 };
 const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
+  console.log("checkin", check_in)
+  console.log("check_out", check_out)
+
   const handleChitiet = async () => {
     router.push({
       pathname: '/chitiet',

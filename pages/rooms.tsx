@@ -24,34 +24,29 @@ const rooms = () => {
         mota: string;
     }
     const [phong, setPhong] = useState<Phong[]>([]);
-    const [check_in, setCheck_in] = useState("");
-    const [check_out, setCheck_out] = useState("");
+
     const [checkin, setCheckin] = useState(new Date())
     const [checkout, setCheckout] = useState(new Date())
     const [mincheckout, setMincheckout] = useState(new Date())
-    const handleClick =()=>{
-        console.log("ádfgnm", check_in)
-        console.log("cvdfg", check_out)
 
-    }
-    const handleCheckDate = (checki : Date)=>{
+    const handleCheckDate = (checki: Date) => {
         setCheckin(checki)
         let datecheckout = new Date(checki)
         datecheckout.setDate(datecheckout.getDate() + 1)
         setMincheckout(datecheckout)
         console.log(datecheckout)
         setCheckout(datecheckout)
-      }
+    }
 
     useEffect(() => {
-        const handleCheckDate = (checki : Date)=>{
+        const handleCheckDate = (checki: Date) => {
             setCheckin(checki)
             let datecheckout = new Date(checki)
             datecheckout.setDate(datecheckout.getDate() + 1)
             setMincheckout(datecheckout)
             console.log(datecheckout)
             setCheckout(datecheckout)
-          }
+        }
         const handlephong = async () => {
             try {
                 const params = {
@@ -104,6 +99,7 @@ const rooms = () => {
     //     // handleLoaiphong(id_loaiphong)
     // }, [])
 
+
     return (
         <div className={roboto.className}>
             <Header></Header>
@@ -112,14 +108,14 @@ const rooms = () => {
                     <p className="uppercase font-bold">bộ lọc tìm kiếm</p>
                     <p>Nhận phòng:</p>
                     <DatePicker
-                      className=""
-                      // type="datetime"
-                      selected={checkin}
-                      minDate={new Date()}
-                      // maxDate={new Date("10-30-2023")}
-                      // onChange={(date: Date) => setStartDate(date)}
-                      onChange={(date: Date) =>handleCheckDate((date))}
-                      dateFormat="dd/MM/yyyy"
+                        className=""
+                        // type="datetime"
+                        selected={checkin}
+                        minDate={new Date()}
+                        // maxDate={new Date("10-30-2023")}
+                        // onChange={(date: Date) => setStartDate(date)}
+                        onChange={(date: Date) => handleCheckDate((date))}
+                        dateFormat="dd/MM/yyyy"
                     />
                     {/* <input type="Date" 
                     className="border-2 border-gray-300" 
@@ -128,14 +124,14 @@ const rooms = () => {
                     /> */}
                     <p>Trả phòng:</p>
                     <DatePicker
-                      className=""
-                      // type="datetime"
-                      selected={checkout}
-                      minDate={mincheckout}
-                      // maxDate={new Date("10-30-2023")}
-                      // onChange={(date: Date) => setStartDate(date)}
-                      onChange={(date: Date) =>setCheckout((date))}
-                      dateFormat="dd/MM/yyyy"
+                        className=""
+                        // type="datetime"
+                        selected={checkout}
+                        minDate={mincheckout}
+                        // maxDate={new Date("10-30-2023")}
+                        // onChange={(date: Date) => setStartDate(date)}
+                        onChange={(date: Date) => setCheckout((date))}
+                        dateFormat="dd/MM/yyyy"
                     />
                     {/* <input type="Date" 
                     className="border-2 border-gray-300" 
@@ -164,17 +160,20 @@ const rooms = () => {
                     <div className="grid grid-cols-3 gap-5 pr-5">
                         {/* <button onClick={handlePhong}>click</button> */}
 
-                        
-                            {
-                                phong.map((phongs, indexP) => {
-                                    return (
-                                        <Rooms key={indexP} tenphong={phongs.tenphong} id_lp={phongs.id_LP} id_phong={phongs.id} check_in={check_in} check_out={check_out}/>                                        
-                                    )
 
-                                })
-                            }
+                        {
+                            phong.map((phongs, indexP) => {
 
-                       
+                                return (
+                                    <Rooms key={indexP} tenphong={phongs.tenphong} id_lp={phongs.id_LP} id_phong={phongs.id}
+                                        check_in={checkin.getDate() + "-" + (checkin.getMonth() + 1) + "-" + checkin.getFullYear()}
+                                        check_out={checkout.getDate() + "-" + (checkout.getMonth() + 1) + "-" + checkout.getFullYear()} />
+                                )
+
+                            })
+                        }
+
+
 
 
 

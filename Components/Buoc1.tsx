@@ -58,8 +58,9 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
   //     SDT: string,
   //     email: string
   //   }
-  const [roll, setRoll] = useState('')
   const [khachhang, setKhachhang] = useState<Khachhang[]>([]);
+  const [roll, setRoll] = useState('')
+
   const [CMND, setCMND] = useState("")
   const [SDT, setSDT] = useState("")
   const [email, setEmail] = useState("")

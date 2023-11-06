@@ -33,7 +33,8 @@ import Vitri_QL from '@/Components/quanly/Vitri_QL';
 import LoaiphongQL from '@/Components/quanly/LoaiphongQL ';
 import Phong_QL from '@/Components/quanly/Phong_QL';
 import NhanvienQL from '@/Components/quanly/Nhanvien_QL';
-
+import WallpaperIcon from '@mui/icons-material/Wallpaper';
+import HinhanhPhong from '@/Components/quanly/HinhanhPhong';
 
 export default function LabTabs() {
   interface Phong {
@@ -305,18 +306,18 @@ export default function LabTabs() {
         <TabPanel value="1">
           <div className="flex">
             <div className="w-2/12 border-r-2 border-black uppercase text-xl space-y-5">
-              <ListItemButton  onClick={() => setOption(1)} >
+              <ListItemButton onClick={() => setOption(1)} >
                 <ListItemIcon>
                   <CategoryIcon />
                 </ListItemIcon>
-                <ListItemText primary="cơ sở vật chất"/>
+                <ListItemText primary="cơ sở vật chất" />
               </ListItemButton>
 
               <ListItemButton onClick={() => setOption(2)}>
                 <ListItemIcon>
                   <ExtensionIcon />
                 </ListItemIcon>
-                <ListItemText  primary="Thiết bị" />
+                <ListItemText primary="Thiết bị" />
               </ListItemButton>
 
               <ListItemButton onClick={() => setOption(3)}>
@@ -330,7 +331,7 @@ export default function LabTabs() {
                 <ListItemIcon>
                   <DiscountIcon />
                 </ListItemIcon>
-                <ListItemText  primary="Khuyến mãi" />
+                <ListItemText primary="Khuyến mãi" />
               </ListItemButton>
 
               <ListItemButton onClick={() => setOption(5)}>
@@ -348,7 +349,7 @@ export default function LabTabs() {
 
             {option == 2 ? (
               <div className='w-10/12'>
-                <Thietbi_QL phong={phong}  csvc={csvc} />
+                <Thietbi_QL phong={phong} csvc={csvc} />
               </div>
             ) : null}
             {option == 3 ? (
@@ -382,7 +383,7 @@ export default function LabTabs() {
 
               <ListItemButton onClick={() => setOption(6)}>
                 <ListItemIcon>
-                  <PanoramaIcon />
+                  <WallpaperIcon />
                 </ListItemIcon>
                 <ListItemText primary="loại phòng" />
               </ListItemButton>
@@ -394,6 +395,12 @@ export default function LabTabs() {
                 <ListItemText primary="phòng" />
               </ListItemButton>
 
+              <ListItemButton onClick={() => setOption(10)}>
+                <ListItemIcon>
+                  <PanoramaIcon />
+                </ListItemIcon>
+                <ListItemText primary="Hình ảnh" />
+              </ListItemButton>
             </div>
             {option == 5 ? (
               <div className='w-10/12   '>
@@ -402,12 +409,18 @@ export default function LabTabs() {
             ) : null}
             {option == 6 ? (
               <div className='w-10/12   '>
-                <LoaiphongQL loaiphong = {loaiphong}/>
+                <LoaiphongQL loaiphong={loaiphong} />
               </div>
             ) : null}
             {option == 7 ? (
               <div className='w-10/12   '>
-                <Phong_QL/>
+                <Phong_QL />
+              </div>
+            ) : null}
+
+            {option == 10 ? (
+              <div className='w-10/12   '>
+                <HinhanhPhong />
               </div>
             ) : null}
           </div>
@@ -475,7 +488,7 @@ export default function LabTabs() {
             </div>
             {option == 8 ? (
               <div className='w-10/12'>
-                <NhanvienQL/>
+                <NhanvienQL />
               </div>
             ) : null}
             {option == 9 ? (

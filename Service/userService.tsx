@@ -611,6 +611,70 @@ export async function Datphong(params:{
     const data = await response.json();
     return data;
   }
+
+  //hinhanh
+  export async function ThemHinhanh(params:{
+    hinhanh: string,
+    id_Phong: number,
+
+    }): Promise<any> {
+      const response = await fetch(`http://localhost:8080/api/PostPictures`,
+      {
+        method:"POST",
+        headers: {
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify(params),
+      });
+      const data = await response.json();
+      return data;
+  }
+  export async function Layhinhanh(params: { id_layha: any }): Promise<any> {
+      const { id_layha } = params;
+      const response = await fetch(
+        `http://localhost:8080/api/Layhinhanh?keyword=${id_layha}`
+      );
+      const data = await response.json();
+      return data;
+  }
+  export async function Layhinhanh_IdPhong(params: { id_Phong: any }): Promise<any> {
+    const { id_Phong} = params;
+    const response = await fetch(
+      `http://localhost:8080/api/Layhinhanh_IdPhong?keyword=${id_Phong}`
+    );
+    const data = await response.json();
+    return data;
+  }
+
+    export async function SuaHinhanh(params:{
+      id: number;
+      hinhanh: string,
+      id_Phong: number,
+      }): Promise<any> {
+      const response = await fetch(`http://localhost:8080/api/SuaHinhanh`,
+      {
+        method:"POST",
+        headers: {
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify(params),
+      });
+      const data = await response.json();
+      return data;
+    }
+  
+    export async function XoaHinhanh(params:{id: number;}): Promise<any> {
+      const response = await fetch(`http://localhost:8080/api/XoaHinhanh`,
+      {
+        method:"DELETE",
+        headers: {
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify(params),
+      });
+      const data = await response.json();
+      return data;
+    }
 // export async function DangKy_KH(params: {
 //   hten_KH: string;
 //   Ngaysinh: string;

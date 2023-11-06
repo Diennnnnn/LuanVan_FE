@@ -1,9 +1,11 @@
-import { Loaiphong, Phong } from "@/Service/userService";
+import { Layhinhanh, Layhinhanh_IdPhong, Loaiphong, Phong } from "@/Service/userService";
 import { Montserrat } from "next/font/google";
 import Link from "next/link";
 import router from "next/router";
 import { type } from "os";
 import { useEffect, useState } from "react";
+import Image from 'next/image'
+
 
 const roboto = Montserrat({
   weight: '400',
@@ -25,8 +27,8 @@ const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
   const handleChitiet = async () => {
     router.push({
       pathname: '/chitiet',
-      query: { id_phong: id_phong, id_lp: id_lp, check_in, check_out}
-      
+      query: { id_phong: id_phong, id_lp: id_lp, check_in, check_out }
+
     })
   }
   interface Loaiphong {
@@ -35,9 +37,15 @@ const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
     songuoi: number;
     gia: number;
   }
+  interface HinhanhPhong {
+    id: number;
+    hinhanh: string;
+    id_Phong: number;
+
+  }
   const [loaiphong, setLoaiphong] = useState<Loaiphong[]>([]);
   const [id_loaiphong, setId_loaiphong] = useState(Number);
-
+  const [hinhanhPhong, setHinhanhPhong] = useState<HinhanhPhong[]>([]);
   useEffect(() => {
     const handleLoaiphong = async () => {
       try {
@@ -60,8 +68,30 @@ const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
 
 
     };
+    const Layhinhanh_IdPhongg = async () => {
+      try {
+        const params = {
+          id_Phong: "ALL",
+        };
+        console.log(params)
+        const response = await Layhinhanh_IdPhong(params);
+        const res: HinhanhPhong[] = response.layha;
+        console.log(response)
+        console.log(res)
+        setHinhanhPhong(res);
+        // res.map((res)=>{
+        //   setId(res.id)
+        //   console.log("id",id)
+        // })
+        // console.log(phongs)
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
     handleLoaiphong()
-  },[])
+    Layhinhanh_IdPhongg()
+  }, [])
 
   return (
     <div className={roboto.className}>
@@ -70,7 +100,30 @@ const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
           return (
             <>
               <div className="relative bg-white text-lg flex flex-col rounded-t-xl space-y-3 ">
-                <div className="bg-cover bg-[url('../public/khuA/A101/hinh7.jpg')] h-72 w-full rounded-t-xl"></div>
+                {
+                  hinhanhPhong.map((item2, index2) => {
+                    if (item2.id_Phong === id_phong) {
+                      return (
+                        <>
+                          <Image
+                            className="h-72 w-full rounded-t-xl"
+                            src={new Buffer(item2.hinhanh, "base64").toString("binary")}
+                            width={500}
+                            height={500}
+                            alt="Picture of the author"
+                          />
+                        </>
+                      )
+                    }
+                  })
+
+                }
+                {/* } */}
+                {/* <div className="preview-img bg-contain bg-no-repeat  h-72 w-full rounded-t-xl"
+                  style={{
+                    backgroundImage: `url(${new Buffer(hinhanhPhong[1].hinhanh, "base64").toString("binary")}})`,
+                  }}
+                ></div> */}
                 <p className="text-center ">{tenphong}</p>
                 <div className="flex justify-center">
                   <p className="pr-2 uppercase">Giá</p>
@@ -83,7 +136,8 @@ const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
                   <p className="uppercase pl-2">người</p>
                 </div>
                 <div className="text-center">{item.tenloaiphong}</div>
-                <button  onClick={handleChitiet} className="uppercase text-green-700 font-semibold text-center pb-3">xem chi tiết</button>
+                <button onClick={handleChitiet} className="uppercase text-green-700 font-semibold text-center pb-3">xem chi tiết</button>
+
               </div>
             </>
           )

@@ -101,7 +101,7 @@ const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
         loaiphong.map((item, index) => {
           return (
             <>
-              <div className="relative bg-white text-lg flex flex-col rounded-t-xl space-y-3 ">
+              <div className="relative hover:bg-gray-100 bg-white  text-lg flex flex-col rounded-t-xl space-y-3 ">
 
                 {
                   hinhanhPhong.length > 0 ?

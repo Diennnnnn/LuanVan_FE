@@ -103,12 +103,12 @@ const rooms = () => {
     return (
         <div className={roboto.className}>
             <Header></Header>
-            <div className="grid grid-cols-6 w-11/12 gap-2 bg-gray-100 m-auto mt-8">
+            <div className="grid grid-cols-6 w-11/12 gap-2 bg-gray-50 pb-10 m-auto mt-8">
                 <div className="col-span-1 pl-3 space-y-2 mt-6">
                     <p className="uppercase font-bold">bộ lọc tìm kiếm</p>
                     <p>Nhận phòng:</p>
                     <DatePicker
-                        className=""
+                        className="outline-none border-b-2 border-gray-300 pl-1"
                         // type="datetime"
                         selected={checkin}
                         minDate={new Date()}
@@ -124,7 +124,7 @@ const rooms = () => {
                     /> */}
                     <p>Trả phòng:</p>
                     <DatePicker
-                        className=""
+                        className="outline-none border-b-2 border-gray-300 pl-1"
                         // type="datetime"
                         selected={checkout}
                         minDate={mincheckout}

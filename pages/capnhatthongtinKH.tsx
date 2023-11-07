@@ -127,7 +127,7 @@ const capnhatthongtinKH = () => {
     <div className={roboto.className}>
       <Header />
       <div className="w-8/12 mt-8 border-2 border-gray-100 m-auto shadow-xl rounded-md pb-8">
-        <p className="font-semibold text-xl uppercase text-center m-5 ">thông tin khách hàng</p>
+        <p className="font-semibold text-xl uppercase text-center m-5 ">Cập nhật thông tin khách hàng</p>
         <div className="flex justify-center">
           <div className="basis-4/12 ">
             <img src={new Buffer(avt, "base64").toString("binary")} className="h-52 w-52 rounded-full m-auto mt-5" />

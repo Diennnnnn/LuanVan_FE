@@ -470,16 +470,16 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                     <p className="font-semibold text-lg">The Kupid Homestay</p>
                     <p className="text-sm">47 Đặng Thái Thân, Phường 3, Đà Lạt</p>
                   </div>
-                  <div className="bg-gray-200 mt-5 p-[3%] h-32 text-slate-700 text-base space-y-4">
+                  <div className=" mt-5 p-[3%] h-32 text-slate-700 text-base space-y-4">
                     <div className="flex ">
-                      <p className="text-sm basis-40">Ngày nhận phòng: </p>
+                      <p className="text-sm basis-2/5">Ngày nhận phòng: </p>
                       {check_in ?
                         <p className="text-base font-semibold">{check_in}, Từ 14:00</p>
 
                         :
                         <div className="space-y-1">
                           <DatePicker
-                            className=""
+                            className="outline-none border-b-2 border-gray-300"
                             // type="datetime"
                             selected={checkin}
                             minDate={new Date()}
@@ -504,7 +504,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
 
                         <div className="space-y-1">
                           <DatePicker
-                            className=""
+                            className="outline-none border-b-2 border-gray-300"
                             // type="datetime"
                             selected={checkout}
                             minDate={mincheckout}
@@ -520,7 +520,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                       {/* <p className="text-base">{check_out}, Trước 12:00</p> */}
                     </div>
                   </div>
-                  <div className=" m-5 text-lg flex">
+                  <div className=" m-3 text-lg flex">
                     <p className="basis-40 font-semibold">Loại phòng</p>
 
                     {tenphong ?
@@ -540,7 +540,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                               : null
                           }
                         }}
-                        sx={{ width: 300 }}
+                        sx={{ width: 300}}
 
                         renderInput={(params) => <TextField {...params}
                           label="Tên loại phòng"

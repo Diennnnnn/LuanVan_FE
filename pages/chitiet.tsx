@@ -8,7 +8,7 @@ import Header from "@/Components/Header";
 import Card1 from "@/Components/Card1";
 import Footer from "@/Components/Footer";
 import { GetServerSideProps } from "next";
-import { Danhmuccsvc, Dsthietbi, Loaiphong, Phong, Vitri } from "@/Service/userService";
+import { Danhmuccsvc, Dsthietbi, Layhinhanh_IdPhong, Loaiphong, Phong, Vitri } from "@/Service/userService";
 import router from "next/router";
 const data = [
   { img: "/hinh3.jpg" },
@@ -35,7 +35,7 @@ interface codeProductProps {
   check_out: string | null
 }
 
-const chitiet = ({ id_phong, id_lp , check_in, check_out}: codeProductProps) => {
+const chitiet = ({ id_phong, id_lp, check_in, check_out }: codeProductProps) => {
   // console.log(id_phong);
   // console.log(id_lp);
   interface Phong {
@@ -71,8 +71,14 @@ const chitiet = ({ id_phong, id_lp , check_in, check_out}: codeProductProps) => 
     id: number;
     tenCSVC: string;
     giagoc: number;
-    soluong:number;
+    soluong: number;
     thoigianmua: Date
+  }
+  interface HinhanhPhong {
+    id: number;
+    hinhanh: string;
+    id_Phong: number;
+
   }
   const [phong, setPhong] = useState<Phong[]>([]);
   const [loaiphong, setLoaiphong] = useState<Loaiphong[]>([]);
@@ -91,7 +97,7 @@ const chitiet = ({ id_phong, id_lp , check_in, check_out}: codeProductProps) => 
   const [id_CSVC, setId_CSVC] = useState(Number);
   // const [tenCSVC, setTenCSVC] = useState({arr[]});
   const [tenCSVC, setTenCSVC] = useState<string[]>([]);
-
+  const [hinhanhPhong, setHinhanhPhong] = useState<HinhanhPhong[]>([]);
 
   const [nav1, setNav1] = useState<any>()
   const [nav2, setNav2] = useState<any>()
@@ -107,11 +113,11 @@ const chitiet = ({ id_phong, id_lp , check_in, check_out}: codeProductProps) => 
   const handleDatphong = async () => {
     router.push({
       pathname: '/datphong',
-      query: {id_phong: id_phong, tenphong: tenphong, gia: gia, songuoi: songuoi, tenloaiphong:tenloaiphong, check_in: check_in, check_out:check_out} //ten bien: gia tri truyen vao
-      
+      query: { id_phong: id_phong, tenphong: tenphong, gia: gia, songuoi: songuoi, tenloaiphong: tenloaiphong, check_in: check_in, check_out: check_out } //ten bien: gia tri truyen vao
+
     })
   }
-  
+
   useEffect(() => {
 
     const handlephong = async () => {
@@ -220,31 +226,32 @@ const chitiet = ({ id_phong, id_lp , check_in, check_out}: codeProductProps) => 
 
     };
 
-    // const handledmcsvc = async () => {
-    //   try {
-    //     const params = {
-    //       id_dmcsvc: id_CSVC,
+    const Layhinhanh_IdPhongg = async () => {
+      try {
+        const params = {
+          id_Phong: id_phong,
+        };
+        console.log(params)
+        const response = await Layhinhanh_IdPhong(params);
+        const res: HinhanhPhong[] = response.layha;
+        console.log(response)
+        console.log(res)
+        setHinhanhPhong(res);
+        // res.map((res)=>{
+        //   setId(res.id)
+        //   console.log("id",id)
+        // })
+        // console.log(phongs)
 
-    //     };
-    //     console.log(params)
-    //     const response = await Danhmuccsvc(params);
-    //     const res: DanhmucCSVC[] = response.dmcsvc; //gán dữ liệu vào res
-    //     console.log(response)
-    //     console.log(res)
-    //     setDanhmuccsvc(res); //gán res vào setPhong
-    //     res.map((res) => {
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-    //     })
-
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-
-
-    // };
     handleLoaiphong()
     handlephong();
     handledsthietbi();
+    Layhinhanh_IdPhongg();
     // handledmcsvc();
   }, [])
 
@@ -266,7 +273,8 @@ const chitiet = ({ id_phong, id_lp , check_in, check_out}: codeProductProps) => 
                   arrows={false}
                   // fade={true}
                   asNavFor={nav2} ref={(slider1) => setNav1(slider1)}>
-                  {data.map((el, index) => <Card1 key={index} img={el.img}></Card1>)}
+                  {hinhanhPhong.map((item, index) => <Card1 key={index} img={new Buffer(item.hinhanh, "base64").toString("binary")} />)}
+                  {/* {data.map((el, index) => <Card1 key={index} img={el.img}></Card1>)} */}
                 </Slider>
               </div>
 
@@ -274,17 +282,15 @@ const chitiet = ({ id_phong, id_lp , check_in, check_out}: codeProductProps) => 
                 <Slider className=""
                   asNavFor={nav1}
                   ref={(slider2) => setNav2(slider2 || null)}
-                  slidesToShow={5}
+                  slidesToShow={2}
                   swipeToSlide={true}
                   focusOnSelect={true}
                   centerMode={true}
                   dots={true}
                   arrows={false}
-
-
                 >
-
-                  {data.map((el, index) => <Card key={index} img={el.img}></Card>)}
+                  {hinhanhPhong.map((item1, index1) => <Card key={index1} img={new Buffer(item1.hinhanh, "base64").toString("binary")} />)}
+                  {/* {data.map((el, index) => <Card key={index} img={el.img}></Card>)} */}
 
                 </Slider>
               </div>
@@ -308,7 +314,7 @@ const chitiet = ({ id_phong, id_lp , check_in, check_out}: codeProductProps) => 
 
                 <div className="">
                   {
-                    tenCSVC.map((item, index):React.ReactNode => {
+                    tenCSVC.map((item, index): React.ReactNode => {
                       return (
                         <><li key={index}>
                           {tenCSVC[index]}

@@ -675,6 +675,29 @@ export async function Datphong(params:{
       const data = await response.json();
       return data;
     }
+
+
+    export async function SuaTTKH(params:{
+      id: number;
+      hotenKH: string,
+      ngaysinh: Date,
+      gioitinh: string,
+      CMND: string,
+      SDT: string,
+      email: string,
+      avt: string,
+      }): Promise<any> {
+      const response = await fetch(`http://localhost:8080/api/SuaTTKH`,
+      {
+        method:"POST",
+        headers: {
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify(params),
+      });
+      const data = await response.json();
+      return data;
+    }
 // export async function DangKy_KH(params: {
 //   hten_KH: string;
 //   Ngaysinh: string;

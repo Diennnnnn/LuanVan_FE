@@ -90,7 +90,8 @@ export default function LabTabs() {
     ngaysinh: string,
     CMND: string,
     SDT: string,
-    email: string
+    email: string,
+    avt:string
   }
   interface Vitri {
     id: number;

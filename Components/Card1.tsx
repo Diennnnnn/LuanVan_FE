@@ -11,7 +11,7 @@ const Card = ({img}:Props)=>{
    return (
     <div>
         <div className="">
-            <img className="h-96  object-contain" src={img} alt="hahaha"></img>
+            <img className="h-96   object-contain" src={img} alt="hahaha"></img>
         </div>
     </div>
    ) 

@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import dayjs from "dayjs";
+import CommonUtils from "../CommonUtils";
+import { SuaTTKH } from "@/Service/userService";
 const roboto = Montserrat({
     weight: '400',
     subsets: ['latin'],
@@ -17,12 +19,101 @@ const KhachhangQL = ({ allkh }: Props) => {
         id: number;
         hotenKH: string;
         gioitinh: string,
-        ngaysinh: string,
+        ngaysinh: Date,
         CMND: string,
         SDT: string,
-        email: string
+        email: string,
+        avt: string
     }
     const [allkhachhangQL, setAllKhachhangQL] = useState<Khachhang[]>([]);
+    const [prevURLIMG, setPrevURLIMG] = useState("");
+    const [fileIMG, setFileIMG] = useState<File>()
+    const [avt, setAvt] = useState("");
+    const [id, setId] = useState(Number)
+    const [hotenKH, setHotenKH] = useState("")
+    const [CMND, setCMND] = useState("")
+    const [SDT, setSDT] = useState("")
+    const [email, setEmail] = useState("")
+    const [ngaysinh, setNgaysinh] = useState(new Date())
+    const [gioitinh, setGioitinh] = useState("")
+
+    const handleOnChangeImage = async (event: { target: { files: any; }; }) => {
+        console.log("img")
+        setFileIMG(event.target.files[0]);
+
+        let data = event.target.files;
+        let file = data[0];
+
+        if (file) {
+            let base64img = await CommonUtils.getBase64(file);
+            console.log("check base64 img: ", base64img);
+            let objectUrl = URL.createObjectURL(file);
+            console.log("check objectUrl img: ", objectUrl);
+
+            setAvt(base64img)
+            setPrevURLIMG(objectUrl)
+
+        }
+        console.log("setPrevURLIMG", prevURLIMG)
+
+    };
+
+    const handleSuaTTKH = (id: number, hotenKH: string, gioitinh: string, ngaysinh: Date, CMND: string, SDT: string, email: string, avt: string,) => {
+        // console.log("id", id)
+        // console.log("csvc", id_CSVC)
+        // console.log("id_Phong", id_Phong)
+        // console.log("soluong", soluong)
+        // console.log("thoigianbatdau", thoigianbatdau)
+        let date1 = new Date(ngaysinh)
+        setId(id)
+        setHotenKH(hotenKH)
+        setGioitinh(gioitinh)
+        setNgaysinh(date1)
+        setCMND(CMND)
+        setEmail(email)
+        setSDT(SDT)
+       if(avt != ''){
+        setPrevURLIMG(new Buffer(avt, "base64").toString("binary"))
+       }
+    }
+
+    const handleCapnhatTTKH = async () => {
+        // console.log("mota", mota)
+        // console.log("motaEN", motaEN)
+        let date1 = new Date(ngaysinh)
+
+        let res = await SuaTTKH(
+            {
+                id: id,
+                hotenKH: hotenKH,
+                gioitinh: gioitinh,
+                ngaysinh: ngaysinh,
+
+                CMND: CMND,
+                SDT: SDT,
+                email: email,
+                avt: avt
+
+            }
+        );
+        if (res && res.errCode === 0) {
+            setHotenKH(hotenKH)
+            setGioitinh(gioitinh)
+            setNgaysinh(date1)
+            setCMND(CMND)
+            setEmail(email)
+            setSDT(SDT)
+            setPrevURLIMG(new Buffer(avt, "base64").toString("binary"))
+            // setStep('them')
+            alert("Cập nhật thành công")
+
+
+        } else {
+            console.log(res)
+            alert("Cập nhậtkhông thành công")
+        };
+
+    }
 
     useEffect(() => {
         // console.log("csvc", csvc)
@@ -32,7 +123,28 @@ const KhachhangQL = ({ allkh }: Props) => {
         <div className={roboto.className}>
             <div className="w-11/12 m-auto">
                 <p className="font-semibold uppercase text-2xl text-center mt-5">Danh sách khách hàng</p>
+                <div className="flex space-x-4">
+                    <div className="preview-img-container w-4/12 pt-4">
+                        <input
+                            className=""
+                            id="preview-img"
+                            type="file"
+                            accept=".png,.jpg"
+                            hidden
+                            // onChange={(e) => setFileIMG(e.target.files?.[0])}
+                            onChange={(event) => handleOnChangeImage(event)}
+                        />
+                        <label className="lable-upload" htmlFor="preview-img">Chọn ảnh</label>
 
+                    </div>
+                    <div className="preview-img bg-contain bg-no-repeat  w-96 h-32"
+                        style={{
+                            backgroundImage: `url(${prevURLIMG})`,
+                        }}
+                    ></div>
+                </div>
+
+                <button onClick={handleCapnhatTTKH}>ehjkl</button>
                 <div className="mt-8">
                     <table className="border-separate border border-slate-400  m-auto text-center w-full">
                         <thead>
@@ -44,6 +156,9 @@ const KhachhangQL = ({ allkh }: Props) => {
                                 <th className="border border-slate-300 w-20">CCCD</th>
                                 <th className="border border-slate-300 w-20">Số điện thoại</th>
                                 <th className="border border-slate-300 w-20">Email</th>
+                                <th className="border border-slate-300 w-20">Avata</th>
+                                <th className="border border-slate-300 w-20">Tác vụ</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -62,6 +177,22 @@ const KhachhangQL = ({ allkh }: Props) => {
                                             <td className="border border-slate-300 p-2">{item.CMND}</td>
                                             <td className="border border-slate-300 p-2">{item.SDT}</td>
                                             <td className="border border-slate-300 p-2">{item.email}</td>
+                                            <td className="border border-slate-300 p-2">
+                                                <div
+                                                    className="preview-img bg-contain bg-no-repeat  w-96 h-32"
+                                                    // src={new Buffer(item.anhminhhoa, "base64").toString("binary")}
+                                                    style={{
+                                                        backgroundImage: `url(${new Buffer(item.avt, "base64").toString("binary")})`,
+                                                    }}
+                                                // onClick={() => openPreviewImg()}
+                                                >
+                                                </div>
+                                            </td>
+                                            <td className="border border-slate-300 p-2">
+                                                <button>
+                                                    <EditIcon onClick={() => handleSuaTTKH(item.id, item.hotenKH, item.gioitinh, item.ngaysinh, item.CMND, item.SDT, item.email, item.avt)} />
+                                                </button>
+                                            </td>
 
 
                                             {/* <td className="border border-slate-300 text-center">

@@ -59,7 +59,8 @@ const Header = () => {
     hotenKH: string;
     CMND: string,
     SDT: string,
-    email: string
+    email: string,
+    avt:string
   }
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -67,12 +68,15 @@ const Header = () => {
   const [hoten, setHoten] = useState("");
   const [id_KH, setId_KH] = useState(Number);
   const [log, setLog] = useState(Boolean)
+  const [log11, setLog11] = useState(Boolean)
+
   const [id_phong, setId_phong] = useState(Number)
   const [tenphong, setTenphong] = useState("")
   const [gia, setGia] = useState(Number)
   const [check_in, setCheck_in] = useState("")
   const [check_out, setCheck_out] = useState("")
   const [songuoi, setSonguoi] = useState(Number)
+  const [avt, setAvt] = useState("")
 
 
   const handleDatphong = async () => {
@@ -88,6 +92,12 @@ const Header = () => {
     router.push({
       pathname: '/thongtinKH',
       // query: { id_phong: id_phong, tenphong: tenphong, gia: gia, songuoi: songuoi, check_in: check_in, check_out: check_out } //ten bien: gia tri truyen vao
+
+    })
+  }
+  const handleUpdateInfor = async () => {
+    router.push({
+      pathname: '/capnhatthongtinKH',
 
     })
   }
@@ -118,6 +128,9 @@ const Header = () => {
       setLog(true)
       setKhachhang(khachhang1);
       const ressss: Khachhang[] = khachhang1;
+      ressss.map((i)=>{
+        setAvt(new Buffer(i.avt, "base64").toString("binary"))
+      })
     }
 
   }, []);
@@ -149,7 +162,7 @@ const Header = () => {
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                     variant="dot"
                   >
-                    <Avatar alt="Remy Sharp" />
+                    <Avatar src={avt} />
                   </StyledBadge>
                   // <Avatar alt="Semy Sharp" src="/hinh10.jpg" />
 
@@ -160,6 +173,7 @@ const Header = () => {
               log === false ?
                 null : (
                   (
+
                     <Menu
                       sx={{ mt: '45px' }}
                       id="menu-appbar"
@@ -181,7 +195,7 @@ const Header = () => {
                           <PermContactCalendarIcon/>Trang cá nhân
                         </Typography>
                       </MenuItem>
-                      <MenuItem onClick={handleInfor}>
+                      <MenuItem onClick={handleUpdateInfor}>
                         <Typography textAlign="center" sx={{ margin: 1 }}>
                           <EditIcon/>Cập nhật thông tin
                         </Typography>

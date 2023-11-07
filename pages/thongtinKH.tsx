@@ -3,12 +3,15 @@ import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
 
 import { useEffect, useState } from "react";
+import Edit from "@mui/icons-material/Edit";
+import Delete from "@mui/icons-material/Delete";
+import dayjs from "dayjs";
 const roboto = Montserrat({
   weight: '400',
   subsets: ['latin'],
   display: 'swap',
 })
-const thongtinKH = () =>{
+const thongtinKH = () => {
   interface Khachhang {
     id: number;
     hotenKH: string;
@@ -16,11 +19,14 @@ const thongtinKH = () =>{
     ngaysinh: string,
     CMND: string,
     SDT: string,
-    email: string
+    email: string,
+    avt: string
   }
   const [hotenKH, setHotenKH] = useState("")
   const [CMND, setCMND] = useState("")
   const [SDT, setSDT] = useState("")
+  const [avt, setAvt] = useState("")
+
   const [email, setEmail] = useState("")
   const [ngaysinh, setNgaysinh] = useState("")
   const [gioitinh, setGioitinh] = useState("")
@@ -38,7 +44,7 @@ const thongtinKH = () =>{
     console.log(roll)
   }
   useEffect(() => {
-    
+
     let khachhang1 = JSON.parse(localStorage.getItem('khachhang') || '{}');
 
     if (Object.keys(khachhang1).length === 0) {
@@ -58,55 +64,55 @@ const thongtinKH = () =>{
         setCMND(res.CMND)
         setEmail(res.email)
         setSDT(res.SDT)
+        setAvt(res.avt)
+
         setRoll(res.gioitinh)
       })
 
     }
   }, []);
- 
-  return(
-    <div className={roboto.className }>
-        <Header/>
-        <div className="w-8/12 mt-8 border-2 border-gray-100 m-auto rounded-md">
-          <p className="font-semibold text-xl uppercase text-center m-5 ">thông tin khách hàng</p>
-          <div className="grid grid-cols-2 gap-3 m-3 ">
-            <div className="col-span-1 ">
-              <div className="flex ">
-                <div className="basis-1/4 space-y-5 ">
-                <p>Họ và tên: </p>
-                <p>Ngày sinh:</p>
-                <p>Giới tính:</p>
-                </div>
 
-                <div className="basis-3/4 space-y-5">
-                <input type="text" className="outline-none w-4/5 border-b-2 border-gray-400" value={hotenKH}/>
-                <input type="date" className="outline-none w-4/5 border-b-2 border-gray-400" value={ngaysinh}/>
-                <div className="space-x-7 ">
-                  <input type="radio" className=""  value='Nam' name='roll' checked={roll === "Nam"}/>  Nam
-                  <input type="radio" className=""  value='Nữ' name='roll' checked={roll === "Nữ"}/>  Nữ
-                </div>
-                </div>
-              </div>
+  return (
+    <div className={roboto.className}>
+      <Header />
+      <div className="w-8/12 mt-8 border-2 border-gray-100 m-auto shadow-xl rounded-md pb-8">
+        <p className="font-semibold text-xl uppercase text-center m-5 ">thông tin khách hàng</p>
+        <div className="flex justify-center">
+          <div className="basis-4/12">
+            <img src={new Buffer(avt, "base64").toString("binary")} className="h-52 w-52 rounded-full ml-[10%] mt-5" />
+          </div>
+
+          <div className=" basis-6/12 space-y-5 ">
+            <div className="flex">
+              <p className="basis-4/12">Họ và tên: </p>
+              <p className="w-4/5 border-b-2 border-gray-400" >{hotenKH}</p>
             </div>
-            
-            <div className="col-span-1 ">
-              <div className="flex ">
-                <div className="basis-1/4 space-y-5 ">
-                <p>CCCD:</p>
-                <p>Số điện thoại:</p>
-                <p>Email:</p>
-                </div>
-
-                <div className="basis-3/4 space-y-5">
-                <input type="text" className="outline-none w-4/5 border-b-2 border-gray-400" value={CMND}/>
-                <input type="" className="outline-none w-4/5 border-b-2 border-gray-400 " value={SDT}/>
-                <input type="" className="outline-none w-4/5 border-b-2 border-gray-400" value={email}/>
-                </div>
-              </div>
+            <div className="flex">
+              <p className="basis-4/12">Ngày sinh:</p>
+              <p className="w-4/5 border-b-2 border-gray-400">{dayjs(ngaysinh).format("DD/MM/YYYY")}</p>
+            </div>
+            <div className="flex">
+              <p className="basis-4/12">Giới tính:</p>
+              <p className="w-4/5 border-b-2 border-gray-400">{gioitinh}</p>
+            </div>
+            <div className="flex">
+              <p className="basis-4/12">CCCD:</p>
+              <p className="w-4/5 border-b-2 border-gray-400" >{CMND} </p>
+            </div>
+            <div className="flex">
+              <p className="basis-4/12">Số điện thoại:</p>
+              <p className="w-4/5 border-b-2 border-gray-400 " >{SDT} </p>
+            </div>
+            <div className="flex">
+              <p className="basis-4/12">Email:</p>
+              <p className="w-4/5 border-b-2 border-gray-400" >{email} </p>
             </div>
           </div>
+
+
         </div>
-        {/* <Footer/> */}
+      </div>
+      {/* <Footer/> */}
     </div>
 
   )

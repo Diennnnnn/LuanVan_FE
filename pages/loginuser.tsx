@@ -99,13 +99,31 @@ const SignInOTP = () => {
 
     result
       .confirm(otp)
-      .then((result: any) => {
+      .then(async (result: any) => {
         setStep("VERIFY_SUCCESS");
         router.push({
           pathname: '/',
           // query: { phoneNumber: phoneNumber },
         })
-        handleKhachhang(sdt)
+        // handleKhachhang(sdt)
+        try {
+          const params = {
+            SDT :sdt,
+          };
+          console.log(params)  
+          const response = await Khachhang(params);
+          const res: Khachhang[] = response.khachhang;
+           //luu khachhang len local storage
+           localStorage.setItem('khachhang', JSON.stringify(res));
+          console.log(res)
+          setKhachhang(res);
+    
+    
+             
+    
+        } catch (error) {
+          console.log(error);
+        }
       })
       .catch((err: any) => {
         alert("Incorrect code");

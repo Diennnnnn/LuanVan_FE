@@ -6,8 +6,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useEffect, useState } from "react";
 import Edit from "@mui/icons-material/Edit";
 import Delete from "@mui/icons-material/Delete";
-import { SuaTTKH } from "@/Service/userService";
+import { AllKhachhang, SuaTTKH, XoaAvtKH } from "@/Service/userService";
 import CommonUtils from "@/Components/CommonUtils";
+import router from "next/router";
 const roboto = Montserrat({
   weight: '400',
   subsets: ['latin'],
@@ -37,17 +38,32 @@ const capnhatthongtinKH = () => {
   const [roll, setRoll] = useState('')
   const [id, setId] = useState(Number)
   const [prevURLIMG, setPrevURLIMG] = useState("");
+  const [allkh, setAllkh] = useState<Khachhang[]>([]);
+  const [fileIMG, setFileIMG] = useState<File>()
+  const [hinhanh, setHinhanh] = useState("");
+
+  const handleOnChangeImage = async (event: { target: { files: any; }; }) => {
+    console.log("img")
+    setFileIMG(event.target.files[0]);
+
+    let data = event.target.files;
+    let file = data[0];
+
+    if (file) {
+      let base64img = await CommonUtils.getBase64(file);
+      console.log("check base64 img: ", base64img);
+      let objectUrl = URL.createObjectURL(file);
+      console.log("check objectUrl img: ", objectUrl);
+
+      setAvt(base64img)
+      setPrevURLIMG(objectUrl)
+
+    }
+    console.log("setPrevURLIMG", prevURLIMG)
+
+  };
 
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // e.preventDefault();
-    // if (e.target.value === roll) {
-    // setRoll('false')
-    // } else {
-    setRoll(e.target.value)
-    // }
-    console.log(roll)
-  }
   const handleCapnhatTTKH = async () => {
     console.log("id", id)
     console.log("hotenKH", hotenKH)
@@ -70,11 +86,38 @@ const capnhatthongtinKH = () => {
         CMND: CMND,
         SDT: SDT,
         email: email,
-        avt: new Buffer(avt, "base64").toString("binary")
+        avt: avt
 
       }
     );
     if (res && res.errCode === 0) {
+      //remove localstorage
+      // localStorage.removeItem("khachhang");
+
+      //lay TTKH theo id
+      try {
+        const params = {
+          id_allkh: id,
+        };
+        console.log(params)
+
+        const response = await AllKhachhang(params);
+        const res: Khachhang[] = response.allkh;
+        console.log(response)
+        console.log("ressss",res)
+        setAllkh(res);
+        localStorage.setItem('khachhang', JSON.stringify(res));
+
+        // localStorage.setItem('khachhang', JSON.stringify(res));
+
+      } catch (error) {
+        console.log(error);
+      }
+
+      router.push({
+        pathname: '/thongtinKH',
+
+      })
       setHotenKH('')
       setGioitinh('')
       setNgaysinh(new Date())
@@ -92,6 +135,47 @@ const capnhatthongtinKH = () => {
       alert("Cập nhậtkhông thành công")
     };
 
+  }
+
+  const handleDeleteAvt = async () =>{
+    let res = await XoaAvtKH(
+      {
+        id: id,       
+
+      }
+    );
+    if( res && res.errCode === 0){
+      alert("Xóa Avatar thành công")
+      try {
+        const params = {
+          id_allkh: id,
+        };
+        console.log(params)
+
+        const response = await AllKhachhang(params);
+        const res: Khachhang[] = response.allkh;
+        console.log(response)
+        console.log("ressss",res)
+        setAllkh(res);
+        localStorage.setItem('khachhang', JSON.stringify(res));
+
+        // localStorage.setItem('khachhang', JSON.stringify(res));
+
+      } catch (error) {
+        console.log(error);
+      }
+
+      router.push({
+        pathname: '/thongtinKH',
+
+      })
+    }
+    else{
+      console.log(res)
+
+      alert("Xóa Avatar KHÔNG thành công")
+
+    }
   }
   useEffect(() => {
 
@@ -115,8 +199,9 @@ const capnhatthongtinKH = () => {
         setCMND(res.CMND)
         setEmail(res.email)
         setSDT(res.SDT)
-        setAvt(res.avt)
-
+        if (res.avt != null){
+          setAvt(new Buffer(res.avt, "base64").toString("binary"))
+        }
         setRoll(res.gioitinh)
       })
 
@@ -130,10 +215,29 @@ const capnhatthongtinKH = () => {
         <p className="font-semibold text-xl uppercase text-center m-5 ">Cập nhật thông tin khách hàng</p>
         <div className="flex justify-center">
           <div className="basis-4/12 ">
-            <img src={new Buffer(avt, "base64").toString("binary")} className="h-52 w-52 rounded-full m-auto mt-5" />
+            
+            <img
+              src={
+                prevURLIMG ?  prevURLIMG  : avt
+                // new Buffer(avt, "base64").toString("binary")
+              }
+              className="h-52 w-52 rounded-full m-auto mt-5" />
             <div className="text-center space-x-5 mt-5">
-              <button className="bg-green-400 h-8 w-8 rounded-full hover:bg-green-500"><Edit /></button>
-              <button className="bg-green-400 h-8 w-8 rounded-full hover:bg-green-500"><Delete /></button>
+              <input
+                className="bg-green-400 h-8 w-8 rounded-full hover:bg-green-500"
+                id="preview-img"
+                type="file"
+                accept=".png,.jpg"
+                hidden
+                // onChange={(e) => setFileIMG(e.target.files?.[0])}
+                onChange={(event) => handleOnChangeImage(event)}
+              />
+              <label className="lable-upload bg-green-400 h-8 w-8 rounded-full hover:bg-green-500" htmlFor="preview-img">
+                <Edit /><i className="fas fa-upload"></i>
+              </label>
+              {/* <button className="bg-green-400 h-8 w-8 rounded-full hover:bg-green-500" ><Edit /></button> */}
+
+              <button onClick={()=>handleDeleteAvt()} className="bg-green-400 h-8 w-8 rounded-full hover:bg-green-500"><Delete /></button>
             </div>
           </div>
 
@@ -157,8 +261,8 @@ const capnhatthongtinKH = () => {
               />
               {/* <input type="date" className="outline-none w-4/5 border-b-2 border-gray-400" value={ngaysinh} /> */}
               <div className="space-x-7 ">
-                <input type="radio" onChange={(e) => setRoll(e.target.value)} className="" value='Nam' name='roll' checked={roll === "Nam"} />  Nam
-                <input type="radio" onChange={(e) => setRoll(e.target.value)} className="" value='Nữ' name='roll' checked={roll === "Nữ"} />  Nữ
+                <input type="radio" onChange={(e) => setGioitinh(e.target.value)} className="" value='Nam' name='gioitinh' checked={gioitinh === "Nam"} />  Nam
+                <input type="radio" onChange={(e) => setGioitinh(e.target.value)} className="" value='Nữ' name='gioitinh' checked={gioitinh === "Nữ"} />  Nữ
               </div>
               <input type="text" className="outline-none w-4/5 border-b-2 border-gray-400" value={CMND} onChange={(e) => setCMND(e.target.value)} />
               <input type="" className="outline-none w-4/5 border-b-2 border-gray-400 " value={SDT} onChange={(e) => setSDT(e.target.value)} />
@@ -166,7 +270,7 @@ const capnhatthongtinKH = () => {
             </div>
           </div>
         </div>
-        <button onClick={handleCapnhatTTKH}>zxcvbnm</button>
+        <button onClick={handleCapnhatTTKH}>Cap nhat</button>
 
       </div>
       {/* <Footer/> */}

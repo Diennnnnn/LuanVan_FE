@@ -698,6 +698,54 @@ export async function Datphong(params:{
       const data = await response.json();
       return data;
     }
+
+
+    export async function ThemTTKH_SDT(params:{
+     sdt: string
+      }): Promise<any> {
+      const response = await fetch(`http://localhost:8080/api/ThemTTKH_SDT`,
+      {
+        method:"POST",
+        headers: {
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify(params),
+      });
+      const data = await response.json();
+      return data;
+    }
+
+    export async function XoaAvtKH(params:{
+      id: number
+       }): Promise<any> {
+       const response = await fetch(`http://localhost:8080/api/XoaAvtKH`,
+       {
+         method:"POST",
+         headers: {
+           "Content-Type":"application/json",
+         },
+         body: JSON.stringify(params),
+       });
+       const data = await response.json();
+       return data;
+     }
+
+     export async function VNPay(params:{  
+          amount: number // số tiền
+          bankCode: string
+       }): Promise<any> {
+       const response = await fetch(`http://localhost:8080/order/create_payment_url`,
+       {
+         method:"POST",
+         headers: {
+           "Content-Type":"application/json",
+         },
+         body: JSON.stringify(params),
+       });
+       const data = await response.json();
+       return data;
+     }
+
 // export async function DangKy_KH(params: {
 //   hten_KH: string;
 //   Ngaysinh: string;

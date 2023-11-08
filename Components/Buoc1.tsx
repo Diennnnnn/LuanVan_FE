@@ -88,36 +88,36 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
   const [valueCombobox1, setValueCombobox1] = useState("")
 
 
-  //   const handleDatphong = async () => {
-  //     console.log("hoten", hoten)
-  //     console.log("id_KH", id_KH)
-  //     console.log("id_phong:", id_phong)
-  //     console.log("ngaydat", new Date)
-  //     console.log("check_in", check_in)
-  //     console.log("check_out", check_out)
-  //     console.log("songuoi1", songuoi1)
+    const handleDatphong = async () => {
+      // console.log("hoten", hoten)
+      console.log("id_KH", id_KH)
+      console.log("id_phong:", id_phong)
+      console.log("ngaydat", new Date)
+      console.log("check_in", check_in)
+      console.log("check_out", check_out)
+      console.log("songuoi1", songuoi1)
 
-  //     if (id_phong && check_in && check_out && songuoi) {
-  //       let res = await Datphong(
-  //         {
-  //           id_KH: id_KH,
-  //           id_phong: id_phong,
-  //           ngaydat: ngaydat,
-  //           check_in: check_in,
-  //           check_out: check_out,
-  //           songuoi: songuoi
+      if (id_phong && check_in && check_out && songuoi) {
+        let res = await Datphong(
+          {
+            id_KH: id_KH,
+            id_phong: id_phong,
+            ngaydat: new Date(),
+            check_in: check_in,
+            check_out: check_out,
+            songuoi: songuoi
 
-  //         }
-  //       );
-  //       if (res && res.errCode === 0) {
-  //         alert("Đặt lịch thành công")
-  //       } else {
-  //         console.log(res)
-  //         alert("Đặt phòng không thành công")
-  //       };
-  //     }
+          }
+        );
+        if (res && res.errCode === 0) {
+          alert("Đặt lịch thành công")
+        } else {
+          console.log(res)
+          alert("Đặt phòng không thành công")
+        };
+      }
 
-  //   }
+    }
   const handleCheckDate = (checki: Date) => {
     setCheckin(checki)
     let datecheckout = new Date(checki)
@@ -539,10 +539,12 @@ const Buoc1 = ({ tenphong, id_phong, check_in, check_out, gia, songuoi, tenloaip
             }
 
           </div>
-        </div>
 
+        </div>
       </div>
       {/* onClick={()=>setStep("Buoc2")} */}
+      <button onClick={()=>handleDatphong()}>click</button>
+
       {/* <div className="text-center mt-6"><button onClick={handleDatphong} className="border-2 border-green-600 text-xl uppercase h-10 w-56 rounded-lg hover:bg-green-600">Tiếp tục</button></div> */}
     </div>
 

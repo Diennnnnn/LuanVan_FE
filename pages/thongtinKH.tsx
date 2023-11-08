@@ -64,7 +64,9 @@ const thongtinKH = () => {
         setCMND(res.CMND)
         setEmail(res.email)
         setSDT(res.SDT)
-        setAvt(res.avt)
+        if (res.avt != null){
+          setAvt(new Buffer(res.avt, "base64").toString("binary"))
+        }
 
         setRoll(res.gioitinh)
       })
@@ -79,7 +81,11 @@ const thongtinKH = () => {
         <p className="font-semibold text-xl uppercase text-center m-5 ">thông tin khách hàng</p>
         <div className="flex justify-center">
           <div className="basis-4/12">
-            <img src={new Buffer(avt, "base64").toString("binary")} className="h-52 w-52 rounded-full ml-[10%] mt-5" />
+            <img
+                         src={avt}
+
+            //  src={new Buffer(avt, "base64").toString("binary")}
+              className="h-52 w-52 rounded-full ml-[10%] mt-5" />
           </div>
 
           <div className=" basis-6/12 space-y-5 ">

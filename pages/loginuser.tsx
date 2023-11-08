@@ -7,21 +7,21 @@ import { useRouter } from "next/router";
 import { render } from "react-dom";
 import App from "next/app";
 import Router from "next/router";
-import { Khachhang } from "@/Service/userService";
+import { Khachhang, ThemTTKH_SDT } from "@/Service/userService";
 
 // type Props = {
 //   sdt: String;
 // };
 
 const SignInOTP = () => {
-  interface Khachhang{
+  interface Khachhang {
     id: number;
     hotenKH: string;
     gioitinh: string,
     ngaysinh: string,
     CMND: string,
     SDT: string,
-    email:string
+    email: string
   }
   // const SignInOTP = ({sdt}: Props) => {
   // const SignInOTP = (this.props.phoneNumber) => {
@@ -39,16 +39,16 @@ const SignInOTP = () => {
     console.log("phoneNumber", phoneNumber)
     try {
       const params = {
-        SDT :phoneNumber,
+        SDT: phoneNumber,
       };
-      console.log(params)  
+      console.log(params)
       const response = await Khachhang(params);
       const res: Khachhang[] = response.khachhang;
       console.log(res)
       setKhachhang(res);
 
 
-          //luu khachhang len local storage
+      //luu khachhang len local storage
       localStorage.setItem('khachhang', JSON.stringify(res));
 
     } catch (error) {
@@ -62,12 +62,12 @@ const SignInOTP = () => {
     if (e.target.value === "") return;
     let temp: any
     try {
-      temp =e.target.value?.slice(1, 10)
-      setPhoneNumber("+84"+temp)
+      temp = e.target.value?.slice(1, 10)
+      setPhoneNumber("+84" + temp)
       console.log("temp", temp)
     } catch (error) {
       console.log(error);
-    }   
+    }
   };
 
   const signin = () => {
@@ -108,19 +108,47 @@ const SignInOTP = () => {
         // handleKhachhang(sdt)
         try {
           const params = {
-            SDT :sdt,
+            SDT: sdt,
           };
-          console.log(params)  
+          console.log(params)
           const response = await Khachhang(params);
           const res: Khachhang[] = response.khachhang;
-           //luu khachhang len local storage
-           localStorage.setItem('khachhang', JSON.stringify(res));
+          console.log("sdfsdfsd", res.length)
+          if (res.length === 0) {
+            let res = await ThemTTKH_SDT(
+              {
+                sdt: sdt
+
+              }
+            );
+            if (res && res.errCode === 0) {
+              try {
+                const params = {
+                  SDT: sdt,
+                };
+                console.log(params)
+                const response2 = await Khachhang(params);
+                const res2: Khachhang[] = response2.khachhang;
+                //luu khachhang len local storage
+                localStorage.setItem('khachhang', JSON.stringify(res2));
+                console.log(res2)
+                setKhachhang(res2);
+              } catch (error) {
+                console.log(error);
+              }
+            } else {
+              console.log(res)
+              alert("Tài khoản không tồn tại")
+            };
+          }else{
+          //luu khachhang len local storage
+          localStorage.setItem('khachhang', JSON.stringify(res));
           console.log(res)
           setKhachhang(res);
-    
-    
-             
-    
+          }
+
+
+
         } catch (error) {
           console.log(error);
         }
@@ -133,14 +161,14 @@ const SignInOTP = () => {
     // }
   };
 
-//   const handleSuccess = (phoneNumber: string) => {
-//     console.log("sdt", phoneNumber)
-// ;
-//     router.push({
-//       pathname: '/thongtinKH',
-//       // query: { phoneNumber: phoneNumber },
-//     })
-//   }
+  //   const handleSuccess = (phoneNumber: string) => {
+  //     console.log("sdt", phoneNumber)
+  // ;
+  //     router.push({
+  //       pathname: '/thongtinKH',
+  //       // query: { phoneNumber: phoneNumber },
+  //     })
+  //   }
 
   return (
     <div style={{ marginTop: 100 }}>

@@ -60,7 +60,7 @@ const Header = () => {
     CMND: string,
     SDT: string,
     email: string,
-    avt:string
+    avt: string
   }
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -84,7 +84,7 @@ const Header = () => {
       pathname: '/datphong',
       // query: { id_phong: id_phong, tenphong: tenphong, gia: gia, songuoi: songuoi, check_in: check_in, check_out: check_out } //ten bien: gia tri truyen vao
       // tenphong={tenphong || ''} gia={gia  ||0} songuoi={songuoi || 0} id_phong={id_phong || 0} check_in={check_in || ''} check_out={check_out || ''}
-      query: { id_phong: null, tenphong: null, gia: null, songuoi: null, check_in: null, check_out: null, tenloaiphong: null  } //ten bien: gia tri truyen vao
+      query: { id_phong: null, tenphong: null, gia: null, songuoi: null, check_in: null, check_out: null, tenloaiphong: null } //ten bien: gia tri truyen vao
 
     })
   }
@@ -128,8 +128,11 @@ const Header = () => {
       setLog(true)
       setKhachhang(khachhang1);
       const ressss: Khachhang[] = khachhang1;
-      ressss.map((i)=>{
-        setAvt(new Buffer(i.avt, "base64").toString("binary"))
+      ressss.map((i) => {
+        if (i.avt != null){
+          setAvt(new Buffer(i.avt, "base64").toString("binary"))
+        }
+          
       })
     }
 
@@ -192,21 +195,21 @@ const Header = () => {
                     >
                       <MenuItem onClick={handleInfor}>
                         <Typography textAlign="center" sx={{ margin: 1 }}>
-                          <PermContactCalendarIcon/>Trang cá nhân
+                          <PermContactCalendarIcon />Trang cá nhân
                         </Typography>
                       </MenuItem>
                       <MenuItem onClick={handleUpdateInfor}>
                         <Typography textAlign="center" sx={{ margin: 1 }}>
-                          <EditIcon/>Cập nhật thông tin
+                          <EditIcon />Cập nhật thông tin
                         </Typography>
                       </MenuItem>
-                      <hr className="w-10/12 m-auto"/>
+                      <hr className="w-10/12 m-auto" />
                       <MenuItem onClick={handleOnClick}>
                         <Typography textAlign="center" sx={{ margin: 1 }}>
                           <LogoutIcon />Đăng xuất
                         </Typography>
                       </MenuItem>
-                      
+
                     </Menu>
                   )
                 )

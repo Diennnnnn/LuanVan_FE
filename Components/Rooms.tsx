@@ -21,8 +21,8 @@ type Props = {
   check_out: string
 };
 const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
-  console.log("checkin", check_in)
-  console.log("check_out", check_out)
+  // console.log("checkin", check_in)
+  // console.log("check_out", check_out)
 
   const handleChitiet = async () => {
     router.push({
@@ -80,12 +80,6 @@ const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
         console.log(response)
         console.log(res)
         setHinhanhPhong(res);
-        // res.map((res) => {
-        //   if (res.id_Phong === id_phong) {
-        //     SetI(res.id)
-        //   }
-        // })
-        // console.log(phongs)
 
       } catch (error) {
         console.log(error);

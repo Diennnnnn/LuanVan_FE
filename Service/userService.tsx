@@ -130,6 +130,13 @@ export async function Datphong(params:{
   check_in: string;
   check_out: string;
   songuoi: number;
+  tongtien:number,
+  thanhtoan:string,
+  trangthai:string,
+  ghichu:string,
+  hotennguoio:string,
+  SDT_nguoio:string,
+  CCCD_nguoio:string
   }): Promise<any> {
     const response = await fetch(`http://localhost:8080/api/Datphong`,
     {
@@ -746,6 +753,23 @@ export async function Datphong(params:{
        return data;
      }
 
+
+  export async function LayPhieudat(params: { id_pd: any }): Promise<any> {
+    const { id_pd} = params;
+    const response = await fetch(
+      `http://localhost:8080/api/LayPhieudat?keyword=${id_pd}`
+    );
+    const data = await response.json();
+    return data;
+  }
+  export async function Phieudat_idKH(params: { phieudat_idKH: any }): Promise<any> {
+    const { phieudat_idKH } = params;
+    const response = await fetch(
+      `http://localhost:8080/api/LayPhieudat_idKH?keyword=${phieudat_idKH}`
+    );
+    const data = await response.json();
+    return data;
+  }
 // export async function DangKy_KH(params: {
 //   hten_KH: string;
 //   Ngaysinh: string;

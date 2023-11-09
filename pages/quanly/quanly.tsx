@@ -35,6 +35,7 @@ import Phong_QL from '@/Components/quanly/Phong_QL';
 import NhanvienQL from '@/Components/quanly/Nhanvien_QL';
 import WallpaperIcon from '@mui/icons-material/Wallpaper';
 import HinhanhPhong from '@/Components/quanly/HinhanhPhong';
+import Phieudat_QL from '@/Components/quanly/Phieudat_QL';
 
 export default function LabTabs() {
   interface Phong {
@@ -181,22 +182,6 @@ export default function LabTabs() {
     };
 
 
-    // const handleThietbi = async () => {
-    //   try {
-    //     const params = {
-    //       id_phong: "ALL",
-    //     };
-    //     console.log(params)
-
-    //     const response = await Dsthietbi(params);
-    //     const res: Dsthietbi[] = response.dstb;
-    //     console.log(response)
-    //     console.log(res)
-    //     setThietbi(res);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
     const handleVitri = async () => {
       try {
         const params = {
@@ -298,9 +283,9 @@ export default function LabTabs() {
           <TabList onChange={handleChange} aria-label="lab API tabs example" centered variant="fullWidth">
             <Tab icon={<HolidayVillage />} iconPosition="start" label="home" sx={{ color: 'green' }} value="1" />
             <Tab icon={<MeetingRoom />} iconPosition="start" label="phòng" sx={{ color: 'green' }} value="2" />
-            <Tab icon={<AssignmentIndIcon />} iconPosition="start" label="thông tin" sx={{ color: 'green' }} value="4" />
-            <Tab icon={<ListIcon />} iconPosition="start" label="Phiếu đặt" sx={{ color: 'green' }} value="5" />
-            <Tab icon={<ListIcon />} iconPosition="start" label="Doanh thu" sx={{ color: 'green' }} value="6" />
+            <Tab icon={<AssignmentIndIcon />} iconPosition="start" label="thông tin" sx={{ color: 'green' }} value="3" />
+            <Tab icon={<ListIcon />} iconPosition="start" label="Phiếu đặt" sx={{ color: 'green' }} value="4" />
+            <Tab icon={<ListIcon />} iconPosition="start" label="Doanh thu" sx={{ color: 'green' }} value="5" />
 
           </TabList>
         </Box>
@@ -427,49 +412,7 @@ export default function LabTabs() {
           </div>
         </TabPanel>
 
-        {/* <TabPanel value="3">
-          <div className='flex border-2 border-green-400 h-96  overflow-scroll'>
-            <div className='w-8/12'></div>
-            <table className=''>
-              <thead>
-                <tr>
-                  <th className="border border-slate-300 text-center">#</th>
-                  <th className="border border-slate-300 text-center">Tên phim</th>
-                  <th className="border border-slate-300 text-center">Đạo diễn</th>
-                  <th className="border border-slate-300 text-center">Diễn viên</th>
-                  <th className="border border-slate-300 text-center">Nhà sản xuất</th>
-                  <th className="border border-slate-300 text-center">Ngôn ngữ</th>
-                  <th className="border border-slate-300 text-center">Tóm tắt</th>
-                  <th className="border border-slate-300 text-center">Thời lượng</th>
-                  <th className="border border-slate-300 text-center">Tác vụ</th>
-                  <th className="border border-slate-300 text-center">Poster</th>
-                  <th className="border border-slate-300 text-center">Trailer</th>
-                  <th className="border border-slate-300 text-center">Ngày chiếu</th>
-                  <th className="border border-slate-300 text-center">Trạng thái phim</th>
-                  <th className="border border-slate-300 text-center">Giới hạn tuổi</th>
-                  <th className="border border-slate-300 text-center">Quốc gia</th>
-
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className="border border-slate-300 text-center">fgh</td>
-                  <td className="border border-slate-300 text-center">dfcv</td>
-                  <td className="border border-slate-300 text-center">sdfcv</td>
-                  <td className="border border-slate-300 text-center">sdcfv</td>
-
-                  <td className="border border-slate-300 text-center">
-                    dfghjk
-                  </td>
-
-                </tr>
-              </tbody>
-            </table>
-
-          </div>
-        </TabPanel> */}
-
-        <TabPanel value="4">
+        <TabPanel value="3">
           <div className="flex">
             <div className="w-2/12 border-r-2 border-black uppercase text-xl space-y-5">
               <ListItemButton onClick={() => setOption(8)}>
@@ -499,6 +442,8 @@ export default function LabTabs() {
             ) : null}
           </div>
         </TabPanel>
+
+        <TabPanel value="4"><Phieudat_QL/></TabPanel>
       </TabContext>
     </Box>
   );

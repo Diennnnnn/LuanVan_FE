@@ -104,7 +104,7 @@ const capnhatthongtinKH = () => {
         const response = await AllKhachhang(params);
         const res: Khachhang[] = response.allkh;
         console.log(response)
-        console.log("ressss",res)
+        console.log("ressss", res)
         setAllkh(res);
         localStorage.setItem('khachhang', JSON.stringify(res));
 
@@ -137,14 +137,14 @@ const capnhatthongtinKH = () => {
 
   }
 
-  const handleDeleteAvt = async () =>{
+  const handleDeleteAvt = async () => {
     let res = await XoaAvtKH(
       {
-        id: id,       
+        id: id,
 
       }
     );
-    if( res && res.errCode === 0){
+    if (res && res.errCode === 0) {
       alert("Xóa Avatar thành công")
       try {
         const params = {
@@ -155,7 +155,7 @@ const capnhatthongtinKH = () => {
         const response = await AllKhachhang(params);
         const res: Khachhang[] = response.allkh;
         console.log(response)
-        console.log("ressss",res)
+        console.log("ressss", res)
         setAllkh(res);
         localStorage.setItem('khachhang', JSON.stringify(res));
 
@@ -170,7 +170,7 @@ const capnhatthongtinKH = () => {
 
       })
     }
-    else{
+    else {
       console.log(res)
 
       alert("Xóa Avatar KHÔNG thành công")
@@ -199,7 +199,7 @@ const capnhatthongtinKH = () => {
         setCMND(res.CMND)
         setEmail(res.email)
         setSDT(res.SDT)
-        if (res.avt != null){
+        if (res.avt != null) {
           setAvt(new Buffer(res.avt, "base64").toString("binary"))
         }
         setRoll(res.gioitinh)
@@ -211,14 +211,14 @@ const capnhatthongtinKH = () => {
   return (
     <div className={roboto.className}>
       <Header />
-      <div className="w-8/12 mt-8 border-2 border-gray-100 m-auto shadow-xl rounded-md pb-8">
+      <div className="w-8/12 mt-8 border-2 border-gray-100 m-auto shadow-xl rounded-md pb-8 ">
         <p className="font-semibold text-xl uppercase text-center m-5 ">Cập nhật thông tin khách hàng</p>
         <div className="flex justify-center">
           <div className="basis-4/12 ">
-            
+
             <img
               src={
-                prevURLIMG ?  prevURLIMG  : avt
+                prevURLIMG ? prevURLIMG : avt
                 // new Buffer(avt, "base64").toString("binary")
               }
               className="h-52 w-52 rounded-full m-auto mt-5" />
@@ -232,12 +232,12 @@ const capnhatthongtinKH = () => {
                 // onChange={(e) => setFileIMG(e.target.files?.[0])}
                 onChange={(event) => handleOnChangeImage(event)}
               />
-              <label className="lable-upload bg-green-400 h-8 w-8 rounded-full hover:bg-green-500" htmlFor="preview-img">
+              <button className="bg-green-400 h-8 w-8 rounded-full hover:bg-green-500"><label className="lable-upload " htmlFor="preview-img">
                 <Edit /><i className="fas fa-upload"></i>
-              </label>
+              </label></button>
               {/* <button className="bg-green-400 h-8 w-8 rounded-full hover:bg-green-500" ><Edit /></button> */}
 
-              <button onClick={()=>handleDeleteAvt()} className="bg-green-400 h-8 w-8 rounded-full hover:bg-green-500"><Delete /></button>
+              <button onClick={() => handleDeleteAvt()} className="bg-green-400 h-8 w-8  rounded-full hover:bg-green-500"><Delete /></button>
             </div>
           </div>
 
@@ -267,11 +267,13 @@ const capnhatthongtinKH = () => {
               <input type="text" className="outline-none w-4/5 border-b-2 border-gray-400" value={CMND} onChange={(e) => setCMND(e.target.value)} />
               <input type="" className="outline-none w-4/5 border-b-2 border-gray-400 " value={SDT} onChange={(e) => setSDT(e.target.value)} />
               <input type="" className="outline-none w-4/5 border-b-2 border-gray-400" value={email} onChange={(e) => setEmail(e.target.value)} />
+
             </div>
           </div>
         </div>
-        <button onClick={handleCapnhatTTKH}>Cap nhat</button>
-
+        <div className="py-7 pr-[10%]">
+          <button onClick={handleCapnhatTTKH} className="float-right border-2 border-green-500  hover:bg-green-500 h-8 w-44 rounded-lg">Cập nhật thông tin</button>
+        </div>
       </div>
       {/* <Footer/> */}
     </div>

@@ -17,6 +17,10 @@ import Badge from '@mui/material/Badge';
 import { styled } from "@mui/material/styles";
 import EditIcon from '@mui/icons-material/Edit';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
+import HistoryIcon from '@mui/icons-material/History';
+import History from "@mui/icons-material/History";
+
+
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
     backgroundColor: '#44b700',
@@ -101,6 +105,12 @@ const Header = () => {
 
     })
   }
+  const handleLichsu = async () => {
+    router.push({
+      pathname: '/lichsu',
+
+    })
+  }
   const handleOpenUserMenu = (event: { currentTarget: React.SetStateAction<HTMLElement | null>; }) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -129,10 +139,10 @@ const Header = () => {
       setKhachhang(khachhang1);
       const ressss: Khachhang[] = khachhang1;
       ressss.map((i) => {
-        if (i.avt != null){
+        if (i.avt != null) {
           setAvt(new Buffer(i.avt, "base64").toString("binary"))
         }
-          
+
       })
     }
 
@@ -195,22 +205,38 @@ const Header = () => {
                     >
                       <MenuItem onClick={handleInfor}>
                         <Typography textAlign="center" sx={{ margin: 1 }}>
-                          <PermContactCalendarIcon />Trang cá nhân
-                        </Typography>
-                      </MenuItem>
-                      <MenuItem onClick={handleUpdateInfor}>
-                        <Typography textAlign="center" sx={{ margin: 1 }}>
-                          <EditIcon />Cập nhật thông tin
-                        </Typography>
-                      </MenuItem>
-                      <hr className="w-10/12 m-auto" />
-                      <MenuItem onClick={handleOnClick}>
-                        <Typography textAlign="center" sx={{ margin: 1 }}>
-                          <LogoutIcon />Đăng xuất
+                          <PermContactCalendarIcon />
+                          <label className="pl-2">Trang cá nhân</label>
                         </Typography>
                       </MenuItem>
 
+                      <MenuItem onClick={handleUpdateInfor}>
+                        <Typography  textAlign="center" sx={{ margin: 1 }}>
+                          <EditIcon />
+                          <label className="pl-2">Cập nhật thông tin</label>
+                        </Typography>
+                      </MenuItem>
+
+                      <MenuItem onClick={handleLichsu}>
+                        <Typography textAlign="center" sx={{ margin: 1 }}>
+                          <History />
+                          <label className="pl-2">Lịch sử đặt phòng</label>
+                        </Typography>
+                      </MenuItem>
+
+                      <hr className="w-10/12 m-auto" />
+
+                      <MenuItem onClick={handleOnClick}>
+                        <Typography textAlign="center" sx={{ margin: 1 }}>
+                          <LogoutIcon />
+                          <label className="pl-2">Đăng xuất</label>
+                        </Typography>
+                      </MenuItem>
+
+
                     </Menu>
+
+
                   )
                 )
             }

@@ -64,7 +64,7 @@ const thongtinKH = () => {
         setCMND(res.CMND)
         setEmail(res.email)
         setSDT(res.SDT)
-        if (res.avt != null){
+        if (res.avt != null) {
           setAvt(new Buffer(res.avt, "base64").toString("binary"))
         }
 
@@ -82,9 +82,9 @@ const thongtinKH = () => {
         <div className="flex justify-center">
           <div className="basis-4/12">
             <img
-                         src={avt}
+              src={avt}
 
-            //  src={new Buffer(avt, "base64").toString("binary")}
+              //  src={new Buffer(avt, "base64").toString("binary")}
               className="h-52 w-52 rounded-full ml-[10%] mt-5" />
           </div>
 

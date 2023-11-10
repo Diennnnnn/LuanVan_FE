@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { render } from "react-dom";
 import App from "next/app";
 import Router from "next/router";
-import { Khachhang, ThemTTKH_SDT } from "@/Service/userService";
+import { Khachhang, Nhanvien_SDT, ThemTTKH_SDT } from "@/Service/userService";
 
 // type Props = {
 //   sdt: String;
@@ -23,6 +23,17 @@ const SignInOTP = () => {
     SDT: string,
     email: string
   }
+  interface Nhanvien {
+    id: number;
+    hotenNV: string;
+    gioitinh: string,
+    ngaysinh: Date,
+    CCCD: string,
+    SDT: string,
+    email: string,
+    diachi: string,
+    chucvu: string
+  }
   // const SignInOTP = ({sdt}: Props) => {
   // const SignInOTP = (this.props.phoneNumber) => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -31,6 +42,7 @@ const SignInOTP = () => {
   const [step, setStep] = useState("INPUT_PHONE_NUMBER");
   const [result, setResult] = useState<any>()
   const [khachhang, setKhachhang] = useState<Khachhang[]>([]);
+  const [nhanvien, setNhanvien] = useState<Nhanvien[]>([]);
 
   console.log("sdt1", phoneNumber)
 
@@ -94,6 +106,28 @@ const SignInOTP = () => {
 
   const router = useRouter();
 
+  //   const handleLayNV_SDT = async () => {
+  //     try {
+  //         const params = {
+  //           nhanvien_sdt : SDT,
+  //         };
+  //         console.log(params)
+  //         const response = await Nhanvien_SDT(params);
+  //         const res: Nhanvien[] = response.nhanvien_sdt; //gán dữ liệu vào res
+  //         console.log(response)
+  //         setNhanvien(res); //gán res vào setPhong
+  //         // res.map((res) => {
+  //         //     setId_loaiphong(res.id_LP)
+  //         //     // console.log("id", id)
+  //         // })
+
+  //     } catch (error) {
+  //         console.log(error);
+  //     }
+
+
+  // };
+
   const ValidateOtp = (phoneNumber: string) => {
     if (otp === null) return;
 
@@ -101,57 +135,83 @@ const SignInOTP = () => {
       .confirm(otp)
       .then(async (result: any) => {
         setStep("VERIFY_SUCCESS");
-        router.push({
-          pathname: '/',
-          // query: { phoneNumber: phoneNumber },
-        })
+       
         // handleKhachhang(sdt)
         try {
           const params = {
             SDT: sdt,
           };
           console.log(params)
-          const response = await Khachhang(params);
-          const res: Khachhang[] = response.khachhang;
-          console.log("sdfsdfsd", res.length)
-          if (res.length === 0) {
-            let res = await ThemTTKH_SDT(
-              {
-                sdt: sdt
+          const response1 = await Nhanvien_SDT(params);
+          const res1: Nhanvien[] = response1.nhanvien_sdt; //gán dữ liệu vào res
+          console.log(response1)
+          setNhanvien(res1); //gán res vào setPhong
+          if (res1.length === 1) 
+          {
+            localStorage.setItem('nhanvien', JSON.stringify(res1));
+            router.push({
+              pathname: '/quanly/quanly',
+              // query: { phoneNumber: phoneNumber },
+            })
+          } 
+          else {
+            try {
+              const params = {
+                SDT: sdt,
+              };
+              console.log(params)
+              const response = await Khachhang(params);
+              const res: Khachhang[] = response.khachhang;
+              console.log("sdfsdfsd", res.length)
+              if (res.length === 0) {
+                let res = await ThemTTKH_SDT(
+                  {
+                    sdt: sdt
 
-              }
-            );
-            if (res && res.errCode === 0) {
-              try {
-                const params = {
-                  SDT: sdt,
+                  }
+                );
+                if (res && res.errCode === 0) {
+                  try {
+                    const params = {
+                      SDT: sdt,
+                    };
+                    console.log(params)
+                    const response2 = await Khachhang(params);
+                    const res2: Khachhang[] = response2.khachhang;
+                    //luu khachhang len local storage
+                    localStorage.setItem('khachhang', JSON.stringify(res2));
+                    console.log(res2)
+                    setKhachhang(res2);
+                  } catch (error) {
+                    console.log(error);
+                  }
+                } else {
+                  console.log(res)
+                  alert("Tài khoản không tồn tại")
                 };
-                console.log(params)
-                const response2 = await Khachhang(params);
-                const res2: Khachhang[] = response2.khachhang;
+              } else {
                 //luu khachhang len local storage
-                localStorage.setItem('khachhang', JSON.stringify(res2));
-                console.log(res2)
-                setKhachhang(res2);
-              } catch (error) {
-                console.log(error);
+                localStorage.setItem('khachhang', JSON.stringify(res));
+                console.log(res)
+                setKhachhang(res);
               }
-            } else {
-              console.log(res)
-              alert("Tài khoản không tồn tại")
-            };
-          }else{
-          //luu khachhang len local storage
-          localStorage.setItem('khachhang', JSON.stringify(res));
-          console.log(res)
-          setKhachhang(res);
+
+
+
+            } catch (error) {
+              console.log(error);
+            }
+            router.push({
+              pathname: '/',
+              // query: { phoneNumber: phoneNumber },
+            })
           }
-
-
-
         } catch (error) {
           console.log(error);
         }
+
+
+
       })
       .catch((err: any) => {
         alert("Incorrect code");

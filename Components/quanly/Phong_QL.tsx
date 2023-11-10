@@ -76,7 +76,7 @@ const Phong_QL = () => {
         loaiphong.map((item) => {
             if (item.tenloaiphong === str1 && item.songuoi === Number(str2)) {
                 setId_LP(item.id)
-                setValueLoaiphong(item.tenloaiphong + ' - ' + item.songuoi + ' người')
+                setValueLoaiphong(item.tenloaiphong + ' - ' + item.songuoi + ' người' + ' - ' + item.gia + ' VND')
 
             }
         })
@@ -344,15 +344,15 @@ const Phong_QL = () => {
                             value={valueLoaiphong}
                             clearOnEscape
                             id="clear-on-escape"
-                            options={loaiphong.map((option) => option.tenloaiphong + ' - ' + option.songuoi + ' người')}
+                            options={loaiphong.map((option) => option.tenloaiphong + ' - ' + option.songuoi + ' người' + '-' + option.gia + 'VND')}
                             // options={loaiphong.map((option) => [option.tenloaiphong, option.songuoi])}
                             // options={}
                             onChange={(event: any, newValue: string | null) => {
                                 { newValue ? handleLayID_LP(newValue) : null }
 
                             }}
-                            sx={{ width: 290 }}
-                            renderInput={(params) => <TextField {...params} label="Loại phòng - Số người" variant="standard" />}
+                            sx={{ width: 400 }}
+                            renderInput={(params) => <TextField {...params} label="Loại phòng - Số người - Giá" variant="standard" />}
                         />
 
                     </div>

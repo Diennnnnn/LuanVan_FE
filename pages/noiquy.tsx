@@ -59,7 +59,7 @@ const noiquy = () =>{
           noiquy.map((item, index) => {
             return(
               <div key={index}>
-                <div className="bg-gray-100 w-9/12 pt-5 h-full m-auto list-disc space-y-4">
+                <div className=" w-9/12 pt-5 h-full m-auto list-disc space-y-4">
                   <li className="leading-loose ">{item.mota}
                     <p className="font-semibold pl-5">{item.motaEN}</p>
                   </li>

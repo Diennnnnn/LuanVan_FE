@@ -770,6 +770,16 @@ export async function Datphong(params:{
     const data = await response.json();
     return data;
   }
+
+
+  export async function Nhanvien_SDT(params: { SDT: any }): Promise<any> {
+    const { SDT } = params;
+    const response = await fetch(
+      `http://localhost:8080/api/LayNhanvien_SDT?keyword=${SDT}`
+    );
+    const data = await response.json();
+    return data;
+  }
 // export async function DangKy_KH(params: {
 //   hten_KH: string;
 //   Ngaysinh: string;

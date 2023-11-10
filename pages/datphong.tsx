@@ -187,31 +187,32 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
         alert("Đặt phòng không thành công")
       };
     }
-    // else {
-    //   let res = await Datphong(
-    //     {
-    //       id_KH: id_KH,
-    //       id_phong: id_phong,
-    //       ngaydat: ngaydat,
-    //       check_in: check_in,
-    //       check_out: check_out,
-    //       songuoi: songuoio,
-    //       tongtien: tongtien,
-    //       thanhtoan: '',
-    //       trangthai: '',
-    //       ghichu: ghichu,
-    //       hotennguoio: hotenkhacho,
-    //       SDT_nguoio: SDTkhacho,
-    //       CCCD_nguoio: CCCDkhacho
-    //     }
-    //   );
-    //   if (res && res.errCode === 0) {
-    //     alert("Đặt phòng thành công")
-    //   } else {
-    //     console.log(res)
-    //     alert("Đặt phòng không thành công")
-    //   };
-    // }
+    else {
+        let res = await Datphong(
+          {
+            id_KH: id_KH,
+            id_phong: id_Phong,
+            ngaydat: ngaydat,
+            check_in: checkin.getFullYear() + "-" + (checkin.getMonth() + 1) + "-" + checkin.getDate(),
+            check_out: checkout.getFullYear() + "-" + (checkout.getMonth() + 1) + "-" + checkout.getDate(),
+            songuoi: songuoio,
+            tongtien: tongtien,
+            thanhtoan: '',
+            trangthai: '',
+            ghichu: ghichu,
+            hotennguoio: hotenkhacho,
+            SDT_nguoio: SDTkhacho,
+            CCCD_nguoio: CCCDkhacho
+          }
+        );
+        if (res && res.errCode === 0) {
+          alert("Đặt phòng thành công")
+        } else {
+          console.log(res)
+          alert("Đặt phòng không thành công")
+        };
+      
+    }
 
   }
   // const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -291,6 +292,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
       console.log(response)
       setPhong2(res); //gán res vào setPhong
       res.map(async (res) => {
+        setId_Phong(res.id)
         const params = {
           id_lp: res.id_LP,
         };
@@ -682,7 +684,8 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                     {/* <input type="radio" />  Đặt cho mình
                           <input type="radio"/> Đặt cho người khác */}
                   </div>
-                  <input className="bg-gray-400" value={ghichu} onChange={(e) => setGhichu(e.target.value)} />
+                  <p className="font-semibold mt-5 text-xl" >Ghi chú:</p>
+                  <textarea placeholder="Note yêu cầu" className="bg-gray-100 w-full mt-3 h-20 outline-none p-3" value={ghichu} onChange={(e) => setGhichu(e.target.value)} />
 
                   {
                     roll === 'datchonguoithan' ? (

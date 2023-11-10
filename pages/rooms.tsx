@@ -157,7 +157,7 @@ const rooms = () => {
                 </div>
                 <div className="col-span-5 mt-6">
                     {/* <button onClick={handleClick}>dfghjk</button> */}
-                    <div className="grid grid-cols-3 gap-5 pr-5">
+                    <div className="grid grid-cols-3 gap-3 pr-5">
                         {/* <button onClick={handlePhong}>click</button> */}
 
 

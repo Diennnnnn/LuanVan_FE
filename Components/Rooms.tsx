@@ -95,12 +95,12 @@ const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
         loaiphong.map((item, index) => {
           return (
             <>
-              <div className="relative hover:bg-gray-100 bg-white  text-lg flex flex-col rounded-t-xl space-y-3 ">
+              <div className="relative hover:bg-gray-100 bg-white m-4  text-lg flex flex-col rounded-t-xl space-y-4 ">
 
                 {
                   hinhanhPhong.length > 0 ?
                     <Image
-                      className="h-72 w-full rounded-t-xl"
+                      className="h-60 w-full rounded-t-full"
                       src={new Buffer(hinhanhPhong[0].hinhanh, "base64").toString("binary")}
                       width={500}
                       height={500}

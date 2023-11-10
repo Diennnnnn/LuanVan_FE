@@ -6,6 +6,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import dayjs from "dayjs";
 import CommonUtils from "../CommonUtils";
 import { SuaTTKH } from "@/Service/userService";
+import Image from "next/image";
+
+
 const roboto = Montserrat({
     weight: '400',
     subsets: ['latin'],
@@ -72,9 +75,9 @@ const KhachhangQL = ({ allkh }: Props) => {
         setCMND(CMND)
         setEmail(email)
         setSDT(SDT)
-       if(avt != ''){
-        setPrevURLIMG(new Buffer(avt, "base64").toString("binary"))
-       }
+        if (avt != '') {
+            setPrevURLIMG(new Buffer(avt, "base64").toString("binary"))
+        }
     }
 
     const handleCapnhatTTKH = async () => {
@@ -123,7 +126,7 @@ const KhachhangQL = ({ allkh }: Props) => {
         <div className={roboto.className}>
             <div className="w-11/12 m-auto">
                 <p className="font-semibold uppercase text-2xl text-center mt-5">Danh sách khách hàng</p>
-                <div className="flex space-x-4">
+                {/* <div className="flex space-x-4">
                     <div className="preview-img-container w-4/12 pt-4">
                         <input
                             className=""
@@ -142,7 +145,7 @@ const KhachhangQL = ({ allkh }: Props) => {
                             backgroundImage: `url(${prevURLIMG})`,
                         }}
                     ></div>
-                </div>
+                </div> */}
 
                 <button onClick={handleCapnhatTTKH}>ehjkl</button>
                 <div className="mt-8">
@@ -178,15 +181,19 @@ const KhachhangQL = ({ allkh }: Props) => {
                                             <td className="border border-slate-300 p-2">{item.SDT}</td>
                                             <td className="border border-slate-300 p-2">{item.email}</td>
                                             <td className="border border-slate-300 p-2">
-                                                <div
-                                                    className="preview-img bg-contain bg-no-repeat  w-96 h-32"
-                                                    // src={new Buffer(item.anhminhhoa, "base64").toString("binary")}
-                                                    style={{
-                                                        backgroundImage: `url(${new Buffer(item.avt, "base64").toString("binary")})`,
-                                                    }}
-                                                // onClick={() => openPreviewImg()}
-                                                >
-                                                </div>
+                                                {item.avt ?
+                                                    <>
+                                                        <Image
+                                                            className="preview-img bg-contain bg-no-repeat  w-96 h-32"
+                                                            src={new Buffer(item.avt, "base64").toString("binary")}
+                                                            width={500}
+                                                            height={500}
+                                                            alt="Picture of the author"
+                                                        />
+                                                    </>
+                                                    : null
+
+                                                }
                                             </td>
                                             <td className="border border-slate-300 p-2">
                                                 <button>

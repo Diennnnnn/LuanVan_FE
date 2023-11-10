@@ -282,7 +282,7 @@ const chitiet = ({ id_phong, id_lp, check_in, check_out }: codeProductProps) => 
                 <Slider className=""
                   asNavFor={nav1}
                   ref={(slider2) => setNav2(slider2 || null)}
-                  slidesToShow={2}
+                  slidesToShow={4}
                   swipeToSlide={true}
                   focusOnSelect={true}
                   centerMode={true}

@@ -91,9 +91,9 @@ const Vitri_QL = ({ vitri }: Props) => {
             }
         );
         if (res && res.errCode === 0) {
-            setId(id)
-            setKhu(khu)
-            setTang(tang)
+            setId(0)
+            setKhu('')
+            setTang(0)
             handleVitri()
             setStep('them')
             alert("Cập nhật vị trí thành công")

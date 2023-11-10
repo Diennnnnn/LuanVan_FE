@@ -70,14 +70,16 @@ const Phong_QL = () => {
         let i = value.indexOf(' -')
         let str1 = value.slice(0, i)
         let str2 = value.slice(i + 3, i + 4)
+        let str3 = value.slice(i+13)
         // console.log(i)
         // console.log(str1)
         // console.log(str2)
+        // console.log(str3)
         loaiphong.map((item) => {
-            if (item.tenloaiphong === str1 && item.songuoi === Number(str2)) {
+            if (item.tenloaiphong === str1 && item.songuoi === Number(str2) && item.gia === Number(str3)) {
                 setId_LP(item.id)
-                setValueLoaiphong(item.tenloaiphong + ' - ' + item.songuoi + ' người' + ' - ' + item.gia + ' VND')
-
+                setValueLoaiphong(item.tenloaiphong + ' - ' + item.songuoi + ' người'+ ' - ' + item.gia + ' VND')
+                
             }
         })
 
@@ -85,11 +87,11 @@ const Phong_QL = () => {
     const handleLayID_VT = (value: string) => {
         console.log(value)
         let i = value.indexOf(' -')
-        let str1 = value.slice(i - 1, i)
+        let str1 = value.slice(4, i)
         let str2 = value.slice(value.length - 1, value.length)
-        // console.log(i)
-        // console.log(str1)
-        // console.log(str2)
+        console.log(i)
+        console.log(str1)
+        console.log(str2)
         vitri.map((item) => {
             if (item.khu === str1 && item.tang === Number(str2)) {
                 setId_VT(item.id)
@@ -132,6 +134,8 @@ const Phong_QL = () => {
             setTenphong('')
             setMota('')
             setDientich(0)
+            setValueLoaiphong('')
+            setValueKhu('')
             handleLayPhong()
             alert("Thêm phòng thành công")
 
@@ -174,7 +178,7 @@ const Phong_QL = () => {
         loaiphong.map((item) => {
             if (id_LP === item.id) {
                 setId_LP(item.id)
-                setValueLoaiphong(item.tenloaiphong + ' - ' + item.songuoi + ' người')
+                setValueLoaiphong(item.tenloaiphong + ' - ' + item.songuoi + ' người'+ ' - ' + item.gia + ' VND')
             }
         })
         vitri.map((item) => {
@@ -344,7 +348,7 @@ const Phong_QL = () => {
                             value={valueLoaiphong}
                             clearOnEscape
                             id="clear-on-escape"
-                            options={loaiphong.map((option) => option.tenloaiphong + ' - ' + option.songuoi + ' người' + '-' + option.gia + 'VND')}
+                            options={loaiphong.map((option) => option.tenloaiphong + ' - ' + option.songuoi + ' người' + ' - ' + option.gia)}
                             // options={loaiphong.map((option) => [option.tenloaiphong, option.songuoi])}
                             // options={}
                             onChange={(event: any, newValue: string | null) => {

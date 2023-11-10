@@ -20,7 +20,7 @@ const Phieudat_QL = () => {
         check_in: Date;
         check_out: Date;
         songuoi: number,
-        sotien:number,
+        tongtien:number,
         thanhtoan:string,
         trangthai:string,
         hotennguoio:string,
@@ -162,7 +162,7 @@ const Phieudat_QL = () => {
                                                 {dayjs(item.check_out).format("DD/MM/YYYY")}
                                             </td>
                                             <td className="border border-slate-300 p-2">{item.songuoi}</td>
-                                            <td className="border border-slate-300 p-2">{item.sotien}</td>
+                                            <td className="border border-slate-300 p-2">{item.tongtien}</td>
                                             <td className="border border-slate-300 p-2">{item.thanhtoan}</td>
                                             <td className="border border-slate-300 p-2">{item.trangthai}</td>
                                             <td className="border border-slate-300 p-2">{item.ghichu}</td>

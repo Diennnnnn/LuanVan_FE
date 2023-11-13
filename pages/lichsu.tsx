@@ -1,7 +1,8 @@
 import Header from "@/Components/Header";
-import { Phieudat_idKH, Phong } from "@/Service/userService";
+import { Datphong, Phieudat_idKH, Phong } from "@/Service/userService";
 import dayjs from "dayjs";
 import { Montserrat } from "next/font/google";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const roboto = Montserrat({
@@ -26,6 +27,21 @@ const lichsu = () => {
     CCCD_nguoio: string,
     ghichu: string
     // dieukien: string
+  }
+  interface TTphieudat {
+    id_KH: number,
+    id_phong: number,
+    ngaydat: Date,
+    check_in: string,
+    check_out: string,
+    songuoi: number,
+    tongtien: number,
+    thanhtoan: string,
+    trangthai: string,
+    ghichu: string,
+    hotennguoio: string,
+    SDT_nguoio: string,
+    CCCD_nguoio: string
   }
   interface Khachhang {
     id: number;
@@ -52,24 +68,70 @@ const lichsu = () => {
   const [phong, setPhong] = useState<Phong[]>([]);
 
 
+  const router = useRouter()
+  const handlePhong = async () => {
+    try {
+      const params = {
+        id_phong: "ALL",
+      };
+      console.log(params)
+
+      const response = await Phong(params);
+      const res: Phong[] = response.phong;
+      console.log(response)
+      console.log(res)
+      setPhong(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(">>> check vnp_ResponseCode", router.query.vnp_ResponseCode)
+  const handleLuuCSDL = () => {
+    let phieudats = JSON.parse(localStorage.getItem('phieudat') || '{}');
+      if (Object.keys(phieudats).length === 0) {
+        console.log("true");
+      } else {
+        // console.log("ITEM",khachhang1.khachhang);
+        // setKhachhang(phieudats);
+  
+        const res: TTphieudat[] = phieudats;
+  
+        res.map(async (item) => {
+          let res = await Datphong(
+            {
+              id_KH: item.id_KH,
+              id_phong: item.id_phong,
+              ngaydat: item.ngaydat,
+              check_in: item.check_in,
+              check_out: item.check_out,
+              songuoi: item.songuoi,
+              tongtien: item.tongtien,
+              thanhtoan: 'Đã thanh toán',
+              trangthai: item.trangthai,
+              ghichu: item.ghichu,
+              hotennguoio: item.hotennguoio,
+              SDT_nguoio: item.SDT_nguoio,
+              CCCD_nguoio: item.CCCD_nguoio
+            }
+          );
+          if (res && res.errCode === 0) {
+            handlePhong()
+            localStorage.removeItem('phieudat')
+            alert("Đặt phòng thành công")
+          } else {
+            console.log(res)
+            handlePhong()
+            localStorage.removeItem('phieudat')
+            alert("Đặt phòng không thành công")
+          };
+        })
+      }
+    
+  }
 
   useEffect(() => {
-    const handlePhong = async () => {
-      try {
-        const params = {
-          id_phong: "ALL",
-        };
-        console.log(params)
 
-        const response = await Phong(params);
-        const res: Phong[] = response.phong;
-        console.log(response)
-        console.log(res)
-        setPhong(res);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+
     let khachhang1 = JSON.parse(localStorage.getItem('khachhang') || '{}');
 
     if (Object.keys(khachhang1).length === 0) {
@@ -93,9 +155,11 @@ const lichsu = () => {
         console.log(res1)
         setPhieudat_idKH(res1);
       })
-
     }
-    handlePhong()
+
+      handleLuuCSDL()
+      handlePhong()
+
   }, []);
   return (
     <div className={roboto.className}>
@@ -123,13 +187,13 @@ const lichsu = () => {
                   <tr key={index} className="hover:bg-gray-100">
                     <td className=" text-center">{item.id}</td>
                     <td className=" p-2">
-                    {dayjs(item.ngaydat).format("DD/MM/YYYY")}
+                      {dayjs(item.ngaydat).format("DD/MM/YYYY")}
                     </td>
                     <td className="p-2">
-                    {dayjs(item.check_in).format("DD/MM/YYYY")}
+                      {dayjs(item.check_in).format("DD/MM/YYYY")}
                     </td>
                     <td className=" p-2">
-                    {dayjs(item.check_out).format("DD/MM/YYYY")}
+                      {dayjs(item.check_out).format("DD/MM/YYYY")}
                     </td>
                     <td className="p-2">
                       {phong.map((item1) =>

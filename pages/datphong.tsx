@@ -14,6 +14,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { GetServerSideProps } from "next";
 import { Montserrat } from "next/font/google";
+import Link from "next/link";
 import Router from "next/router";
 import React from "react";
 import { useEffect, useState } from "react";
@@ -163,32 +164,54 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
     console.log("ghichu", ghichu)
 
     if (id_phong && check_in && check_out && songuoi) {
-      let res = await Datphong(
-        {
-          id_KH: id_KH,
-          id_phong: id_phong,
-          ngaydat: ngaydat,
-          check_in: strCheckin,
-          check_out: strCheckout,
-          songuoi: songuoio,
-          tongtien: tongtien,
-          thanhtoan: '',
-          trangthai: '',
-          ghichu: ghichu,
-          hotennguoio: hotenkhacho,
-          SDT_nguoio: SDTkhacho,
-          CCCD_nguoio: CCCDkhacho
-        }
-      );
-      if (res && res.errCode === 0) {
-        alert("Đặt phòng thành công")
-      } else {
-        console.log(res)
-        alert("Đặt phòng không thành công")
-      };
+      let phieudat = {
+        TTphieudat: [
+          {
+            id_KH: id_KH,
+            id_phong: id_phong,
+            ngaydat: ngaydat,
+            check_in: strCheckin,
+            check_out: strCheckout,
+            songuoi: songuoio,
+            tongtien: tongtien,
+            thanhtoan: '',
+            trangthai: '',
+            ghichu: ghichu,
+            hotennguoio: hotenkhacho,
+            SDT_nguoio: SDTkhacho,
+            CCCD_nguoio: CCCDkhacho
+          }
+        ]
+      }
+      localStorage.setItem('phieudat', JSON.stringify(phieudat.TTphieudat));
+
+      // let res = await Datphong(
+      //   {
+      //     id_KH: id_KH,
+      //     id_phong: id_phong,
+      //     ngaydat: ngaydat,
+      //     check_in: strCheckin,
+      //     check_out: strCheckout,
+      //     songuoi: songuoio,
+      //     tongtien: tongtien,
+      //     thanhtoan: '',
+      //     trangthai: '',
+      //     ghichu: ghichu,
+      //     hotennguoio: hotenkhacho,
+      //     SDT_nguoio: SDTkhacho,
+      //     CCCD_nguoio: CCCDkhacho
+      //   }
+      // );
+      // if (res && res.errCode === 0) {
+      //   alert("Đặt phòng thành công")
+      // } else {
+      //   console.log(res)
+      //   alert("Đặt phòng không thành công")
+      // };
     }
     else {
-        let res = await Datphong(
+      let phieudat = {
+        TTphieudat: [
           {
             id_KH: id_KH,
             id_phong: id_Phong,
@@ -204,14 +227,34 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
             SDT_nguoio: SDTkhacho,
             CCCD_nguoio: CCCDkhacho
           }
-        );
-        if (res && res.errCode === 0) {
-          alert("Đặt phòng thành công")
-        } else {
-          console.log(res)
-          alert("Đặt phòng không thành công")
-        };
-      
+        ]
+      }
+      localStorage.setItem('phieudat', JSON.stringify(phieudat.TTphieudat));
+
+      // let res = await Datphong(
+      //   {
+      //     id_KH: id_KH,
+      //     id_phong: id_Phong,
+      //     ngaydat: ngaydat,
+      //     check_in: checkin.getFullYear() + "-" + (checkin.getMonth() + 1) + "-" + checkin.getDate(),
+      //     check_out: checkout.getFullYear() + "-" + (checkout.getMonth() + 1) + "-" + checkout.getDate(),
+      //     songuoi: songuoio,
+      //     tongtien: tongtien,
+      //     thanhtoan: '',
+      //     trangthai: '',
+      //     ghichu: ghichu,
+      //     hotennguoio: hotenkhacho,
+      //     SDT_nguoio: SDTkhacho,
+      //     CCCD_nguoio: CCCDkhacho
+      //   }
+      // );
+      // if (res && res.errCode === 0) {
+      //   alert("Đặt phòng thành công")
+      // } else {
+      //   console.log(res)
+      //   alert("Đặt phòng không thành công")
+      // };
+
     }
 
   }
@@ -1030,8 +1073,12 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                   </div>
                 </div>
               </div>
-              <button className="bg-green-300" onClick={handleDatphong}>hoàn thành</button>
+
               <input type="checkbox" className="mt-6 ml-5 mr-2 text-slate-700 font-bold" /><label className="text-slate-500 font-bold">Chắn chắn rằng tất cả thông tin trên trang này là chính xác trước khi thanh toán.</label>
+
+              <Link href={`http://localhost:8080/order/create_payment_url?keyword=${tongtien}`}>
+                <button onClick={handleDatphong}>ÁDFGHJ</button>
+              </Link>
 
             </div>
             <Box sx={{ display: 'flex', flexDirection: 'row', width: '70%', paddingTop: '2%', margin: 'auto' }}>

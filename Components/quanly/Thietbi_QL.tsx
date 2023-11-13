@@ -104,7 +104,10 @@ const Thietbi_QL = ({ csvc, phong }: Props) => {
             setId_Phong(0)
             setSoluong(0)
             setThoigianbatdau(new Date())
+            setValueCSVC('')
+            setValuePhong('')
             handleLayThietbi()
+            
             alert("Thêm thiết bị thành công")
 
         } else {

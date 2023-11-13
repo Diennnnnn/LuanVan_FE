@@ -46,6 +46,7 @@ const chitiet = ({ id_phong, id_lp, check_in, check_out }: codeProductProps) => 
     tenphong: string;
     trangthai: string;
     mota: string;
+    dientich: number;
   }
   interface Loaiphong {
     id: number;
@@ -57,7 +58,7 @@ const chitiet = ({ id_phong, id_lp, check_in, check_out }: codeProductProps) => 
     id: number;
     khu: string;
     tang: number;
-    dientich: number;
+
   }
 
   interface Dsthietbi {
@@ -134,7 +135,7 @@ const chitiet = ({ id_phong, id_lp, check_in, check_out }: codeProductProps) => 
         res.map(async (res) => {
           setMota(res.mota),
             setTenphong(res.tenphong)
-
+          setDientich(res.dientich)
           //lay vi tri
           const params = {
             id_vt: res.id_VT,
@@ -149,8 +150,8 @@ const chitiet = ({ id_phong, id_lp, check_in, check_out }: codeProductProps) => 
           res1.map((res) => {
             setKhu(res.khu),
               console.log("khu:", khu),
-              setTang(res.tang),
-              setDientich(res.dientich)
+              setTang(res.tang)
+            //setDientich(res.dientich)
           })
 
 
@@ -303,7 +304,7 @@ const chitiet = ({ id_phong, id_lp, check_in, check_out }: codeProductProps) => 
             <div className=" space-y-2">
               <p className="font-semibold text-2xl">Mô tả</p>
               <p className="text-xl text-justify leading-loose">{mota}</p>
-              <li className="text-lg italic ">Số người ở: <span className="text-green-500">{songuoi}người</span></li>
+              <li className="text-lg italic ">Số người ở: <span className="text-green-500">{songuoi} người</span></li>
               <li className="text-lg italic ">Loại phòng: <span className="text-green-500">{tenloaiphong}</span></li>
               <li className="text-lg italic ">Giá: <span className="text-green-500">{gia}/đêm</span></li>
               <li className="text-lg italic">Khu: {khu}; Tầng: {tang}; Diện tích: {dientich}m2</li>
@@ -312,26 +313,24 @@ const chitiet = ({ id_phong, id_lp, check_in, check_out }: codeProductProps) => 
               <p className="font-semibold text-2xl">Tiện ích có sẵn</p>
               <div className="grid grid-cols-2  h-16 list-outside text-lg">
 
-                <div className="">
-                  {
-                    tenCSVC.map((item, index): React.ReactNode => {
-                      return (
-                        <><li key={index}>
-                          {tenCSVC[index]}
-                        </li>
-                        </>
+                {
+                  tenCSVC.map((item, index): React.ReactNode => {
+                    return (
+                      <><li key={index}>
+                        {tenCSVC[index]}
+                      </li>
+                      </>
 
-                      )
-                    })
-                  }
+                    )
+                  })
+                }
 
-                </div>
               </div>
 
             </div>
           </div>
         </div>
-        <div className="text-center mt-6"><button onClick={handleDatphong} className="border-2 border-green-600 text-xl uppercase h-10 w-56 rounded-lg hover:bg-green-600">đặt phòng</button></div>
+        <div className="text-center mt-10"><button onClick={handleDatphong} className="border-2 border-green-600 text-xl uppercase h-10 w-56 rounded-lg hover:bg-green-600">đặt phòng</button></div>
       </div>
 
       <Footer />

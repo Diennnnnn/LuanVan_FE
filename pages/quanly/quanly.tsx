@@ -36,6 +36,7 @@ import NhanvienQL from '@/Components/quanly/Nhanvien_QL';
 import WallpaperIcon from '@mui/icons-material/Wallpaper';
 import HinhanhPhong from '@/Components/quanly/HinhanhPhong';
 import Phieudat_QL from '@/Components/quanly/Phieudat_QL';
+import Thongke from '@/Components/quanly/Thongke';
 
 export default function LabTabs() {
   interface Phong {
@@ -285,7 +286,7 @@ export default function LabTabs() {
             <Tab icon={<MeetingRoom />} iconPosition="start" label="phòng" sx={{ color: 'green' }} value="2" />
             <Tab icon={<AssignmentIndIcon />} iconPosition="start" label="thông tin" sx={{ color: 'green' }} value="3" />
             <Tab icon={<ListIcon />} iconPosition="start" label="Phiếu đặt" sx={{ color: 'green' }} value="4" />
-            <Tab icon={<ListIcon />} iconPosition="start" label="Doanh thu" sx={{ color: 'green' }} value="5" />
+            <Tab icon={<ListIcon />} iconPosition="start" label="Thống kê" sx={{ color: 'green' }} value="5" />
 
           </TabList>
         </Box>
@@ -444,6 +445,7 @@ export default function LabTabs() {
         </TabPanel>
 
         <TabPanel value="4"><Phieudat_QL/></TabPanel>
+        <TabPanel value="5"><Thongke/></TabPanel>
       </TabContext>
     </Box>
   );

@@ -771,6 +771,14 @@ export async function Datphong(params:{
     return data;
   }
 
+  export async function LayPhieudat_ngay(params: { check_in: any }): Promise<any> {
+    const { check_in} = params;
+    const response = await fetch(
+      `http://localhost:8080/api/LayPhieudat_ngay?keyword=${check_in}`
+    );
+    const data = await response.json();
+    return data;
+  }
 
   export async function Nhanvien_SDT(params: { SDT: any }): Promise<any> {
     const { SDT } = params;

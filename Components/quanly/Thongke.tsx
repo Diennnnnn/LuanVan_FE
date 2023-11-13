@@ -1,5 +1,5 @@
 
-import { AllKhachhang, LayPhieudat, Phong } from "@/Service/userService";
+import { AllKhachhang, LayPhieudat, LayPhieudat_ngay, Phong } from "@/Service/userService";
 import dayjs from "dayjs";
 import { Montserrat } from "next/font/google";
 import { useEffect, useState } from "react";
@@ -51,8 +51,25 @@ const Thongke = () => {
             }
         };
 
+        const handleLayPhieudat_ngay = async () => {
+            try {
+                const params = {
+                    check_in: '2023/11/13',
+                };
+                console.log(params)
 
-        handleLayPhieudat()
+                const response = await LayPhieudat_ngay(params);
+                const res: Phieudat[] = response.phieudat_ngay;
+                console.log(response)
+                console.log(res)
+                setPhieudat(res);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+
+        handleLayPhieudat_ngay()
 
     }, [])
     return (
@@ -71,9 +88,9 @@ const Thongke = () => {
                         <tbody>
                             {
                                 phieudat.map((item, index) => {
+                                    // if(item.check_in ===)
                                     return (
                                         <tr key={index}>
-                                            {/* <td className="border border-slate-300 text-center">{item.id}</td> */}
                                             <td className="border border-slate-300 p-2">
                                                 {dayjs(item.check_in).format("DD/MM/YYYY")}
                                             </td>

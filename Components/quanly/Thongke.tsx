@@ -26,7 +26,8 @@ const Thongke = () => {
         hotennguoio:string,
         SDT_nguoio:string,
         CCCD_nguoio:string,
-        ghichu:string
+        ghichu:string,
+        total_amount:number,
         // dieukien: string
     }
     
@@ -53,12 +54,12 @@ const Thongke = () => {
 
         const handleLayPhieudat_ngay = async () => {
             try {
-                const params = {
-                    check_in: '2023/11/13',
-                };
-                console.log(params)
+                // const params = {
+                //     check_in: '2023/11/13',
+                // };
+                // console.log(params)
 
-                const response = await LayPhieudat_ngay(params);
+                const response = await LayPhieudat_ngay();
                 const res: Phieudat[] = response.phieudat_ngay;
                 console.log(response)
                 console.log(res)
@@ -94,11 +95,12 @@ const Thongke = () => {
                                             <td className="border border-slate-300 p-2">
                                                 {dayjs(item.check_in).format("DD/MM/YYYY")}
                                             </td>
-                                            <td className="border border-slate-300 p-2"></td>
+                                            <td className="border border-slate-300 p-2">{item.total_amount}</td>
                                         </tr>
                                     )
                                 })
                             }
+
 
 
                         </tbody>

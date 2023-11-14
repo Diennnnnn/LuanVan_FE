@@ -771,11 +771,26 @@ export async function Datphong(params:{
     return data;
   }
 
-  export async function LayPhieudat_ngay(params: { check_in: any }): Promise<any> {
-    const { check_in} = params;
+  export async function LayPhieudat_ngay(): Promise<any> {
+    // const { } = params;
     const response = await fetch(
-      `http://localhost:8080/api/LayPhieudat_ngay?keyword=${check_in}`
+      `http://localhost:8080/api/LayPhieudat_ngay`
     );
+    const data = await response.json();
+    return data;
+  }
+  export async function SuaPhieudat(params:{
+    id: number;
+    trangthai:string
+    }): Promise<any> {
+    const response = await fetch(`http://localhost:8080/api/SuaPhieudat`,
+    {
+      method:"POST",
+      headers: {
+        "Content-Type":"application/json",
+      },
+      body: JSON.stringify(params),
+    });
     const data = await response.json();
     return data;
   }

@@ -1,5 +1,6 @@
 
-import { AllKhachhang, LayPhieudat, Phong } from "@/Service/userService";
+import { AllKhachhang, LayPhieudat, Phong, SuaPhieudat } from "@/Service/userService";
+import { Checkbox } from "@mui/material";
 import dayjs from "dayjs";
 import { Montserrat } from "next/font/google";
 import { useEffect, useState } from "react";
@@ -20,13 +21,13 @@ const Phieudat_QL = () => {
         check_in: Date;
         check_out: Date;
         songuoi: number,
-        tongtien:number,
-        thanhtoan:string,
-        trangthai:string,
-        hotennguoio:string,
-        SDT_nguoio:string,
-        CCCD_nguoio:string,
-        ghichu:string
+        tongtien: number,
+        thanhtoan: string,
+        trangthai: string,
+        hotennguoio: string,
+        SDT_nguoio: string,
+        CCCD_nguoio: string,
+        ghichu: string
         // dieukien: string
     }
     interface Khachhang {
@@ -51,8 +52,46 @@ const Phieudat_QL = () => {
     const [phieudat, setPhieudat] = useState<Phieudat[]>([]);
     const [allkh, setAllkh] = useState<Khachhang[]>([]);
     const [phong, setPhong] = useState<Phong[]>([]);
+    const [id, setId] = useState(Number);
+    const handleLayPhieudat = async () => {
+        try {
+            const params = {
+                id_pd: "ALL",
+            };
+            console.log(params)
 
+            const response = await LayPhieudat(params);
+            const res: Phieudat[] = response.phieudat;
+            console.log(response)
+            console.log(res)
+            setPhieudat(res);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
+    const handleCapnhatTrangthai = async (id:number) => {
+        // setOpen(false);
+        // setAgree(true)
+        let res = await SuaPhieudat(
+            {
+                id: id,
+                trangthai: 'Đã nhận phòng'
+
+            }
+        );
+        if (res && res.errCode === 0) {
+            handleLayPhieudat()
+            // setTrangthai('')
+            // handleLayLichsu()
+            // alert("Cập nhật nội quy thành công")
+
+        } else {
+            console.log(res)
+            alert("Cập nhật trạng thái không thành công")
+        };
+
+    }
 
     useEffect(() => {
         const handleLayPhieudat = async () => {
@@ -127,11 +166,12 @@ const Phieudat_QL = () => {
                                 <th className="border border-slate-300 ">Số tiền</th>
                                 <th className="border border-slate-300 ">Thanh toán</th>
                                 <th className="border border-slate-300 ">Trạng thái</th>
-                                
+
                                 <th className="border border-slate-300 ">Ghi chú</th>
                                 <th className="border border-slate-300 ">Họ tên người ở</th>
                                 <th className="border border-slate-300 ">Số điện thoại</th>
                                 <th className="border border-slate-300 ">CCCD</th>
+                                <th className="border border-slate-300 ">Nhận phòng</th>
 
                             </tr>
                         </thead>
@@ -148,7 +188,7 @@ const Phieudat_QL = () => {
 
                                             </td>
                                             <td className="border border-slate-300 p-2">
-                                            {phong.map((item1) =>
+                                                {phong.map((item1) =>
                                                     item1.id === item.id_Phong ? item1.tenphong : null
                                                 )}
                                             </td>
@@ -169,6 +209,13 @@ const Phieudat_QL = () => {
                                             <td className="border border-slate-300 p-2">{item.hotennguoio}</td>
                                             <td className="border border-slate-300 p-2">{item.SDT_nguoio}</td>
                                             <td className="border border-slate-300 p-2">{item.CCCD_nguoio}</td>
+                                            <td className="border border-slate-300 p-2">
+                                                <Checkbox 
+                                                disabled = {(item.trangthai === 'Đã hủy' )? true : false} 
+                                                checked = {(item.trangthai === 'Đã nhận phòng')}
+                                                onClick={()=>handleCapnhatTrangthai(item.id)}/>
+                                            </td>
+
                                         </tr>
                                     )
                                 })

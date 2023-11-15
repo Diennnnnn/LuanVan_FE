@@ -80,6 +80,9 @@ const lichsu = () => {
   const [agree, setAgree] = React.useState(Boolean);
   const [id, setId] = React.useState(Number);
   const [trangthai, setTrangthai] = React.useState('');
+  const [ngaynhan, setNgaynhan] = useState(new Date());
+  const [hoan, setHoan] = useState(Number);
+
   const router = useRouter()
 
   let i
@@ -112,7 +115,7 @@ const lichsu = () => {
       console.log(error);
     }
   };
-  console.log(">>> check vnp_ResponseCode", router.query.vnp_ResponseCode)
+  // console.log(">>> check vnp_ResponseCode", router.query.vnp_ResponseCode)
   const handleLuuCSDL = () => {
     let phieudats = JSON.parse(localStorage.getItem('phieudat') || '{}');
     if (Object.keys(phieudats).length === 0) {
@@ -181,21 +184,61 @@ const lichsu = () => {
       })
     }
   }
-  const handleClickOpen = (id: number) => {
+  const handleClickOpen = (id: number, ngaynhan: Date) => {
+    let d = new Date(ngaynhan)
+
     setId(id)
+    setNgaynhan(d)
     setOpen(true);
   };
 
   const handleCapnhatTrangthai = async () => {
+    console.log('>>>checkin', ngaynhan)
+    let ngay = ngaynhan.getDate()
+    let thang = ngaynhan.getMonth() + 1
+    let nam = ngaynhan.getFullYear()
+    let d = new Date()
+    let d1 = new Date(nam + '-' + thang + '-' + (ngay - 7))
+    let d2 = new Date(nam + '-' + thang + '-' + (ngay - 5))
+    let temp
+    d.setHours(0)
+    d.setMinutes(0)
+    d.setSeconds(0)
+    d.setMilliseconds(0)
+
+    d1.setHours(0)
+    d1.setMinutes(0)
+    d1.setSeconds(0)
+    d1.setMilliseconds(0)
+
+    d2.setHours(0)
+    d2.setMinutes(0)
+    d2.setSeconds(0)
+    d2.setMilliseconds(0)
+
+
+    if (d.getTime() <= d1.getTime()) {
+      setHoan(100)
+      temp = 100
+    } else if (d1.getTime() < d.getTime() && d.getTime() <= d2.getTime()) {
+      setHoan(50)
+      temp = 50
+    } else {
+      setHoan(0)
+      temp = 0
+    }
     setOpen(false);
     setAgree(true)
+    console.log('>>>>check % hoan tien', temp)
+
+
     let res = await SuaPhieudat(
       {
         id: id,
-        trangthai: 'Đã hủy'
+        trangthai: 'Đã hủy -'+' '+ 'Hoàn' +' '+temp + '%'
 
       }
-    );
+    )
     if (res && res.errCode === 0) {
       setTrangthai('')
       handleLayLichsu()
@@ -291,7 +334,7 @@ const lichsu = () => {
                       <Checkbox
                         checked={item.id === id && open ? true : false || agree && item.id === id || item.trangthai === 'Đã hủy'}
                         disabled={agree && item.id === id || item.trangthai === 'Đã hủy' || item.trangthai === 'Đã nhận phòng'}
-                        onClick={() => handleClickOpen(item.id)}></Checkbox>
+                        onClick={() => handleClickOpen(item.id, item.check_in)}></Checkbox>
                       <Dialog
                         fullScreen={fullScreen}
                         open={open}

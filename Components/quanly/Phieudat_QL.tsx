@@ -53,6 +53,7 @@ const Phieudat_QL = () => {
     const [allkh, setAllkh] = useState<Khachhang[]>([]);
     const [phong, setPhong] = useState<Phong[]>([]);
     const [id, setId] = useState(Number);
+    
     const handleLayPhieudat = async () => {
         try {
             const params = {

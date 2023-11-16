@@ -393,8 +393,17 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
     }
     let d1 = new Date(checkin)
     let d2 = new Date(checkout)
+    d1.setHours(0)
+    d1.setMinutes(0)
+    d1.setSeconds(0)
+    d1.setMilliseconds(0)
+    d2.setHours(0)
+    d2.setMinutes(0)
+    d2.setSeconds(0)
+    d2.setMilliseconds(0)
+    let sn = Math.ceil((d2.getTime() - d1.getTime()) / (24 * 60 * 60 * 1000))
 
-    let sn = Number(d2.getDate()) - Number(d1.getDate())
+    // let sn = Number(d2.getDate()) - Number(d1.getDate())
     setSongay(sn)
     setTongtien((giatemp * sn) - ((giatemp * sn) * (phantramKM / 100)))
     console.log("phantramKM", phantramKM)
@@ -571,7 +580,18 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
             d4.setMilliseconds(0)
             // console.log("d", d)
             // console.log("check_in", check_in)
-            let temp = (Number(d4.getDate()) - Number(d3.getDate()))
+
+            d1.setHours(0)
+            d1.setMinutes(0)
+            d1.setSeconds(0)
+            d1.setMilliseconds(0)
+            d2.setHours(0)
+            d2.setMinutes(0)
+            d2.setSeconds(0)
+            d2.setMilliseconds(0)
+            let temp = Math.ceil((d4.getTime() - d3.getTime()) / (24 * 60 * 60 * 1000))
+
+            // let temp = (Number(d4.getDate()) - Number(d3.getDate()))
             setSongay(temp)
 
             // nếu d3(checkin) trong khoảng tg khuyến mãi 

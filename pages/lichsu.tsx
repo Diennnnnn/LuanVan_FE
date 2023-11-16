@@ -1,5 +1,5 @@
 import Header from "@/Components/Header";
-import { Datphong, Phieudat_idKH, Phong, SuaPhieudat } from "@/Service/userService";
+import { Datphong, Phieudat_idKH, Phong, SuaPhieudat, VNPayRefund } from "@/Service/userService";
 import dayjs from "dayjs";
 import { Montserrat } from "next/font/google";
 import { useRouter } from "next/router";
@@ -14,6 +14,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { Alert, Checkbox } from '@mui/material';
 import React from "react";
+import { useParams } from 'next/navigation'
+
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 const roboto = Montserrat({
   weight: '400',
@@ -21,6 +23,8 @@ const roboto = Montserrat({
   display: 'swap',
 })
 const lichsu = () => {
+  const router = useRouter()
+
   interface Phieudat {
     id: number;
     id_KH: number;
@@ -35,7 +39,9 @@ const lichsu = () => {
     hotennguoio: string,
     SDT_nguoio: string,
     CCCD_nguoio: string,
-    ghichu: string
+    ghichu: string,
+    maGD: number,
+    thoigianGD: string
     // dieukien: string
   }
   interface TTphieudat {
@@ -82,10 +88,22 @@ const lichsu = () => {
   const [trangthai, setTrangthai] = React.useState('');
   const [ngaynhan, setNgaynhan] = useState(new Date());
   const [hoan, setHoan] = useState(Number);
+  const [ttphieudat_idKH, setTThieudat_idKH] = useState<TTphieudat[]>([]);
+  // const [tt, setTt] = useState(window.URL);
+  const [magd, setMagd] = useState(Number);
+  const [tggd, setTggd] = useState(String);
+  const [sotien, setSotien] = useState(Number);
 
-  const router = useRouter()
+  let { query } = useRouter()
+  console.log(">>> check params", query)
 
-  let i
+  // setResponseCode(String(router.query.vnp_ResponseCode))
+
+
+  let i = query.vnp_ResponseCode
+  let j = query.vnp_TxnRef
+  let k = query.vnp_PayDate
+  let z = true
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -104,34 +122,53 @@ const lichsu = () => {
       const params = {
         id_phong: "ALL",
       };
-      console.log(params)
+      // console.log(params)
 
       const response = await Phong(params);
       const res: Phong[] = response.phong;
-      console.log(response)
-      console.log(res)
+      // console.log(response)
+      // console.log(res)
       setPhong(res);
     } catch (error) {
       console.log(error);
     }
   };
-  // console.log(">>> check vnp_ResponseCode", router.query.vnp_ResponseCode)
-  const handleLuuCSDL = () => {
-    let phieudats = JSON.parse(localStorage.getItem('phieudat') || '{}');
-    if (Object.keys(phieudats).length === 0) {
-      console.log("true");
-    } else {
-      // console.log("ITEM",khachhang1.khachhang);
-      // setKhachhang(phieudats);
 
-      const res: TTphieudat[] = phieudats;
+  // console.log("tt", tt)
 
-      res.map(async (item) => {
+  // const handleLuuCSDL = () => {
+
+    // let phieudats = JSON.parse(localStorage.getItem('phieudat') || '{}');
+    // if (Object.keys(phieudats).length === 0) {
+    //   console.log("true");
+    // } else
+
+    // const res: TTphieudat[] = phieudats;
+    // const router = useRouter()
+
+    // if (router.query.vnp_PayDate && router.query.vnp_vnp_TxnRef) {
+    console.log("j", router.query.vnp_ResponseCode)
+    console.log("k", k)
+    // console.log("j", j)
+    // console.log("k", k)
+
+    ttphieudat_idKH.map(async (item) => {
+      let z = 1
+      if (i === '00' && ttphieudat_idKH.length != 0 && z == 1) {
+        console.log(">>> check vnp_ResponseCode", i)
+        // setKhachhang(phieudats);
+        console.log("j", j)
+        console.log("k", k)
+        // console.log("j", j)
+        // console.log("k", k)
+
         let res = await Datphong(
           {
             id_KH: item.id_KH,
             id_phong: item.id_phong,
             ngaydat: item.ngaydat,
+            // check_in: item.check_out.getFullYear() + "-" + (item.check_out.getMonth() + 1) + "-" + item.check_out.getDate(),
+            // check_out: item.check_in.getFullYear() + "-" + (item.check_in.getMonth() + 1) + "-" + item.check_in.getDate(),
             check_in: item.check_in,
             check_out: item.check_out,
             songuoi: item.songuoi,
@@ -141,12 +178,19 @@ const lichsu = () => {
             ghichu: item.ghichu,
             hotennguoio: item.hotennguoio,
             SDT_nguoio: item.SDT_nguoio,
-            CCCD_nguoio: item.CCCD_nguoio
+            CCCD_nguoio: item.CCCD_nguoio,
+            maGD: Number(j),
+            thoigianGD: String(k)
           }
         );
         if (res && res.errCode === 0) {
           handleLayLichsu()
+          z = 2
           localStorage.removeItem('phieudat')
+          router.push({
+            pathname: '/lichsu'
+
+          })
           alert("Đặt phòng thành công")
         } else {
           console.log(res)
@@ -154,10 +198,16 @@ const lichsu = () => {
           localStorage.removeItem('phieudat')
           alert("Đặt phòng không thành công")
         };
-      })
-    }
+      }
+    })
 
-  }
+
+
+  // }
+
+
+
+  // }
   const handleLayLichsu = () => {
     let khachhang1 = JSON.parse(localStorage.getItem('khachhang') || '{}');
 
@@ -175,21 +225,24 @@ const lichsu = () => {
         const params = {
           phieudat_idKH: res.id,
         };
-        console.log(params)
+        // console.log(params)
         const response1 = await Phieudat_idKH(params);
         const res1: Phieudat[] = response1.phieudat_idKH;
-        console.log(response1)
-        console.log(res1)
+        // console.log(response1)
+        // console.log(res1)
         setPhieudat_idKH(res1);
       })
     }
   }
-  const handleClickOpen = (id: number, ngaynhan: Date) => {
+  const handleClickOpen = (id: number, ngaynhan: Date, magd: number, tggd: string, tien: number) => {
     let d = new Date(ngaynhan)
 
     setId(id)
     setNgaynhan(d)
     setOpen(true);
+    setMagd(magd)
+    setTggd(tggd)
+    setSotien(tien)
   };
 
   const handleCapnhatTrangthai = async () => {
@@ -198,7 +251,9 @@ const lichsu = () => {
     let thang = ngaynhan.getMonth() + 1
     let nam = ngaynhan.getFullYear()
     let d = new Date()
-    let d1 = new Date(nam + '-' + thang + '-' + (ngay - 7))
+    let d1 = new Date(nam + '-' + thang + '-' + ngay)
+
+    // let d1 = new Date(nam + '-' + thang + '-' + (ngay - 7))
     let d2 = new Date(nam + '-' + thang + '-' + (ngay - 5))
     let temp
     d.setHours(0)
@@ -210,17 +265,17 @@ const lichsu = () => {
     d1.setMinutes(0)
     d1.setSeconds(0)
     d1.setMilliseconds(0)
+    let songay = Math.ceil((d1.getTime() - d.getTime()) / (24 * 60 * 60 * 1000))
+    // d2.setHours(0)
+    // d2.setMinutes(0)
+    // d2.setSeconds(0)
+    // d2.setMilliseconds(0)
 
-    d2.setHours(0)
-    d2.setMinutes(0)
-    d2.setSeconds(0)
-    d2.setMilliseconds(0)
 
-
-    if (d.getTime() <= d1.getTime()) {
+    if (songay >= 7) {
       setHoan(100)
       temp = 100
-    } else if (d1.getTime() < d.getTime() && d.getTime() <= d2.getTime()) {
+    } else if (songay< 7 && songay >=5) {
       setHoan(50)
       temp = 50
     } else {
@@ -235,7 +290,7 @@ const lichsu = () => {
     let res = await SuaPhieudat(
       {
         id: id,
-        trangthai: 'Đã hủy -'+' '+ 'Hoàn' +' '+temp + '%'
+        trangthai: 'Đã hủy -' + ' ' + 'Hoàn' + ' ' + temp + '%'
 
       }
     )
@@ -248,15 +303,103 @@ const lichsu = () => {
       console.log(res)
       alert("Cập nhật trạng thái không thành công")
     };
+    if (temp != 0) {
+      if (temp === 100) {
+        let res = await VNPayRefund(
+          {
+            orderId: magd,
+            transDate: tggd,
+            amount: sotien,
+            transType: '02',
+            user: khachhang[0].hotenKH
+          }
+        );
+        if (res) {
+          console.log(res)
+
+          alert("Thêm nội quy thành công")
+
+        } else {
+          console.log(res)
+          alert("Thêm nội quy không thành công")
+        };
+      }
+      else {
+        let res = await VNPayRefund(
+          {
+            orderId: magd,
+            transDate: tggd,
+            amount: sotien * (temp / 100),
+            transType: '03',
+            user: khachhang[0].hotenKH
+          }
+        );
+        if (res) {
+          console.log(res)
+
+          alert("Thêm nội quy thành công")
+
+        } else {
+          console.log(res)
+          alert("Thêm nội quy không thành công")
+        };
+      }
+
+    }
 
   }
+  const handleThemnoiquy = async () => {
+
+    let res = await VNPayRefund(
+      {
+        orderId: 856,
+        transDate: '20231116115051',
+        amount: 700000,
+        transType: '03',
+        user: 'khoia'
+      }
+    );
+    if (res) {
+      console.log(res)
+
+      alert("Thêm nội quy thành công")
+
+    } else {
+      console.log(res)
+      alert("Thêm nội quy không thành công")
+    };
+
+  }
+    ;
 
   useEffect(() => {
+    // let { query } = useRouter()
+    // console.log(">>> check params", query)
+    // let i = query.vnp_ResponseCode
+    // let j = query.vnp_TxnRef
+    // let k = query.vnp_PayDate
+    let phieudats = JSON.parse(localStorage.getItem('phieudat') || '{}');
+    if (Object.keys(phieudats).length === 0) {
+      console.log("true");
+    } else {
+      // setKhachhang(phieudats);
+      const res: TTphieudat[] = phieudats;
+      setTThieudat_idKH(res)
+      // console.log("res", res)
+    }
+    let khs = JSON.parse(localStorage.getItem('khachhang') || '{}');
+    if (Object.keys(khs).length === 0) {
+      console.log("true");
+    } else {
+      setKhachhang(khs);
+      const res: Khachhang[] = khs;
 
+    }
+    // console.log('>>>> i', i)
 
     handleLayLichsu()
 
-    handleLuuCSDL()
+    // handleLuuCSDL()
     handlePhong()
 
   }, []);
@@ -276,6 +419,8 @@ const lichsu = () => {
               <th className="">Số tiền</th>
               <th className=" ">Trạng thái</th>
               <th className="">Ghi chú</th>
+              <th className=" ">Mã GD</th>
+              <th className="">Thời gian thực hiện GD</th>
               <th className="">Hủy phòng <ErrorOutlineIcon fontSize="small" onClick={handleClickOpen1} />
                 <Dialog
                   fullScreen={fullScreen1}
@@ -330,11 +475,13 @@ const lichsu = () => {
                     <td className=" text-center">{item.tongtien}</td>
                     <td className=" text-center">{item.trangthai}</td>
                     <td className=" text-center">{item.ghichu}</td>
+                    <td className=" text-center">{item.maGD}</td>
+                    <td className=" text-center">{item.thoigianGD}</td>
                     <td className=" text-center">
                       <Checkbox
                         checked={item.id === id && open ? true : false || agree && item.id === id || item.trangthai === 'Đã hủy'}
                         disabled={agree && item.id === id || item.trangthai === 'Đã hủy' || item.trangthai === 'Đã nhận phòng'}
-                        onClick={() => handleClickOpen(item.id, item.check_in)}></Checkbox>
+                        onClick={() => handleClickOpen(item.id, item.check_in, item.maGD, item.thoigianGD, item.tongtien)}></Checkbox>
                       <Dialog
                         fullScreen={fullScreen}
                         open={open}
@@ -370,6 +517,8 @@ const lichsu = () => {
 
           </tbody>
         </table>
+        <button onClick={handleThemnoiquy}>{ttphieudat_idKH.map((i) => i.id_KH)}</button>
+
       </div>
 
     </div>

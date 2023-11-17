@@ -359,7 +359,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
     let i = tenloaiphong.indexOf(' -')
     let str1 = tenloaiphong.slice(0, i)
     console.log(i)
-    console.log(str1)
+    console.log("str1",str1)
     try {
       const params = {
         lp_tenloai: str1,
@@ -693,11 +693,6 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
             const labelProps: {
               optional?: React.ReactNode;
             } = {};
-            // if (isStepOptional(index)) {
-            //   labelProps.optional = (
-            //     <Typography variant="caption">Optional</Typography>
-            //   );
-            // }
             if (isStepSkipped(index)) {
               stepProps.completed = false;
             }
@@ -711,236 +706,206 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
 
         {activeStep == 0 ? (
           <div>
-
-            <div className="grid w-8/12 m-auto mt-6">
-              <div className="grid grid-cols-7 mt-5 ">
-                <div className="col-span-4 m-3 ">
-                  <p className="font-semibold text-2xl">Chi tiết liên hệ</p>
-                  <div className="shadow-lg  p-5">
-                    {/* {
-                  khachhang.map((item, index) => {
-                    return ( */}
-                    <div >
-                      <p className="font-semibold">Họ và tên:</p>
-                      <input
-                        type="text"
-                        className="border-gray-300 border-2 mt-2 pl-2 w-10/12 h-8 rounded-md"
-                        value={hotenKH}
-                      // value={hoten ? hoten : item.hotenKH}
-                      // onChange={(e) => setHoten(e.target.value)}
-                      />
-                      <div className="flex mt-4 ">
-                        <p className="pr-[1%] font-semibold">Số CMND: </p>
-                        <input className="border-gray-300 border-2 h-8 rounded-md pl-2 w-40" value={CMND} />
-                        <p className="pl-[3%] pr-[1%] font-semibold">Số điện thoại:</p>
-                        <input type="tel" className="border-gray-300 border-2 h-8 rounded-md pl-2 w-40" value={SDT} />
-                      </div>
-                      <p className="mt-4 font-semibold ">Email: <input type="text" className="border-gray-300 pl-2 border-2 rounded-md font-normal h-8 w-5/12" value={email} /></p>
-                    </div>
-                    {/* )
-                  })
-                } */}
+            <div className="flex w-8/12 m-auto mt-6 ">
+              <div className="basis-7/12 m-3 ">
+                <p className="font-semibold text-2xl pl-5">Chi tiết liên hệ</p>
+                <div className="shadow-lg space-y-3 p-5">
+                  <div className="flex ">
+                    <p className="font-semibold basis-3/12">Họ và tên:</p>
+                    <input
+                      type="text"
+                      className="border-gray-300 border-2 outline-none w-7/12 h-9 pl-2 rounded-md"
+                      value={hotenKH}
+                    />
                   </div>
-                  <div className="bg-gray-200 h-14 shadow-md rounded-b-lg space-y-5 space-x-10 pl-5 ">
-                    <input onChange={(e) => setRoll(e.target.value)} type="radio" value="datchominh" name='roll' checked={roll === "datchominh"} /> Đặt cho mình
-                    <input onChange={(e) => setRoll(e.target.value)} type="radio" value="datchonguoithan" name='roll' checked={roll === "datchonguoithan"} /> Đặt cho người khác
-                    {/* <input type="radio" />  Đặt cho mình
+
+                  <div className="flex">
+                    <p className=" font-semibold basis-3/12">Số CMND: </p>
+                    <input className="border-gray-300 outline-none  border-2 h-9 rounded-md pl-2 w-52" value={CMND} />
+                  </div>
+
+                  <div className="flex">
+                    <p className=" font-semibold basis-3/12">Số điện thoại:</p>
+                    <input type="tel" className="border-gray-300 border-2  outline-none h-9 rounded-md pl-2 w-52 " value={SDT} />
+                  </div>
+
+                  <div className="flex">
+                    <p className=" font-semibold basis-3/12">Email:</p>
+                    <input type="text" className="border-gray-300  outline-none pl-2 border-2 rounded-md font-normal h-9 w-7/12" value={email} />
+                  </div>
+
+                </div>
+                <div className="bg-gray-200 h-14 shadow-md rounded-b-lg space-y-5 space-x-10 pl-5 ">
+                  <input onChange={(e) => setRoll(e.target.value)} type="radio" value="datchominh" name='roll' checked={roll === "datchominh"} /> Đặt cho mình
+                  <input onChange={(e) => setRoll(e.target.value)} type="radio" value="datchonguoithan" name='roll' checked={roll === "datchonguoithan"} /> Đặt cho người khác
+                  {/* <input type="radio" />  Đặt cho mình
                           <input type="radio"/> Đặt cho người khác */}
-                  </div>
-                  <p className="font-semibold mt-5 text-xl" >Ghi chú:</p>
-                  <textarea placeholder="Note yêu cầu" className="bg-gray-100 w-full mt-3 h-20 outline-none p-3" value={ghichu} onChange={(e) => setGhichu(e.target.value)} />
+                </div>
 
-                  {
-                    roll === 'datchonguoithan' ? (
-                      <div className="pt-5">
-                        <p className="text-xl font-semibold">Thông tin khách:</p>
-                        <div className="shadow-md rounded-b-lg p-4 space-y-3">
-                          <div className="flex space-x-10">
-                            <p className="font-semibold pt-3">Họ và tên:</p>
-                            <input type="text" className="border-gray-300 border-2 mt-2 w-8/12 h-8 pl-2 rounded-md outline-none"
-                              value={hotenkhacho} onChange={(e) => setHotenkhacho(e.target.value)} />
-                          </div>
+                {
+                  roll === 'datchonguoithan' ? (
+                    <div className="pt-5">
+                      <p className="text-xl font-semibold p-5">Thông tin khách:</p>
+                      <div className="shadow-md rounded-b-lg p-4 space-y-3">
 
-                          <div className="flex space-x-10">
-                            <p className="font-semibold pt-1">Số CMND: </p>
-                            <input className="border-gray-300 border-2 h-8 rounded-md pl-2 outline-none"
-                              value={CCCDkhacho} onChange={(e) => setCCCDkhacho(e.target.value)} />
+                        <div className="flex ">
+                          <p className="font-semibold basis-3/12">Họ và tên:</p>
+                          <input type="text" className="border-gray-300 border-2 w-7/12 h-9 pl-2 rounded-md outline-none"
+                            value={hotenkhacho} onChange={(e) => setHotenkhacho(e.target.value)} />
+                        </div>
 
-                          </div>
-                          <div className="flex space-x-3 pt-3">
-                            <p className=" font-semibold">Số điện thoại:</p>
-                            <input type="tel" className="border-gray-300 border-2 h-8 rounded-md pl-2 outline-none"
-                              value={SDTkhacho} onChange={(e) => setSDTkhacho(e.target.value)} />
-                          </div>
+                        <div className="flex">
+                          <p className="font-semibold  basis-3/12">Số CMND: </p>
+                          <input className="border-gray-300 border-2 h-9 rounded-md pl-2 w-52 outline-none"
+                            value={CCCDkhacho} onChange={(e) => setCCCDkhacho(e.target.value)} />
+
+                        </div>
+                        <div className="flex">
+                          <p className=" font-semibold basis-3/12">Số điện thoại:</p>
+                          <input type="tel" className="border-gray-300 border-2 h-9 rounded-md w-52 pl-2 outline-none"
+                            value={SDTkhacho} onChange={(e) => setSDTkhacho(e.target.value)} />
                         </div>
                       </div>
-                    ) : ""
+                    </div>
+                  ) : ""
+                }
+                <div className="flex mt-5">
+                  <p className="font-semibold basis-3/12 text-xl" >Ghi chú:</p>
+                  <textarea placeholder="Note yêu cầu" className="bg-gray-100 w-full h-28 outline-none p-3" value={ghichu} onChange={(e) => setGhichu(e.target.value)} />
+                </div>
+
+              </div>
+              <div className="basis-5/12 shadow-inner bg-gray-50 rounded-md">
+                <div className="text-center pt-5">
+                  <p className="font-semibold text-lg">The Kupid Homestay</p>
+                  <p className="text-sm">47 Đặng Thái Thân, Phường 3, Đà Lạt</p>
+                </div>
+                <div className=" mt-5 p-[3%] h-32 text-slate-700 text-base space-y-4">
+                  <div className="flex ">
+                    <p className="text-sm basis-2/5">Ngày nhận phòng: </p>
+                    {check_in ?
+                      <p className="text-base font-semibold">{check_in}, Từ 14:00</p>
+
+                      :
+                      <div className="space-y-1">
+                        <DatePicker
+                          className="outline-none border-b-2 border-gray-300"
+                          // type="datetime"
+                          selected={checkin}
+                          minDate={new Date()}
+                          // maxDate={new Date("10-30-2023")}
+                          // onChange={(date: Date) => setStartDate(date)}
+                          onChange={(date: Date) => handleCheckDate((date))}
+                          dateFormat="dd/MM/yyyy"
+                        />
+                        {/* <input type="Date" className="text-base" /> */}
+                        <p className="text-xs font-semibold">Từ 14:00</p>
+                      </div>
+                    }
+                    {/* <p className="text-base">{check_in}, Từ 14:00</p> */}
+                  </div>
+
+                  <div className="flex">
+                    <p className="text-sm basis-2/5">Ngày trả phòng: </p>
+                    {check_out ?
+                      <p className="text-base font-semibold">{check_out}, Trước 12:00</p>
+
+                      :
+
+                      <div className="space-y-1">
+                        <DatePicker
+                          className="outline-none border-b-2 border-gray-300"
+                          // type="datetime"
+                          selected={checkout}
+                          minDate={mincheckout}
+                          // maxDate={new Date("10-30-2023")}
+                          // onChange={(date: Date) => setStartDate(date)}
+                          onChange={(date: Date) => setCheckout((date))}
+                          dateFormat="dd/MM/yyyy"
+                        />
+                        {/* <input type="Date" className="text-base" /> */}
+                        <p className="text-xs font-semibold">Trước 12:00</p>
+                      </div>
+                    }
+                    {/* <p className="text-base">{check_out}, Trước 12:00</p> */}
+                  </div>
+                </div>
+                <div className=" m-3 text-lg flex">
+                  <p className="basis-32 font-semibold">Loại phòng</p>
+
+                  {tenphong ?
+                    <p className="  text-lg"> {tenloaiphong} - {songuoi} người</p>
+
+                    :
+                    <Autocomplete
+                      disablePortal
+                      id="combo-box-demo"
+                      options={loaiphong.map((option) => option.tenloaiphong + ' - ' + option.songuoi + ' người')}
+                      value={valueCombobox1}
+                      onChange={(event: any, newValue: string | null) => {
+                        {
+
+                          newValue ?
+                            handleLayLoaiphongtheoTenLP(newValue)
+                            : null
+                        }
+                      }}
+                      sx={{ width: 300 }}
+
+                      renderInput={(params) => <TextField {...params}
+                        label="Tên loại phòng"
+                      />}
+                    />
                   }
                 </div>
-                <div className="col-span-3 shadow-inner bg-gray-50 rounded-md">
-                  <div className="text-center pt-5">
-                    <p className="font-semibold text-lg">The Kupid Homestay</p>
-                    <p className="text-sm">47 Đặng Thái Thân, Phường 3, Đà Lạt</p>
-                  </div>
-                  <div className=" mt-5 p-[3%] h-32 text-slate-700 text-base space-y-4">
-                    <div className="flex ">
-                      <p className="text-sm basis-2/5">Ngày nhận phòng: </p>
-                      {check_in ?
-                        <p className="text-base font-semibold">{check_in}, Từ 14:00</p>
 
-                        :
-                        <div className="space-y-1">
-                          <DatePicker
-                            className="outline-none border-b-2 border-gray-300"
-                            // type="datetime"
-                            selected={checkin}
-                            minDate={new Date()}
-                            // maxDate={new Date("10-30-2023")}
-                            // onChange={(date: Date) => setStartDate(date)}
-                            onChange={(date: Date) => handleCheckDate((date))}
-                            dateFormat="dd/MM/yyyy"
-                          />
-                          {/* <input type="Date" className="text-base" /> */}
-                          <p className="text-xs font-semibold">Từ 14:00</p>
-                        </div>
-                      }
-                      {/* <p className="text-base">{check_in}, Từ 14:00</p> */}
-                    </div>
+                <div className="font-semibold m-3 text-lg flex">
+                  <p className="basis-32 ">Phòng</p>
 
-                    <div className="flex">
-                      <p className="text-sm basis-40">Ngày trả phòng: </p>
-                      {check_out ?
-                        <p className="text-base font-semibold">{check_out}, Trước 12:00</p>
-
-                        :
-
-                        <div className="space-y-1">
-                          <DatePicker
-                            className="outline-none border-b-2 border-gray-300"
-                            // type="datetime"
-                            selected={checkout}
-                            minDate={mincheckout}
-                            // maxDate={new Date("10-30-2023")}
-                            // onChange={(date: Date) => setStartDate(date)}
-                            onChange={(date: Date) => setCheckout((date))}
-                            dateFormat="dd/MM/yyyy"
-                          />
-                          {/* <input type="Date" className="text-base" /> */}
-                          <p className="text-xs font-semibold">Trước 12:00</p>
-                        </div>
-                      }
-                      {/* <p className="text-base">{check_out}, Trước 12:00</p> */}
-                    </div>
-                  </div>
-                  <div className=" m-3 text-lg flex">
-                    <p className="basis-40 font-semibold">Loại phòng</p>
-
-                    {tenphong ?
-                      <p className="  text-lg"> {tenloaiphong} - {songuoi} người</p>
-
-                      :
-                      <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        options={loaiphong.map((option) => option.tenloaiphong + ' - ' + option.songuoi + ' người')}
-                        value={valueCombobox1}
-                        onChange={(event: any, newValue: string | null) => {
-                          {
-
-                            newValue ?
-                              handleLayLoaiphongtheoTenLP(newValue)
-                              : null
-                          }
-                        }}
-                        sx={{ width: 300 }}
-
-                        renderInput={(params) => <TextField {...params}
-                          label="Tên loại phòng"
-                        />}
-                      />
-                    }
-                  </div>
-
-                  <div className="font-semibold m-5 text-lg flex">
-                    <p className="basis-40 ">Phòng</p>
-
-                    {tenphong ?
-                      <>
-                        <p className="font-semibold  text-lg"> {tenphong}</p>
-
-                      </>
-                      :
-                      <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        options={phong.map((option) => option.tenphong)}
-                        value={valueCombobox}
-                        onChange={(event: any, newValue: string | null) => {
-                          {
-
-                            newValue ?
-                              handleLayttphongtheoten(newValue)
-                              : null
-                          }
-                        }}
-                        sx={{ width: 300 }}
-
-                        renderInput={(params) => <TextField {...params}
-                          label="Tên phòng"
-                        />}
-                      />
-                    }
-                  </div>
-                  <div className="flex m-5">
-                    <p className="basis-40 text-slate-500">Số người ở:</p>
-                    <input type="number" className="border-b-2 border-gray-300 outline-none"
-                      value={songuoio} onChange={(e) => setSonguoio(e.target.valueAsNumber)} />
-                  </div>
-                  {/* <p className="font-semibold m-5 text-lg">Phòng {tenphong}</p> */}
-
-                  {loaiphong1.map((item, index) => {
-                    //đặt nhiều phòngg
-                    return (
-                      <>
-                        {/* <div className="flex m-5">
-                          <p className="basis-40 text-slate-500">Khách/phòng</p>
-                          <p className="">{item.songuoi} khách</p>
-                        </div> */}
-                        <div className="flex m-5">
-                          <p className="basis-40 text-slate-500">Giá</p>
-                          <p className="">{item.gia}đ</p>
-                        </div>
-                        <div className="flex m-5">
-                          <p className="basis-40 text-slate-500">Giảm giá</p>
-                          <p>{phantramKM}%</p>
-                        </div>
-
-                        <div className="flex m-5">
-                          <p className="basis-40 font-semibold text-lg">Tổng tiền</p>
-                          <p className="font-semibold text-lg">
-                            {
-                              tongtien
-                              // item.gia ? ((item.gia * songay) - ((item.gia * songay) * (phantramKM / 100))) : null
-                            }
-                          </p>
-                        </div>
-                      </>
-                    )
-                  })}
                   {tenphong ?
                     <>
-                      {/* đặt 1 phòng */}
-                      {/* <div className="flex m-5">
-                        <p className="basis-40 text-slate-500">Khách/phòng</p>
-                        <p className="">{songuoi} khách</p>
-                      </div> */}
+                      <p className="font-semibold  text-lg"> {tenphong}</p>
+
+                    </>
+                    :
+                    <Autocomplete
+                      disablePortal
+                      id="combo-box-demo"
+                      options={phong.map((option) => option.tenphong)}
+                      value={valueCombobox}
+                      onChange={(event: any, newValue: string | null) => {
+                        {
+
+                          newValue ?
+                            handleLayttphongtheoten(newValue)
+                            : null
+                        }
+                      }}
+                      sx={{ width: 300 }}
+
+                      renderInput={(params) => <TextField {...params}
+                        label="Tên phòng"
+                      />}
+                    />
+                  }
+                </div>
+                <div className="flex m-3">
+                  <p className="basis-32 text-slate-500">Số người ở:</p>
+                  <input type="number" className="border-b-2 border-gray-300 w-32 pl-2 outline-none"
+                    value={songuoio} onChange={(e) => setSonguoio(e.target.valueAsNumber)} />
+                </div>
+
+                {loaiphong1.map((item, index) => {
+                  //đặt nhiều phòngg
+                  return (
+                    <>
+ 
                       <div className="flex m-5">
                         <p className="basis-40 text-slate-500">Giá</p>
-                        <p className="">{gia}đ</p>
+                        <p className="">{item.gia}đ</p>
                       </div>
                       <div className="flex m-5">
                         <p className="basis-40 text-slate-500">Giảm giá</p>
-
                         <p>{phantramKM}%</p>
                       </div>
 
@@ -949,18 +914,41 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                         <p className="font-semibold text-lg">
                           {
                             tongtien
-                            // gia ? ((gia * songay) - ((gia * songay) * (phantramKM / 100))) : null
+                            // item.gia ? ((item.gia * songay) - ((item.gia * songay) * (phantramKM / 100))) : null
                           }
                         </p>
                       </div>
                     </>
-                    : null
-                  }
+                  )
+                })}
+                {tenphong ?
+                  <>
+                    <div className="flex m-3">
+                      <p className="basis-32 text-slate-500">Giá</p>
+                      <p className="">{gia}đ</p>
+                    </div>
+                    <div className="flex m-3">
+                      <p className="basis-32 text-slate-500">Giảm giá</p>
 
-                </div>
+                      <p>{phantramKM}%</p>
+                    </div>
+
+                    <div className="flex m-3">
+                      <p className="basis-32 font-semibold text-lg">Tổng tiền</p>
+                      <p className="font-semibold text-lg">
+                        {
+                          tongtien
+                          // gia ? ((gia * songay) - ((gia * songay) * (phantramKM / 100))) : null
+                        }
+                      </p>
+                    </div>
+                  </>
+                  : null
+                }
+
               </div>
-
             </div>
+
             <Box sx={{ display: 'flex', flexDirection: 'row', width: '70%', paddingTop: '2%', margin: 'auto' }}>
               <Button
                 color="inherit"
@@ -1096,9 +1084,9 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
 
               <input type="checkbox" className="mt-6 ml-5 mr-2 text-slate-700 font-bold" /><label className="text-slate-500 font-bold">Chắn chắn rằng tất cả thông tin trên trang này là chính xác trước khi thanh toán.</label>
 
-              <Link href={`http://localhost:8080/order/create_payment_url?keyword=${tongtien}`}>
+              {/* <Link href={`http://localhost:8080/order/create_payment_url?keyword=${tongtien}`}>
                 <button onClick={handleDatphong}>ÁDFGHJ</button>
-              </Link>
+              </Link> */}
 
             </div>
             <Box sx={{ display: 'flex', flexDirection: 'row', width: '70%', paddingTop: '2%', margin: 'auto' }}>
@@ -1112,7 +1100,10 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
               </Button>
               <Box sx={{ flex: '1 1 auto' }} />
               <Button onClick={handleNext} sx={{ color: '#33cc33' }}>
-                {activeStep === steps.length - 1 ? 'Finish' : 'Tiếp theo'}
+                {activeStep === steps.length - 1 ? 'Finish' :
+                  <Link href={`http://localhost:8080/order/create_payment_url?keyword=${tongtien}`} className="uppercase" onClick={handleDatphong}>
+                    {/* <button className="uppercase" onClick={handleDatphong}>Thanh toán</button> */}Thanh toán
+                  </Link>}
               </Button>
             </Box>
           </div>

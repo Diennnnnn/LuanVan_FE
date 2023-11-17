@@ -103,12 +103,12 @@ const rooms = () => {
     return (
         <div className={roboto.className}>
             <Header></Header>
-            <div className="grid grid-cols-6 w-11/12 gap-2 bg-gray-50 pb-10 m-auto mt-8">
-                <div className="col-span-1 pl-3 space-y-2 mt-6">
+            <div className="flex w-11/12 gap-2 bg-gray-100 pb-10 m-auto mt-8">
+                <div className="basis-2/12 p-3 space-y-2 mt-6">
                     <p className="uppercase font-bold">bộ lọc tìm kiếm</p>
                     <p>Nhận phòng:</p>
                     <DatePicker
-                        className="outline-none border-b-2 border-gray-300 pl-1"
+                        className="outline-none border-b-2 w-52 border-gray-300 pl-1"
                         // type="datetime"
                         selected={checkin}
                         minDate={new Date()}
@@ -117,11 +117,6 @@ const rooms = () => {
                         onChange={(date: Date) => handleCheckDate((date))}
                         dateFormat="dd/MM/yyyy"
                     />
-                    {/* <input type="Date" 
-                    className="border-2 border-gray-300" 
-                    value={check_in}
-                    onChange={(event) => setCheck_in(event.target.value)}
-                    /> */}
                     <p>Trả phòng:</p>
                     <DatePicker
                         className="outline-none border-b-2 border-gray-300 pl-1"
@@ -139,25 +134,65 @@ const rooms = () => {
                     onChange={(event) => setCheck_out(event.target.value)}
                     /> */}
                     <hr className=" border-black" />
-                    <p>Phòng:</p>
-                    <input type="checkbox" /> <label>2 người</label>
-                    <input type="checkbox" className="ml-3" /> <label>4 người</label>
+                    <div className="flex ">
+                        <p className="basis-1/5 ">Phòng:</p>
+                        <div className="space-y-2 pl-4">
+                            <div><input type="checkbox" /> <label>2 người</label></div>
+                            <div><input type="checkbox" className="" /> <label>4 người</label></div>
+                            <div><input type="checkbox" className="" /> <label>Nhóm</label></div>
+                        </div>
+                    </div>
+                    
                     <hr className=" border-black" />
-                    <p>Tầng:</p>
-                    <input type="checkbox" /> <label>1</label>
-                    <input type="checkbox" className="ml-3" /> <label>2</label>
-                    <input type="checkbox" className="ml-3" /> <label>3</label>
-                    <input type="checkbox" className="ml-3" /> <label>4</label>
+
+                    <div className="flex ">
+                        <p className="basis-1/5 ">Khu:</p>
+                        <div className="space-y-2 pl-4">
+                            <div className="flex space-x-3">
+                                <div><input type="checkbox" /> <label>A</label></div>
+                                <div><input type="checkbox" /> <label>B</label></div>
+                            </div>
+                            <div className="flex space-x-3 ">
+                                <div><input type="checkbox" /> <label>C</label></div>
+                                <div><input type="checkbox" /> <label>Nhà gỗ</label></div>
+                            </div>
+
+                        </div>
+                    </div>
+
                     <hr className=" border-black" />
-                    <p>Giá:</p>
-                    <input type="checkbox" /> <label>Dưới 1 triệu</label>
-                    <br />
-                    <input type="checkbox" /> <label>Trên 1 triệu</label>
+                    <div className="flex ">
+                        <p className="basis-1/5 ">Tầng:</p>
+                        <div className="space-y-2 pl-4">
+                            <div className="flex space-x-3">
+                                <div><input type="checkbox" /> <label>1</label></div>
+                                <div><input type="checkbox" /> <label>2</label></div>
+                            </div>
+                            <div className="flex space-x-3">
+                                <div><input type="checkbox" /> <label>3</label></div>
+                                <div><input type="checkbox" /> <label>4</label></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <hr className=" border-black" />
+
+
+                    <div className="flex ">
+                        <p className="basis-1/5 ">Giá:</p>
+                        <div className="space-y-2 pl-4">
+                            <div>
+                                <input type="checkbox" /> <label>Dưới 1 triệu</label>
+                            </div>
+                            <div><input type="checkbox" /> <label>Trên 1 triệu</label></div>
+                        </div>
+                    </div>
+
                     <hr className=" border-black" />
                 </div>
-                <div className="col-span-5 mt-6">
+                <div className="basis-10/12  mt-6 ">
                     {/* <button onClick={handleClick}>dfghjk</button> */}
-                    <div className="grid grid-cols-3 gap-3 pr-5">
+                    <div className="grid xl:grid-cols-3 md:grid-cols-2 gap-3 pr-5">
                         {/* <button onClick={handlePhong}>click</button> */}
 
 

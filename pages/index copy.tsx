@@ -128,26 +128,18 @@ const index = () => {
     <div className={roboto.className}>
       <Header></Header>
       <center>
-        <div className=" relative">
+        <div className=" relative border-2 border-[#33cc33] xl:text-red-500 ">
           <div style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
             className="h-[450px]  w-[90%] bg-cover bg-center bg-[url('../public/hinh2.jpg')] rounded-xl mt-4 ">
             <div className="absolute inset-x-0 bottom-3">
-              <form className="xl:flex xs:grid md:grid-cols-3 xs:grid-cols-2 justify-center items-center space-x-2  rounded-md bg-white xxl:w-[75%] w-[85%] xl:h-[80px] md:h-[130px] xs:h-[170px] shadow-xl ">
-                <div className="">
+              <form className="flex justify-center items-center rounded-md bg-white w-[75%] h-[80px] shadow-xl">
+                <div className=" ">
                   <label className="absolute top-1 text-sm text-gray-400 ml-6 inline-block bg-white">Nhận phòng</label>
-                  <input id="startDate" type="date" placeholder="Nhận phòng " className="w-52 rounded-md h-12 border-solid border-gray-300 border-2 pl-2" />
-                </div>
-                <div className=" ">
+                  <input id="startDate" type="date" placeholder="Nhận phòng " className="w-52 rounded-md h-12 border-solid border-gray-300 border-2 mr-3 pl-2" />
                   <label className="absolute top-1 text-sm text-gray-400 ml-6 inline-block bg-white">Trả phòng</label>
-                  <input id="endDate" type="date" placeholder="Trả phòng" className="h-12 w-52 rounded-md border-solid border-2 border-gray-300  pl-2" />
-                </div>
-                <div className="">
-                  <input id="" type="number" placeholder="Số lượng khách" className=" h-12 xl:w-44 xs:w-52 rounded-md border-solid border-2 border-gray-300 pl-2" />
-                </div>
-                <div className=" ">
-                  <input id="" type="number" placeholder="Số lượng phòng" className=" h-12 xl:w-44 xs:w-52 rounded-md border-solid border-2 border-gray-300  pl-2" />
-                </div>
-                <div className="">
+                  <input id="endDate" type="date" placeholder="Trả phòng" className="h-12 w-52 rounded-md border-solid border-2 border-gray-300 mr-3 pl-2" />
+                  <input id="" type="number" placeholder="Số lượng khách" className=" h-12 w-44 rounded-md border-solid border-2 border-gray-300 mr-3 pl-2" />
+                  <input id="" type="number" placeholder="Số lượng phòng" className=" h-12 w-44 rounded-md border-solid border-2 border-gray-300 mr-3 pl-2" />
                   <button className="w-52 border-solid border-2 border-[#33cc33] hover:bg-[#33cc33] h-12 rounded-md">Tìm phòng</button>
                 </div>
               </form>
@@ -155,33 +147,34 @@ const index = () => {
           </div>
         </div>
 
-        <div className="flex md:flex-row flex-col mt-10 w-11/12 h-[250px] ">
-          <div className=" text-left pl-10 p-6 basis-5/12">
-            {/* <div className="text-left w-11/12 float-right "> */}
-              <p className=" lg:text-5xl md:text-4xl text-3xl ">The Kupid</p>
-              <p className="text-[#33cc33] md:text-sm font-semibold pt-1 uppercase">D a L a t N o S i n g l e</p>
-              <p className="pt-10  leading-relaxed ">Kupid là tên của vị thần tình yêu vì thế nơi đây được xem là chốn hẹn hò lãng mạn.</p>
-            {/* </div> */}
+        {/* <div className="grid grid-cols-5 mt-10 w-11/12 h-[250px] border-2 border-[#33cc33]  ">
+          <div className="col-span-2 ">
+            <div className="text-left w-11/12 float-right">
+              <p className=" text-5xl pt-5 font-medium">The Kupid</p>
+              <p className="text-[#33cc33] font-semibold pt-1 uppercase">D a L a t N o S i n g l e</p>
+              <p className="pt-10 leading-relaxed text-gray-600">Kupid là tên của vị thần tình yêu vì thế nơi đây được xem là chốn hẹn hò lãng mạn.</p>
+            </div>
           </div>
-          <div className=" flex m-auto rounded-md space-x-3">
-            <div className="xl:h-52 xl:w-52 lg:h-44 lg:w-44 md:h-32 md:w-32 h-36 w-36 rounded-md bg-cover bg-[url('../public/hinh1.jpg')] "></div>
-            <div className="xl:h-52 xl:w-52 lg:h-44 lg:w-44 md:h-32 md:w-32 h-36 w-36 rounded-md bg-cover bg-[url('../public/nen.jpg')]"></div>
-            <div className="xl:h-52 xl:w-52 lg:h-44 lg:w-44 md:h-32 md:w-32 h-36 w-36 rounded-md bg-cover bg-[url('../public/hinh5.jpg')]  "></div>
-          </div>
-        </div>
+          <div className="col-span-3 flex m-auto rounded-md ">
+            <div className="h-[200px] w-[200px] rounded-md bg-cover bg-[url('../public/hinh1.jpg')] mx-8 "></div>
+            <div className="h-[200px] w-[200px] rounded-md bg-cover bg-[url('../public/nen.jpg')] mx-8"></div>
+            <div className="h-[200px] w-[200px] rounded-md bg-cover bg-[url('../public/hinh5.jpg')] mx-8 "></div>
 
-        <div className="grid md:grid-cols-3 grid-cols-1  xl:w-[85%] md:w-[95%] md:mt-20 mt-44 ">
+          </div>
+        </div> */}
+
+        {/* <div className="grid grid-cols-3 h-[550px] w-[85%] mt-20 border-2 border-[#33cc33]">
           <div className="col-span-1 border-r-2 border-green-200">
             <FontAwesomeIcon icon={faAward} size="5x" style={{ color: "#33cc33", }} />
             <div className="uppercase font-bold text-3xl mt-12">Dịch vụ</div>
-            <p className="mt-5 leading-loose text-base p-6">Với hệ thống phòng đạt chuẩn được thiết kế theo không gian mở nên tạo cảm giác gần gũi và thân thiện với thiên nhiên.</p>
+            <p className="mt-8 leading-loose text-base p-6">Với hệ thống phòng đạt chuẩn được thiết kế theo không gian mở nên tạo cảm giác gần gũi và thân thiện với thiên nhiên.</p>
           </div>
 
           <div className="col-span-1 border-r-2 border-green-200">
             <FontAwesomeIcon icon={faPaperPlane} size="5x" style={{ color: "#33cc33", }} />
             <div className="uppercase font-bold text-3xl mt-12">Vị trí</div>
-            <p className="mt-5 leading-loose text-base p-6">Nằm cách trung tâm thành phố Đà Lạt khoảng 3km, nếu di chuyển bằng xe máy sẽ mất 10 phút.
-              Gần homestay có rất nhiều địa điểm tham quan và vui chơi nổi tiếng.
+            <p className="mt-8 leading-loose text-base p-6">Nằm cách trung tâm thành phố Đà Lạt khoảng 3km, nếu di chuyển bằng xe máy sẽ mất 10 phút.
+              Gần homestay có rất nhiều địa điểm tham quan và vui chơi nổi tiếng như Khu du lịch Lá Phong, khu du lịch Cáp Treo Đà Lạt, Dinh 2 Bảo Đại, quảng trường Lâm Viên,...
               Khoảng cách từ The Kupid đến sân bay Liên Khương là 30km và cách bến xe liên tỉnh Đà Lạt khoảng 4km.
             </p>
           </div>
@@ -189,24 +182,23 @@ const index = () => {
           <div className="col-span-1">
             <FontAwesomeIcon icon={faTree} size="5x" style={{ color: "#33cc33", }} />
             <div className="uppercase font-bold text-3xl mt-12">Không gian</div>
-            <p className="mt-5 leading-loose text-base p-6">The Kupid homestay Đà Lạt được bao bọc bởi những rừng thông rộng lớn, bao la và hùng vĩ.
+            <p className="mt-8 leading-loose text-base p-6">The Kupid homestay Đà Lạt được bao bọc bởi những rừng thông rộng lớn, bao la và hùng vĩ.
               Chính vì vậy nơi đây luôn có bầu không khí trong lành, mát mẻ và vô cùng thoải mái.
               Không gian nơi đây là sự kết hợp vô cùng hoàn hảo vừa lãng mạn, vừa mộng mơ mà vô cùng ấn tượng.
             </p>
           </div>
-        </div>
+        </div> */}
       </center>
-
-      <div className="grid lg:grid-cols-2 grid-cols-1  mt-20  lg:w-11/12 w-9/12 m-auto place-items-center ">
-        <div className="col-span-1 lg:h-[450px] h-80 w-full bg-cover bg-center bg-[url('../public/hinh8.jpg')]"></div>
-        <div className="col-span-1 lg:h-[550px]  w-full ">
-          <div className="flex flex-col lg:h-[600px]">
-            <div className=" bg-[#99CC99] pt-12 pl-[6%] rounded-tl-3xl">
+      {/* <div className="grid grid-cols-2 mt-20 h-[650px] w-full place-items-center border-2 border-[#33cc33]">
+        <div className="col-span-1 h-[450px] w-full bg-cover bg-center bg-[url('../public/hinh8.jpg')]"></div>
+        <div className="col-span-1 h-[600px] w-full ">
+          <div className="grid grid-rows-2 h-[600px]">
+            <div className="h-[350px] bg-[#99CC99] pt-12 pl-[6%] rounded-tl-3xl">
               <p className="uppercase text-xl font-semibold text-green-900">sự dung hòa đầy ăn ý từ</p>
               <p className="uppercase text-3xl pt-5">thiên nhiên an lành và không gian cực đẹp</p>
               <p className="pt-8">Khuôn viên homestay được trang trí vô cùng ấn tượng và bắt mắt. Nơi đây bố trí một khu vườn riêng vớ rất nhiều sắc hoa rực rỡ, hương thơm ngát và tuyệt vời.</p>
             </div>
-            <div className="grid pl-[6%] bg-[#99CC99] grid-cols-2 h-72  items-center rounded-bl-3xl  text-xl">
+            <div className="grid bg-[#99CC99] grid-cols-2 h-[300px] pl-[6%] items-center rounded-bl-3xl  text-xl">
               <div className=" ">
                 <FontAwesomeIcon icon={faWifi} size="1x" />
                 <span className="pl-4">Free Wifi</span>
@@ -238,13 +230,13 @@ const index = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <center>
-        <div className="mt-14 ">
+      {/* <center>
+        <div className="mt-14 border-2 border-[#33cc33]">
           <label className="uppercase text-3xl font-semibold">phòng</label>
           <Link href='/rooms' className="uppercase text-lg  flex justify-end pr-32 hover:text-[#33cc33]">xem đầy đủ</Link>
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10 m-auto  md:w-10/12 w-8/12">
+          <div className="grid grid-cols-3 gap-5 mt-10 m-auto h-[550px] w-10/12">
             <Rooms id_lp={1} tenphong={"A101"} id_phong={1} check_in={""} check_out={""} />
             <Rooms id_lp={2} tenphong={"A302"} id_phong={2} check_in={""} check_out={""} />
             <Rooms id_lp={2} tenphong={"A301"} id_phong={3} check_in={""} check_out={""} />
@@ -252,9 +244,9 @@ const index = () => {
           </div>
         </div>
 
-      </center>
-      
-      <div className="grid grid-cols-2 gap-2 mt-16 h-[550px] w-[90%] max-w-[1170px] m-auto ">
+      </center> */}
+{/* 
+      <div className="grid grid-cols-2 gap-2 mt-16 h-[550px] w-[90%] max-w-[1170px] m-auto border-2 border-[#33cc33]">
         <div className="col-span-1 bg-cover bg-center bg-[url('../public/hinh6.jpg')] h-[550px] "></div>
         <div className="col-span-1 h-[550px] ">
           <div className="grid grid-rows-2 gap-2 h-[550px]">
@@ -270,10 +262,10 @@ const index = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <hr className="border-black mt-20" />
-      <Footer></Footer>
+      {/* <hr className="border-black mt-20" />
+      <Footer></Footer> */}
     </div>
   );
 }

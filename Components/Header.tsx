@@ -155,7 +155,7 @@ const Header = () => {
       <hr className="m-2" />
 
       <div className="flex items-center justify-center mt-2">
-        <div className="basis-9/12 space-x-8 text-xl uppercase text-center  ">
+        <div className="basis-9/12  space-x-8 text-xl uppercase text-center">
           <Link href="/" className="hover:text-[#33cc33]" >Trang chủ</Link>
           <Link href="/rooms" className="hover:text-[#33cc33]">Phòng</Link>
           <Link href="/noiquy" className="hover:text-[#33cc33]">Nội quy</Link>

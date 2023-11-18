@@ -101,17 +101,7 @@ const Phong_QL = () => {
         })
 
     }
-    // const handleLayID_Phong = (value: string) => {
-    //     setValuePhong(value)
 
-    //     phongQL.map(async (item) => {
-    //         if (value === item.tenphong) {
-    //             setId_Phong(item.id)
-    //         }
-
-    //     })
-
-    // }
     const handleThemPhong = async () => {
         console.log("mota", id_LP)
         console.log("motaEN", id_VT)

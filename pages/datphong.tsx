@@ -137,17 +137,14 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
   const [giaphong, setGiaphong] = useState(Number)
   const [strCheckin, setStrCheckin] = useState('')
   const [strCheckout, setStrCheckout] = useState('')
-
-
-
+  const [valueLoaiphong, setValueLoaiphong] = useState("");
+  const [id_LP, setId_LP] = useState(Number)
+  // const [giaphong, setGiaphong] = useState(Number)
+  let kmTemp: number
 
   let d1: Date
   let d2: Date
   let giatemp: number
-
-  //
-  // const [check_in1, setCheck_in1] = useState("");
-  // const [check_out1, setCheck_out1] = useState("");
 
   const handleDatphong = async () => {
     // console.log("hoten", hoten)
@@ -258,15 +255,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
     }
 
   }
-  // const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   // e.preventDefault();
-  //   // if (e.target.value === roll) {
-  //   // setRoll('false')
-  //   // } else {
-  //   setRoll(e.target.value)
-  //   // }
-  //   console.log(roll)
-  // }
+
   const isStepOptional = (step: number) => {
     return step === 1;
   };
@@ -289,6 +278,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
   };
 
   const handleCheckDate = (checki: Date) => {
+
     setPhantramKM(0)
     khuyenmai.map((km) => {
       d1 = new Date(km.start)
@@ -311,10 +301,10 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
       console.log("d1", d1)
       console.log("d2", d2)
       console.log("d3", d3)
-
       if (d3.getTime() >= d1.getTime() && d3.getTime() <= d2.getTime()) {
-        console.log('true')
+        // console.log('true')
         setPhantramKM(km.phantram)
+        kmTemp = km.phantram
       }
     })
     setCheckin(checki)
@@ -354,28 +344,26 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
 
   }
   const handleLayLoaiphongtheoTenLP = async (tenloaiphong: string) => {
-    setValueCombobox1(tenloaiphong)
-    // console.log(tenloaiphong)
+    // let i = tenloaiphong.indexOf(' -')
+    // let str1 = tenloaiphong.slice(0, i)
+    // console.log(i)
+    // console.log("str1", str1)
+
     let i = tenloaiphong.indexOf(' -')
     let str1 = tenloaiphong.slice(0, i)
+    let str2 = tenloaiphong.slice(i + 3, i + 4)
+    let str3 = tenloaiphong.slice(i + 13)
     console.log(i)
-    console.log("str1",str1)
-    try {
-      const params = {
-        lp_tenloai: str1,
-      };
-      console.log(params)
-
-      const response = await Loaiphong_tenLP(params);
-      const res: Loaiphong[] = response.lp_tenloai;
-      console.log(response)
-      console.log(res)
-      setLoaiphong1(res);
-
-      res.map(async (item) => {
-        giatemp = item.gia
+    console.log(str1)
+    console.log(str2)
+    console.log(str3)
+    loaiphong.map(async (item) => {
+      if (item.tenloaiphong === str1 && item.songuoi === Number(str2) && item.gia === Number(str3)) {
+        setId_LP(item.id)
+        setValueLoaiphong(item.tenloaiphong + ' - ' + item.songuoi + ' người' + ' - ' + item.gia + ' VND')
         setGiaphong(item.gia)
-        setSonguoi1(item.songuoi)
+        giatemp = item.gia
+
         const params = {
           phong_idLP: item.id,
         };
@@ -383,14 +371,47 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
 
         const response = await Phong_idLP(params);
         const res: Phong[] = response.phong_idLP;
-        console.log(response)
-        console.log(res)
-        setPhong(res);
+        setPhong(res)
+      }
+    })
 
-      })
-    } catch (error) {
-      console.log(error);
-    }
+    // setValueCombobox1(tenloaiphong)
+    // let i = tenloaiphong.indexOf(' -')
+    // let str1 = tenloaiphong.slice(0, i)
+    // console.log(i)
+    // console.log("str1",str1)
+    // try {
+    //   const params = {
+    //     lp_tenloai: str1,
+    //   };
+    //   console.log(params)
+
+    //   const response = await Loaiphong_tenLP(params);
+    //   const res: Loaiphong[] = response.lp_tenloai;
+    //   console.log(response)
+    //   console.log(res)
+    //   setLoaiphong1(res);
+
+    //   res.map(async (item) => {
+    //     giatemp = item.gia
+    //     setGiaphong(item.gia)
+    //     setSonguoi1(item.songuoi)
+    //     const params = {
+    //       phong_idLP: item.id,
+    //     };
+    //     console.log(params)
+
+    //     const response = await Phong_idLP(params);
+    //     const res: Phong[] = response.phong_idLP;
+    //     console.log(response)
+    //     console.log(res)
+    //     setPhong(res);
+
+    //   })
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    handleCheckDate(new Date())
     let d1 = new Date(checkin)
     let d2 = new Date(checkout)
     d1.setHours(0)
@@ -405,8 +426,8 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
 
     // let sn = Number(d2.getDate()) - Number(d1.getDate())
     setSongay(sn)
-    setTongtien((giatemp * sn) - ((giatemp * sn) * (phantramKM / 100)))
-    console.log("phantramKM", phantramKM)
+    setTongtien((giatemp * sn) - ((giatemp * sn) * (kmTemp / 100)))
+    // console.log("phantramKM", phantramKM)
     console.log("giatemp", giatemp)
 
   };
@@ -840,8 +861,9 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                     <Autocomplete
                       disablePortal
                       id="combo-box-demo"
-                      options={loaiphong.map((option) => option.tenloaiphong + ' - ' + option.songuoi + ' người')}
-                      value={valueCombobox1}
+                      options={loaiphong.map((option) => option.tenloaiphong + ' - ' + option.songuoi + ' người' + ' - ' + option.gia)}
+                      // value={valueCombobox1}
+                      value={valueLoaiphong}
                       onChange={(event: any, newValue: string | null) => {
                         {
 
@@ -895,32 +917,30 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                     value={songuoio} onChange={(e) => setSonguoio(e.target.valueAsNumber)} />
                 </div>
 
-                {loaiphong1.map((item, index) => {
-                  //đặt nhiều phòngg
-                  return (
-                    <>
- 
-                      <div className="flex m-5">
-                        <p className="basis-40 text-slate-500">Giá</p>
-                        <p className="">{item.gia}đ</p>
-                      </div>
-                      <div className="flex m-5">
-                        <p className="basis-40 text-slate-500">Giảm giá</p>
-                        <p>{phantramKM}%</p>
-                      </div>
+                {tenphong ? null :
+                  <>
 
-                      <div className="flex m-5">
-                        <p className="basis-40 font-semibold text-lg">Tổng tiền</p>
-                        <p className="font-semibold text-lg">
-                          {
-                            tongtien
-                            // item.gia ? ((item.gia * songay) - ((item.gia * songay) * (phantramKM / 100))) : null
-                          }
-                        </p>
-                      </div>
-                    </>
-                  )
-                })}
+                    <div className="flex m-5">
+                      <p className="basis-40 text-slate-500">Giá</p>
+                      <p className="">{giaphong}đ</p>
+                    </div>
+                    <div className="flex m-5">
+                      <p className="basis-40 text-slate-500">Giảm giá</p>
+                      <p>{phantramKM}%</p>
+                    </div>
+
+                    <div className="flex m-5">
+                      <p className="basis-40 font-semibold text-lg">Tổng tiền</p>
+                      <p className="font-semibold text-lg">
+                        {
+                          tongtien
+                          // item.gia ? ((item.gia * songay) - ((item.gia * songay) * (phantramKM / 100))) : null
+                        }
+                      </p>
+                    </div>
+                  </>
+
+                }
                 {tenphong ?
                   <>
                     <div className="flex m-3">
@@ -1020,7 +1040,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                 <div className="pl-[5%] p-3 space-y-2 space-x-2">
                   <p className="text-lg font-semibold">Thông tin phòng:</p>
                   <div className="flex ">
-                    <div className="basis-2/5 space-y-2">
+                    <div className="basis-2/6 space-y-2">
                       <div className="flex space-x-2">
                         <p className="">Ngày nhận:</p>
                         {check_in ?
@@ -1043,7 +1063,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                         <p className="font-semibold">{songuoio} người</p>
                       </div>
                     </div>
-                    <div className="basis-3/5 space-y-2">
+                    <div className="basis-4/6 space-y-2">
                       <div className="flex space-x-2 ">
                         <p className="">Ngày trả:</p>
                         {check_out ?
@@ -1056,7 +1076,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                         {tenloaiphong && songuoi ?
                           <p className="font-semibold">{tenloaiphong} - {songuoi} người</p>
                           :
-                          <p className="font-semibold">{valueCombobox1}</p>
+                          <p className="font-semibold">{valueLoaiphong}</p>
 
                         }
                       </div>

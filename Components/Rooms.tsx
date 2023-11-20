@@ -53,10 +53,10 @@ const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
         const params = {
           id_lp: id_lp,
         };
-        console.log(params)
+        // console.log(params)
         const response = await Loaiphong(params);
         const res: Loaiphong[] = response.loaiphong;
-        console.log(response)
+        // console.log(response)
         setLoaiphong(res);
         res.map((res) => {
           // setId_loaiphong(res.id)
@@ -74,11 +74,11 @@ const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
         const params = {
           id_Phong: id_phong,
         };
-        console.log(params)
+        // console.log(params)
         const response = await Layhinhanh_IdPhong(params);
         const res: HinhanhPhong[] = response.layha;
-        console.log(response)
-        console.log(res)
+        // console.log(response)
+        // console.log(res)
         setHinhanhPhong(res);
 
       } catch (error) {

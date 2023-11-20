@@ -85,7 +85,7 @@ const Phieudat_QL = () => {
             handleLayPhieudat()
             // setTrangthai('')
             // handleLayLichsu()
-            // alert("Cập nhật nội quy thành công")
+            alert("Cập nhật nội quy thành công")
 
         } else {
             console.log(res)
@@ -212,7 +212,7 @@ const Phieudat_QL = () => {
                                             <td className="border border-slate-300 p-2">{item.CCCD_nguoio}</td>
                                             <td className="border border-slate-300 p-2">
                                                 <Checkbox 
-                                                disabled = {(item.trangthai === 'Đã hủy' )? true : false} 
+                                                disabled = {(item.trangthai === 'Đã hủy' ) ? true : false} 
                                                 checked = {(item.trangthai === 'Đã nhận phòng')}
                                                 onClick={()=>handleCapnhatTrangthai(item.id)}/>
                                             </td>

@@ -501,7 +501,7 @@ const lichsu = () => {
                     <td className=" text-center">{item.thoigianGD}</td>
                     <td className=" text-center">
                       <Checkbox
-                        checked={item.id === id && open ? true : false || agree && item.id === id || item.trangthai === 'Đã hủy'}
+                        checked={item.id === id && open ? true : false || agree && item.id === id || item.trangthai.slice(0,6) === 'Đã hủy'}
                         disabled={agree && item.id === id || item.trangthai.slice(0,6) === 'Đã hủy' || item.trangthai === 'Đã nhận phòng'}
                         onClick={() => handleClickOpen(item.id, item.check_in, item.maGD, item.thoigianGD, item.tongtien)}></Checkbox>
                       <Dialog

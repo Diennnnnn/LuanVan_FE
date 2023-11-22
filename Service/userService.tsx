@@ -773,6 +773,15 @@ export async function Datphong(params:{
     return data;
   }
 
+  export async function handleLayPhieudat_idPhong(params: { phieudat_idPhong: any }): Promise<any> {
+    const { phieudat_idPhong } = params;
+    const response = await fetch(
+      `http://localhost:8080/api/LayPhieudat_idPhong?keyword=${phieudat_idPhong}`
+    );
+    const data = await response.json();
+    return data;
+  }
+
   export async function LayPhieudat_ngay(): Promise<any> {
     // const { } = params;
     const response = await fetch(

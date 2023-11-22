@@ -212,8 +212,8 @@ const Phieudat_QL = () => {
                                             <td className="border border-slate-300 p-2">{item.CCCD_nguoio}</td>
                                             <td className="border border-slate-300 p-2">
                                                 <Checkbox 
-                                                disabled = {(item.trangthai === 'Đã hủy' ) ? true : false} 
-                                                checked = {(item.trangthai === 'Đã nhận phòng')}
+                                                disabled = {(item.trangthai.slice(0,6) === 'Đã hủy' ) ? true : false} 
+                                                checked = {(item.trangthai === 'Đã nhận phòng' )}
                                                 onClick={()=>handleCapnhatTrangthai(item.id)}/>
                                             </td>
 

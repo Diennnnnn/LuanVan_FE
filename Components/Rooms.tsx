@@ -109,7 +109,7 @@ const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
                     : null
                 }
 
-
+                <p>{id_phong}</p> 
                 <p className="text-center ">{tenphong}</p>
                 <div className="flex justify-center">
                   <p className="pr-2 uppercase">Giá</p>

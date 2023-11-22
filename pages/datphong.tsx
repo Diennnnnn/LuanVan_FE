@@ -123,7 +123,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
   const [hotenkhacho, setHotenkhacho] = useState("")
   const [CCCDkhacho, setCCCDkhacho] = useState("")
   const [SDTkhacho, setSDTkhacho] = useState("")
-  const [songuoio, setSonguoio] = useState(Number)
+  const [songuoio, setSonguoio] = useState(1)
   const [khuyenmai, setKhuyenmai] = useState<Khuyenmai[]>([]);
 
   // const [tenP, setTenP] = useState<string[]>([]);
@@ -139,13 +139,33 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
   const [strCheckout, setStrCheckout] = useState('')
   const [valueLoaiphong, setValueLoaiphong] = useState("");
   const [id_LP, setId_LP] = useState(Number)
-  // const [giaphong, setGiaphong] = useState(Number)
+  const [sn, setSn] = useState(Number)
+
+  const [errorSDT, setErrorSDT] = useState(false)
+  const [errorCCCD, setErrorCCCD] = useState(false)
+
+
   let kmTemp: number
 
   let d1: Date
   let d2: Date
   let giatemp: number
-
+  const handleErrorSDT = (val: string) => {
+    setSDTkhacho(val)
+    if (val.match(/(0[3|5|7|8|9])+([0-9]{8})\b/g)) {
+      setErrorSDT(false)
+    } else {
+      setErrorSDT(true)
+    }
+  }
+  const handleErrorCCCD = (val1: string) => {
+    setCCCDkhacho(val1)
+    if (val1.match(/^([0-9]{12})+$/)) {
+      setErrorCCCD(false)
+    } else {
+      setErrorCCCD(true)
+    }
+  }
   const handleDatphong = async () => {
     // console.log("hoten", hoten)
     console.log("id_KH", id_KH)
@@ -346,13 +366,16 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
   const handleLayLoaiphongtheoTenLP = async (tenloaiphong: string) => {
     // let i = tenloaiphong.indexOf(' -')
     // let str1 = tenloaiphong.slice(0, i)
-    // console.log(i)
+    // console.log(i)`
     // console.log("str1", str1)
 
     let i = tenloaiphong.indexOf(' -')
     let str1 = tenloaiphong.slice(0, i)
     let str2 = tenloaiphong.slice(i + 3, i + 4)
     let str3 = tenloaiphong.slice(i + 13)
+    setSn(Number(str2))
+    // songuoi= Number(str2)
+    console.log('ghj', songuoi)
     console.log(i)
     console.log(str1)
     console.log(str2)
@@ -426,12 +449,47 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
 
     // let sn = Number(d2.getDate()) - Number(d1.getDate())
     setSongay(sn)
-    setTongtien((giatemp * sn) - ((giatemp * sn) * (kmTemp / 100)))
+    if (songuoi) {
+      if (songuoio > songuoi) {
+        setTongtien((giatemp * sn) - ((giatemp * sn) * (kmTemp / 100)) + 150000)
+      } else {
+        setTongtien((giatemp * sn) - ((giatemp * sn) * (kmTemp / 100)))
+      }
+    }
     // console.log("phantramKM", phantramKM)
     console.log("giatemp", giatemp)
 
   };
 
+  const handleTinhtiennn = async (sno: number) => {
+    console.log(songay)
+    console.log(phantramKM)
+    console.log(gia)
+    console.log(songuoi1)
+
+    // console(str2)
+    if (songuoi && gia) {
+      setSonguoio(sno)
+
+      if (sno > songuoi) {
+        setTongtien((gia * songay) - ((gia * songay) * (phantramKM / 100)) + 150000)
+      }
+      else {
+        setTongtien((gia * songay) - ((gia * songay) * (phantramKM / 100)))
+      }
+    } else {
+      setSonguoio(sno)
+
+      if (sno > sn) {
+        setTongtien((giaphong * songay) - ((giaphong * songay) * (phantramKM / 100)) + 150000)
+      }
+      else {
+        setTongtien((giaphong * songay) - ((giaphong * songay) * (phantramKM / 100)))
+      }
+    }
+
+
+  };
 
   useEffect(() => {
     const handleCheckDate = (checki: Date) => {
@@ -538,6 +596,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
 
     };
 
+
     const handleLayKhuyenmai = async () => {
       try {
         const params = {
@@ -622,7 +681,13 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
 
               console.log("d", temp)
               setPhantramKM(km.phantram)
-              setTongtien((gia * temp) - ((gia * temp) * (km.phantram / 100)))
+              if (songuoi) {
+                if (songuoio > songuoi) {
+                  setTongtien((gia * temp) - ((gia * temp) * (km.phantram / 100)) + 150000)
+                } else {
+                  setTongtien((gia * temp) - ((gia * temp) * (km.phantram / 100)))
+                }
+              }
 
             } else {
               setTongtien(gia * temp)
@@ -776,16 +841,30 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                         </div>
 
                         <div className="flex">
-                          <p className="font-semibold  basis-3/12">Số CMND: </p>
+                          <p className="font-semibold  basis-3/12">Số CCCD: </p>
                           <input className="border-gray-300 border-2 h-9 rounded-md pl-2 w-52 outline-none"
-                            value={CCCDkhacho} onChange={(e) => setCCCDkhacho(e.target.value)} />
+                            maxLength={12}
+                            minLength={12}
+                            value={CCCDkhacho} onChange={(e) => handleErrorCCCD(e.target.value)} />
+                        </div>
+                        <div className="flex">
+                          <p className=" font-semibold basis-3/12"></p>
+                          {errorCCCD ?<p className="text-red-500 text-xs">Vui lòng nhập đúng CCCD</p>:''}
 
                         </div>
                         <div className="flex">
                           <p className=" font-semibold basis-3/12">Số điện thoại:</p>
                           <input type="tel" className="border-gray-300 border-2 h-9 rounded-md w-52 pl-2 outline-none"
-                            value={SDTkhacho} onChange={(e) => setSDTkhacho(e.target.value)} />
+                            maxLength={10}
+                            minLength={10}
+                            value={SDTkhacho} onChange={(e) => handleErrorSDT(e.target.value)} />
                         </div>
+                        <div className="flex">
+                          <p className=" font-semibold basis-3/12"></p>
+                          {errorSDT ?<p className="text-red-500 text-xs">Vui lòng nhập đúng số điện thoại</p>:''}
+
+                        </div>
+
                       </div>
                     </div>
                   ) : ""
@@ -911,11 +990,25 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                     />
                   }
                 </div>
-                <div className="flex m-3">
-                  <p className="basis-32 text-slate-500">Số người ở:</p>
-                  <input type="number" className="border-b-2 border-gray-300 w-32 pl-2 outline-none"
-                    value={songuoio} onChange={(e) => setSonguoio(e.target.valueAsNumber)} />
-                </div>
+                {songuoi ?
+                  <div className="flex m-3">
+                    <p className="basis-32 text-slate-500">Số người ở:</p>
+                    <input type="number" className="border-b-2 border-gray-300 w-32 pl-2 outline-none"
+                      min={1}
+                      max={Number(songuoi) + 1 }
+                      value={songuoio}
+                      onChange={(e) => handleTinhtiennn(e.target.valueAsNumber)} />
+                  </div>
+                  :
+                  <div className="flex m-3">
+                    <p className="basis-32 text-slate-500">Số người ở:</p>
+                    <input type="number" className="border-b-2 border-gray-300 w-32 pl-2 outline-none"
+                      min={1}
+                      max={ sn + 1}
+                      value={songuoio}
+                      onChange={(e) => handleTinhtiennn(e.target.valueAsNumber)} />
+                  </div>
+                }
 
                 {tenphong ? null :
                   <>

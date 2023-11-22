@@ -41,7 +41,7 @@ const capnhatthongtinKH = () => {
   const [allkh, setAllkh] = useState<Khachhang[]>([]);
   const [fileIMG, setFileIMG] = useState<File>()
   const [hinhanh, setHinhanh] = useState("");
-
+  const [errorEmail, setErrorEmail] = useState(false)
   const handleOnChangeImage = async (event: { target: { files: any; }; }) => {
     console.log("img")
     setFileIMG(event.target.files[0]);
@@ -177,6 +177,14 @@ const capnhatthongtinKH = () => {
 
     }
   }
+  const handleErrorEmail = (val: string) => {
+    setEmail(val)
+    if (val.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+      setErrorEmail(false)
+    } else {
+      setErrorEmail(true)
+    }
+  }
   useEffect(() => {
 
     let khachhang1 = JSON.parse(localStorage.getItem('khachhang') || '{}');
@@ -252,7 +260,7 @@ const capnhatthongtinKH = () => {
             </div>
 
             <div className="basis-3/4 space-y-5">
-              <input type="text" className="outline-none w-4/5 border-b-2 border-gray-400" value={hotenKH} onChange={(e) => setHotenKH(e.target.value)} />
+              <input type="text" className="outline-none w-4/5 border-b-2 border-gray-400" placeholder="Nhập đầy đủ họ và tên" value={hotenKH} onChange={(e) => setHotenKH(e.target.value)} />
               <DatePicker
                 className="outline-none w-4/5 border-b-2 border-gray-400"
                 dateFormat='dd/MM/yyyy'
@@ -266,11 +274,12 @@ const capnhatthongtinKH = () => {
               </div>
               <input type="text" className="outline-none w-4/5 border-b-2 border-gray-400" value={CMND} onChange={(e) => setCMND(e.target.value)} />
               <input type="" className="outline-none w-4/5 border-b-2 border-gray-400 " value={SDT} onChange={(e) => setSDT(e.target.value)} />
-              <input type="" className="outline-none w-4/5 border-b-2 border-gray-400" value={email} onChange={(e) => setEmail(e.target.value)} />
-
+              <input type="" className="outline-none w-4/5 border-b-2 border-gray-400" placeholder="example@gmail.com" value={email} onChange={(e)=>handleErrorEmail(e.target.value)} />
+              {errorEmail?<p className="text-red-500 text-xs">Lỗi Email không đúng định dạng</p>:''}
             </div>
           </div>
         </div>
+            
         <div className="py-7 pr-[10%]">
           <button onClick={handleCapnhatTTKH} className="float-right border-2 border-green-500  hover:bg-green-500 h-8 w-44 rounded-lg">Cập nhật thông tin</button>
         </div>

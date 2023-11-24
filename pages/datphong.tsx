@@ -3,7 +3,7 @@ import Buoc1 from "@/Components/Buoc1";
 import Buoc2 from "@/Components/Buoc2";
 import Footer from "@/Components/Footer";
 import Header from "@/Components/Header";
-import { Datphong, Khuyenmai, Loaiphong, Loaiphong_tenLP, Phong, Phong_idLP, Phong_tenphong } from "@/Service/userService";
+import { Datphong, Khuyenmai, Loaiphong, Loaiphong_tenLP, Phong, Phong_idLP, Phong_tenphong, handleLayPhieudat_idPhong } from "@/Service/userService";
 import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -90,6 +90,25 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
     finish: Date;
     dieukien: string
   }
+  interface Phieudat {
+    id: number;
+    id_KH: number;
+    id_Phong: number;
+    ngaydat: Date;
+    check_in: Date;
+    check_out: Date;
+    songuoi: number,
+    tongtien: number,
+    thanhtoan: string,
+    trangthai: string,
+    hotennguoio: string,
+    SDT_nguoio: string,
+    CCCD_nguoio: string,
+    ghichu: string,
+    maGD: number,
+    thoigianGD: string
+    // dieukien: string
+  }
   // const [roll, setRoll] = useState('')
   const [khachhang, setKhachhang] = useState<Khachhang[]>([]);
   const [step, setStep] = useState("Buoc1");
@@ -144,6 +163,29 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
   const [errorSDT, setErrorSDT] = useState(false)
   const [errorCCCD, setErrorCCCD] = useState(false)
 
+  const arrp: number[] = []
+  const arrp2: number[] = []
+
+  const [dsphong, setDsphong] = useState([
+    {
+      id: 0,
+      id_LP: 0,
+      id_VT: 0,
+      tenphong: '',
+      trangthai: '',
+      mota: ''
+    },
+  ])
+  const [dsphong2, setDsphong2] = useState([
+    {
+      id: 0,
+      id_LP: 0,
+      id_VT: 0,
+      tenphong: '',
+      trangthai: '',
+      mota: ''
+    },
+  ])
 
   let kmTemp: number
 
@@ -202,29 +244,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
       }
       localStorage.setItem('phieudat', JSON.stringify(phieudat.TTphieudat));
 
-      // let res = await Datphong(
-      //   {
-      //     id_KH: id_KH,
-      //     id_phong: id_phong,
-      //     ngaydat: ngaydat,
-      //     check_in: strCheckin,
-      //     check_out: strCheckout,
-      //     songuoi: songuoio,
-      //     tongtien: tongtien,
-      //     thanhtoan: '',
-      //     trangthai: '',
-      //     ghichu: ghichu,
-      //     hotennguoio: hotenkhacho,
-      //     SDT_nguoio: SDTkhacho,
-      //     CCCD_nguoio: CCCDkhacho
-      //   }
-      // );
-      // if (res && res.errCode === 0) {
-      //   alert("Đặt phòng thành công")
-      // } else {
-      //   console.log(res)
-      //   alert("Đặt phòng không thành công")
-      // };
+    
     }
     else {
       let phieudat = {
@@ -248,29 +268,6 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
       }
       localStorage.setItem('phieudat', JSON.stringify(phieudat.TTphieudat));
 
-      // let res = await Datphong(
-      //   {
-      //     id_KH: id_KH,
-      //     id_phong: id_Phong,
-      //     ngaydat: ngaydat,
-      //     check_in: checkin.getFullYear() + "-" + (checkin.getMonth() + 1) + "-" + checkin.getDate(),
-      //     check_out: checkout.getFullYear() + "-" + (checkout.getMonth() + 1) + "-" + checkout.getDate(),
-      //     songuoi: songuoio,
-      //     tongtien: tongtien,
-      //     thanhtoan: '',
-      //     trangthai: '',
-      //     ghichu: ghichu,
-      //     hotennguoio: hotenkhacho,
-      //     SDT_nguoio: SDTkhacho,
-      //     CCCD_nguoio: CCCDkhacho
-      //   }
-      // );
-      // if (res && res.errCode === 0) {
-      //   alert("Đặt phòng thành công")
-      // } else {
-      //   console.log(res)
-      //   alert("Đặt phòng không thành công")
-      // };
 
     }
 
@@ -297,7 +294,117 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+
+  const handlekiemtrangay = async (ci: Date, ck: Date) => {
+    arrp.slice(0, arrp.length)
+    dsphong.splice(0, dsphong.length)
+
+    setCheckout(ck)
+    let start = new Date(ci)
+    let end = new Date(ck)
+    start.setHours(0)
+    start.setMinutes(0)
+    start.setSeconds(0)
+    start.setMilliseconds(0)
+
+    end.setHours(0)
+    end.setMinutes(0)
+    end.setSeconds(0)
+    end.setMilliseconds(0)
+    // console.log('das', start)
+    // console.log('das', end)
+
+    try {
+      const params = {
+        id_phong: 'ALL',
+      };
+      // console.log(params)
+      const response = await Phong(params);
+      const res: Phong[] = response.phong; //gán dữ liệu vào res
+      // console.log(response)
+      setPhong(res); //gán res vào setPhong
+      res.map(async (res) => {
+        const params = {
+          phieudat_idPhong: res.id,
+        };
+        // console.log(params)
+        const response1 = await handleLayPhieudat_idPhong(params);
+        const res1: Phieudat[] = response1.phieudat_idPhong; //gán dữ liệu vào res
+        if (res1.length === 0) {
+          let timvitri = arrp.findIndex((val) => val === res.id)
+          if (timvitri === -1) {
+            arrp.push(res.id)
+            // console.log("arrpush", arrp)
+            const dsgheDD = {
+              id: (res.id),
+              id_LP: res.id_LP,
+              id_VT: res.id_VT,
+              tenphong: res.tenphong,
+              trangthai: res.trangthai,
+              mota: res.mota
+            }
+            dsphong.push(dsgheDD)
+            setDsphong([dsgheDD, ...dsphong])
+          }
+        }
+        res1.map((i) => {
+          let d1 = new Date(i.check_in)
+          let d2 = new Date(i.check_out)
+          // console.log(i.maGD)
+          d1.setHours(0, 0, 0, 0)
+          d2.setHours(0, 0, 0, 0)
+          if (
+            (start.getTime() < d1.getTime() &&
+              end.getTime() < d2.getTime())
+            ||
+            (start.getTime() > d1.getTime() &&
+              end.getTime() > d2.getTime())
+            ||
+            (start.getTime() === d2.getTime() &&
+              end.getTime() > d2.getTime())
+          ) {
+
+            // let timvitri = phong1.filter((dsgheDDs) => res.id === dsgheDDs.id)
+            let timvitri = arrp.findIndex((val) => val === res.id)
+            if (timvitri === -1) {
+              arrp.push(res.id)
+
+              const dsgheDD = {
+
+                id: (res.id),
+                id_LP: res.id_LP,
+                id_VT: res.id_VT,
+                tenphong: res.tenphong,
+                trangthai: res.trangthai,
+                mota: res.mota
+              }
+              dsphong.push(dsgheDD)
+              setDsphong([dsgheDD, ...dsphong])
+            }
+          }
+        })
+
+
+
+      })
+      // console.log('â')
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+
+  const handleCheckNgayCO = (co: Date) => {
+    let d = new Date(co)
+    setCheckout(d)
+    handlekiemtrangay(checkin, d)
+    console.log(checkin)
+  }
   const handleCheckDate = (checki: Date) => {
+    let dd = new Date(checki)
+    setCheckin(dd)
 
     setPhantramKM(0)
     khuyenmai.map((km) => {
@@ -318,20 +425,20 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
       d3.setMinutes(0)
       d3.setSeconds(0)
       d3.setMilliseconds(0)
-      console.log("d1", d1)
-      console.log("d2", d2)
-      console.log("d3", d3)
+      // console.log("d1", d1)
+      // console.log("d2", d2)
+      // console.log("d3", d3)
       if (d3.getTime() >= d1.getTime() && d3.getTime() <= d2.getTime()) {
         // console.log('true')
         setPhantramKM(km.phantram)
         kmTemp = km.phantram
       }
     })
-    setCheckin(checki)
     let datecheckout = new Date(checki)
     datecheckout.setDate(datecheckout.getDate() + 1)
     setMincheckout(datecheckout)
     setCheckout(datecheckout)
+    handlekiemtrangay(checki, datecheckout)
   }
   const handleLayttphongtheoten = async (value: string) => {
     setValueCombobox(value)
@@ -364,22 +471,14 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
 
   }
   const handleLayLoaiphongtheoTenLP = async (tenloaiphong: string) => {
-    // let i = tenloaiphong.indexOf(' -')
-    // let str1 = tenloaiphong.slice(0, i)
-    // console.log(i)`
-    // console.log("str1", str1)
+    arrp2.slice(0, arrp2.length)
+    dsphong2.splice(0, dsphong2.length)
 
     let i = tenloaiphong.indexOf(' -')
     let str1 = tenloaiphong.slice(0, i)
     let str2 = tenloaiphong.slice(i + 3, i + 4)
     let str3 = tenloaiphong.slice(i + 13)
     setSn(Number(str2))
-    // songuoi= Number(str2)
-    console.log('ghj', songuoi)
-    console.log(i)
-    console.log(str1)
-    console.log(str2)
-    console.log(str3)
     loaiphong.map(async (item) => {
       if (item.tenloaiphong === str1 && item.songuoi === Number(str2) && item.gia === Number(str3)) {
         setId_LP(item.id)
@@ -390,51 +489,46 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
         const params = {
           phong_idLP: item.id,
         };
-        console.log(params)
+        // console.log(params)
 
         const response = await Phong_idLP(params);
         const res: Phong[] = response.phong_idLP;
-        setPhong(res)
+        // setPhong(res)
+
+        res.map((res) => {
+          dsphong.map((res2) => {
+          if (res.id === res2.id) {
+          // console.log("arrp", arrp)
+          // console.log("arrp2", arrp2)
+          // console.log('id', res.id)
+          // let timvitri = arrp.includes(res.id)
+          // let timvitri2 = arrp2.includes(res.id)
+          // console.log("timvitri", timvitri)
+          // console.log("timvitri2", timvitri2)
+          // if (timvitri === false && timvitri2 === false) {
+            // arrp2.push(res.id)
+            // console.log("arrpush", arrp2)
+            const dsgheDD = {
+              id: (res.id),
+              id_LP: res.id_LP,
+              id_VT: res.id_VT,
+              tenphong: res.tenphong,
+              trangthai: res.trangthai,
+              mota: res.mota
+            }
+            // console.log(dsphong2)
+            dsphong2.push(dsgheDD)
+            setDsphong2([dsgheDD, ...dsphong2])
+            // setPhong1([dsgheDD, ...phong1])
+          // }
+          }
+          })
+        })
       }
     })
 
-    // setValueCombobox1(tenloaiphong)
-    // let i = tenloaiphong.indexOf(' -')
-    // let str1 = tenloaiphong.slice(0, i)
-    // console.log(i)
-    // console.log("str1",str1)
-    // try {
-    //   const params = {
-    //     lp_tenloai: str1,
-    //   };
-    //   console.log(params)
 
-    //   const response = await Loaiphong_tenLP(params);
-    //   const res: Loaiphong[] = response.lp_tenloai;
-    //   console.log(response)
-    //   console.log(res)
-    //   setLoaiphong1(res);
-
-    //   res.map(async (item) => {
-    //     giatemp = item.gia
-    //     setGiaphong(item.gia)
-    //     setSonguoi1(item.songuoi)
-    //     const params = {
-    //       phong_idLP: item.id,
-    //     };
-    //     console.log(params)
-
-    //     const response = await Phong_idLP(params);
-    //     const res: Phong[] = response.phong_idLP;
-    //     console.log(response)
-    //     console.log(res)
-    //     setPhong(res);
-
-    //   })
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    handleCheckDate(new Date())
+    // handleCheckDate(new Date())
     let d1 = new Date(checkin)
     let d2 = new Date(checkout)
     d1.setHours(0)
@@ -457,7 +551,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
       }
     }
     // console.log("phantramKM", phantramKM)
-    console.log("giatemp", giatemp)
+    // console.log("giatemp", giatemp)
 
   };
 
@@ -498,6 +592,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
       datecheckout.setDate(datecheckout.getDate() + 1)
       setMincheckout(datecheckout)
       setCheckout(datecheckout)
+      handlekiemtrangay(checki,datecheckout)
     }
 
     // setCheck_in1(check_in || '')
@@ -715,53 +810,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
     handleLoaiphong()
     handleLayKhuyenmai()
 
-    // if (tenphong && check_in) {
-    //   let i = check_in.indexOf('-')
-    //   let str1 = check_in.slice(0, i)
-    //   let str2 = check_in.slice(i + 1, i + 3)
-    //   let str3 = check_in.slice(i + 4, i + 8)
-    //   let str = str3 + '-' + str2 + '-' + str1
-    //   console.log("i", i)
-    //   console.log("str1", str1)
-    //   console.log("str2", str2)
-    //   console.log("str3", str3)
-
-    //   // const str = '2023-11-15';
-    //   let d = new Date(str)
-    //   console.log("d", d)
-    //   console.log("check_in", check_in)
-
-
-    // setPhantramKM(0)
-    // khuyenmai.map((km) => {
-    //   d1 = new Date(km.start)
-    //   d2 = new Date(km.finish)
-    //   d1.setHours(0)
-    //   d1.setMinutes(0)
-    //   d1.setSeconds(0)
-    //   d1.setMilliseconds(0)
-
-    //   d2.setHours(0)
-    //   d2.setMinutes(0)
-    //   d2.setSeconds(0)
-    //   d2.setMilliseconds(0)
-
-    //   let d3 = new Date(checki)
-    //   d3.setHours(0)
-    //   d3.setMinutes(0)
-    //   d3.setSeconds(0)
-    //   d3.setMilliseconds(0)
-    //   console.log("d1", d1)
-    //   console.log("d2", d2)
-    //   console.log("d3", d3)
-
-    //   if (d3.getTime() >= d1.getTime() && d3.getTime() <= d2.getTime()) {
-    //     console.log('true')
-    //     setPhantramKM(km.phantram)
-    //   }
-    // })
-    // }
-
+    
 
   }, []);
 
@@ -849,7 +898,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                         </div>
                         <div className="flex">
                           <p className=" font-semibold basis-3/12"></p>
-                          {errorCCCD ?<p className="text-red-500 text-xs">Vui lòng nhập đúng CCCD</p>:''}
+                          {errorCCCD ? <p className="text-red-500 text-xs">Vui lòng nhập đúng CCCD</p> : ''}
 
                         </div>
                         <div className="flex">
@@ -861,7 +910,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                         </div>
                         <div className="flex">
                           <p className=" font-semibold basis-3/12"></p>
-                          {errorSDT ?<p className="text-red-500 text-xs">Vui lòng nhập đúng số điện thoại</p>:''}
+                          {errorSDT ? <p className="text-red-500 text-xs">Vui lòng nhập đúng số điện thoại</p> : ''}
 
                         </div>
 
@@ -920,7 +969,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                           minDate={mincheckout}
                           // maxDate={new Date("10-30-2023")}
                           // onChange={(date: Date) => setStartDate(date)}
-                          onChange={(date: Date) => setCheckout((date))}
+                          onChange={(date: Date) => handleCheckNgayCO((date))}
                           dateFormat="dd/MM/yyyy"
                         />
                         {/* <input type="Date" className="text-base" /> */}
@@ -959,6 +1008,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                     />
                   }
                 </div>
+                <button onClick={() => console.log(dsphong2)}>Check</button>
 
                 <div className="font-semibold m-3 text-lg flex">
                   <p className="basis-32 ">Phòng</p>
@@ -972,7 +1022,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                     <Autocomplete
                       disablePortal
                       id="combo-box-demo"
-                      options={phong.map((option) => option.tenphong)}
+                      options={dsphong2.slice(1,dsphong2.length).map((option) => option.tenphong)}
                       value={valueCombobox}
                       onChange={(event: any, newValue: string | null) => {
                         {
@@ -995,7 +1045,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                     <p className="basis-32 text-slate-500">Số người ở:</p>
                     <input type="number" className="border-b-2 border-gray-300 w-32 pl-2 outline-none"
                       min={1}
-                      max={Number(songuoi) + 1 }
+                      max={Number(songuoi) + 1}
                       value={songuoio}
                       onChange={(e) => handleTinhtiennn(e.target.valueAsNumber)} />
                   </div>
@@ -1004,7 +1054,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                     <p className="basis-32 text-slate-500">Số người ở:</p>
                     <input type="number" className="border-b-2 border-gray-300 w-32 pl-2 outline-none"
                       min={1}
-                      max={ sn + 1}
+                      max={sn + 1}
                       value={songuoio}
                       onChange={(e) => handleTinhtiennn(e.target.valueAsNumber)} />
                   </div>

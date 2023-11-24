@@ -131,7 +131,7 @@ const Header = () => {
   useEffect(() => {
 
     let khachhang1 = JSON.parse(localStorage.getItem('khachhang') || '{}');
-    console.log("zxcvb", Object.keys(khachhang1).length)
+    // console.log("zxcvb", Object.keys(khachhang1).length)
     if (Object.keys(khachhang1).length === 0) {
       setLog(false)
     } else {

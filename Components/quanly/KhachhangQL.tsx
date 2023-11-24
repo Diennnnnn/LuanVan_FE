@@ -23,7 +23,7 @@ const KhachhangQL = ({ allkh }: Props) => {
         hotenKH: string;
         gioitinh: string,
         ngaysinh: Date,
-        CMND: string,
+        CCCD: string,
         SDT: string,
         email: string,
         avt: string
@@ -34,7 +34,7 @@ const KhachhangQL = ({ allkh }: Props) => {
     const [avt, setAvt] = useState("");
     const [id, setId] = useState(Number)
     const [hotenKH, setHotenKH] = useState("")
-    const [CMND, setCMND] = useState("")
+    const [CCCD, setCCCD] = useState("")
     const [SDT, setSDT] = useState("")
     const [email, setEmail] = useState("")
     const [ngaysinh, setNgaysinh] = useState(new Date())
@@ -61,7 +61,7 @@ const KhachhangQL = ({ allkh }: Props) => {
 
     };
 
-    const handleSuaTTKH = (id: number, hotenKH: string, gioitinh: string, ngaysinh: Date, CMND: string, SDT: string, email: string, avt: string,) => {
+    const handleSuaTTKH = (id: number, hotenKH: string, gioitinh: string, ngaysinh: Date, CCCD: string, SDT: string, email: string, avt: string,) => {
         // console.log("id", id)
         // console.log("csvc", id_CSVC)
         // console.log("id_Phong", id_Phong)
@@ -72,7 +72,7 @@ const KhachhangQL = ({ allkh }: Props) => {
         setHotenKH(hotenKH)
         setGioitinh(gioitinh)
         setNgaysinh(date1)
-        setCMND(CMND)
+        setCCCD(CCCD)
         setEmail(email)
         setSDT(SDT)
         if (avt != '') {
@@ -92,7 +92,7 @@ const KhachhangQL = ({ allkh }: Props) => {
                 gioitinh: gioitinh,
                 ngaysinh: ngaysinh,
 
-                CMND: CMND,
+                CCCD: CCCD,
                 SDT: SDT,
                 email: email,
                 avt: avt
@@ -103,7 +103,7 @@ const KhachhangQL = ({ allkh }: Props) => {
             setHotenKH(hotenKH)
             setGioitinh(gioitinh)
             setNgaysinh(date1)
-            setCMND(CMND)
+            setCCCD(CCCD)
             setEmail(email)
             setSDT(SDT)
             setPrevURLIMG(new Buffer(avt, "base64").toString("binary"))
@@ -177,7 +177,7 @@ const KhachhangQL = ({ allkh }: Props) => {
                                                     dayjs(item.ngaysinh).format("DD/MM/YYYY")
                                                 }
                                             </td>
-                                            <td className="border border-slate-300 p-2">{item.CMND}</td>
+                                            <td className="border border-slate-300 p-2">{item.CCCD}</td>
                                             <td className="border border-slate-300 p-2">{item.SDT}</td>
                                             <td className="border border-slate-300 p-2">{item.email}</td>
                                             <td className="border border-slate-300 p-2">
@@ -197,7 +197,7 @@ const KhachhangQL = ({ allkh }: Props) => {
                                             </td>
                                             <td className="border border-slate-300 p-2">
                                                 <button>
-                                                    <EditIcon onClick={() => handleSuaTTKH(item.id, item.hotenKH, item.gioitinh, item.ngaysinh, item.CMND, item.SDT, item.email, item.avt)} />
+                                                    <EditIcon onClick={() => handleSuaTTKH(item.id, item.hotenKH, item.gioitinh, item.ngaysinh, item.CCCD, item.SDT, item.email, item.avt)} />
                                                 </button>
                                             </td>
 

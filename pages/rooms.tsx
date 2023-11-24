@@ -130,11 +130,10 @@ const rooms = () => {
                             trangthai: res.trangthai,
                             mota: res.mota
                         }
-                        phong1.push(dsgheDD)
                         console.log(phong1)
                         dsphong.push(dsgheDD)
                         setDsphong([dsgheDD, ...dsphong])
-                        setPhong1([dsgheDD, ...phong1])
+                        // setPhong1([dsgheDD, ...phong1])
                     }
                 }
                 res1.map((i) => {
@@ -168,11 +167,10 @@ const rooms = () => {
                                 trangthai: res.trangthai,
                                 mota: res.mota
                             }
-                            phong1.push(dsgheDD)
                             console.log('phong1', phong1)
                             dsphong.push(dsgheDD)
                             setDsphong([dsgheDD, ...dsphong])
-                            setPhong1([dsgheDD, ...phong1])
+                            // setPhong1([dsgheDD, ...phong1])
                         }
                     }
                 })

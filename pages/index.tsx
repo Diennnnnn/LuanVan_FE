@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Montserrat, Roboto } from 'next/font/google'
 import Link from "next/link";
 import Footer from "@/Components/Footer";
-import { Phong } from "@/Service/userService";
+import { Phong, handleLayPhieudat_idPhong } from "@/Service/userService";
 import Rooms from "@/Components/Rooms";
 import B1 from "@/Components/B1";
 import Blog from "@/Components/Blog";
@@ -28,13 +28,42 @@ const index = () => {
     trangthai: string;
     mota: string;
   }
+  interface Phieudat {
+    id: number;
+    id_KH: number;
+    id_Phong: number;
+    ngaydat: Date;
+    check_in: Date;
+    check_out: Date;
+    songuoi: number,
+    tongtien: number,
+    thanhtoan: string,
+    trangthai: string,
+    hotennguoio: string,
+    SDT_nguoio: string,
+    CCCD_nguoio: string,
+    ghichu: string,
+    maGD: number,
+    thoigianGD: string
+    // dieukien: string
+  }
   const [phong, setPhong] = useState<Phong[]>([]);
   const [id, setId] = useState(Number);
   const [mincheckout, setMincheckout] = useState(new Date())
   const [checkin, setCheckin] = useState(new Date())
   const [checkout, setCheckout] = useState(new Date())
   // console.log(phong)
-
+  const arrp: number[] = []
+  const [dsphong, setDsphong] = useState([
+    {
+      id: 0,
+      id_LP: 0,
+      id_VT: 0,
+      tenphong: '',
+      trangthai: '',
+      mota: ''
+    },
+  ])
   const handleCheckDate = (checki: Date) => {
     setCheckin(checki)
     let datecheckout = new Date(checki)
@@ -50,20 +79,31 @@ const index = () => {
 
     // }, false);
 
+    const handleCheckDate = () => {
+      setCheckin(new Date)
+      let datecheckout = new Date()
+      datecheckout.setDate(datecheckout.getDate() + 1)
+      setMincheckout(datecheckout)
+      setCheckout(datecheckout)
+      handlekiemtrangay(new Date(),datecheckout)
+    }
+    // const handleTinhsoNg = (sn: number, sp: number) =>{
+    //     for(let i = 0; i<=)
+    // }
 
     const handlePhong = async () => {
       try {
         const params = {
           id_phong: "ALL",
         };
-        console.log(params)
+        // console.log(params)
         const response = await Phong(params);
         const res: Phong[] = response.phong;
-        console.log(res)
+        // console.log(res)
         setPhong(res);
         res.map((res) => {
           setId(res.id)
-          console.log("id", res.mota)
+          // console.log("id", res.mota)
         })
         // console.log(phongs.)
 
@@ -71,6 +111,7 @@ const index = () => {
         console.log(error);
       }
     };
+    handleCheckDate()
     handlePhong();
   }, [])
 
@@ -115,6 +156,120 @@ const index = () => {
   const goToSlide = (slideIndex: React.SetStateAction<number>) => {
     setCurrentIndex(slideIndex);
   };
+
+  const handleCheckNgayCO = (co: Date) => {
+    let d = new Date(co)
+    setCheckout(d)
+    handlekiemtrangay(checkin, d)
+    console.log(checkin)
+  }
+
+  const handlekiemtrangay = async (ci: Date, ck: Date) => {
+    arrp.slice(0, arrp.length)
+
+    dsphong.splice(0, dsphong.length)
+
+    setCheckout(ck)
+    let start = new Date(ci)
+    let end = new Date(ck)
+    start.setHours(0)
+    start.setMinutes(0)
+    start.setSeconds(0)
+    start.setMilliseconds(0)
+
+    end.setHours(0)
+    end.setMinutes(0)
+    end.setSeconds(0)
+    end.setMilliseconds(0)
+    // console.log('das', start)
+    // console.log('das', end)
+
+    try {
+      const params = {
+        id_phong: 'ALL',
+      };
+      // console.log(params)
+      const response = await Phong(params);
+      const res: Phong[] = response.phong; //gán dữ liệu vào res
+      // console.log(response)
+      setPhong(res); //gán res vào setPhong
+      res.map(async (res) => {
+        const params = {
+          phieudat_idPhong: res.id,
+        };
+        // console.log(params)
+        const response1 = await handleLayPhieudat_idPhong(params);
+        const res1: Phieudat[] = response1.phieudat_idPhong; //gán dữ liệu vào res
+        if (res1.length === 0) {
+          let timvitri = arrp.findIndex((val) => val === res.id)
+          if (timvitri === -1) {
+            arrp.push(res.id)
+            console.log("arrpush", arrp)
+            const dsgheDD = {
+              id: (res.id),
+              id_LP: res.id_LP,
+              id_VT: res.id_VT,
+              tenphong: res.tenphong,
+              trangthai: res.trangthai,
+              mota: res.mota
+            }
+            // console.log(phong1)
+            dsphong.push(dsgheDD)
+            setDsphong([dsgheDD, ...dsphong])
+            // setPhong1([dsgheDD, ...phong1])
+          }
+        }
+        res1.map((i) => {
+          let d1 = new Date(i.check_in)
+          let d2 = new Date(i.check_out)
+          console.log(i.maGD)
+          d1.setHours(0, 0, 0, 0)
+          d2.setHours(0, 0, 0, 0)
+          if (
+            (start.getTime() < d1.getTime() &&
+              end.getTime() < d2.getTime())
+            ||
+            (start.getTime() > d1.getTime() &&
+              end.getTime() > d2.getTime())
+            ||
+            (start.getTime() === d2.getTime() &&
+              end.getTime() > d2.getTime())
+          ) {
+
+            // let timvitri = phong1.filter((dsgheDDs) => res.id === dsgheDDs.id)
+            let timvitri = arrp.findIndex((val) => val === res.id)
+            if (timvitri === -1) {
+              arrp.push(res.id)
+
+              const dsgheDD = {
+
+                id: (res.id),
+                id_LP: res.id_LP,
+                id_VT: res.id_VT,
+                tenphong: res.tenphong,
+                trangthai: res.trangthai,
+                mota: res.mota
+              }
+              // console.log('phong1', phong1)
+              dsphong.push(dsgheDD)
+              setDsphong([dsgheDD, ...dsphong])
+              // setPhong1([dsgheDD, ...phong1])
+            }
+          }
+        })
+
+
+
+      })
+      // console.log('â')
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+
   useEffect(() => {
 
     setTimeout(
@@ -135,12 +290,34 @@ const index = () => {
               <form className="xl:flex xs:grid md:grid-cols-3 xs:grid-cols-2 justify-center items-center space-x-2  rounded-md bg-white xxl:w-[75%] w-[85%] xl:h-[80px] md:h-[130px] xs:h-[170px] shadow-xl ">
                 <div className="">
                   <label className="absolute top-1 text-sm text-gray-400 ml-6 inline-block bg-white">Nhận phòng</label>
-                  <input id="startDate" type="date" placeholder="Nhận phòng " className="w-52 rounded-md h-12 border-solid border-gray-300 border-2 pl-2" />
+                  <DatePicker
+                    className="outline-none border-b-2 border-gray-300"
+                    // type="datetime"
+                    selected={checkin}
+                    minDate={new Date()}
+                    // maxDate={new Date("10-30-2023")}
+                    // onChange={(date: Date) => setStartDate(date)}
+                    onChange={(date: Date) => handleCheckDate((date))}
+                    dateFormat="dd/MM/yyyy"
+                  />
+                  {/* <input id="startDate" type="date" placeholder="Nhận phòng " className="w-52 rounded-md h-12 border-solid border-gray-300 border-2 pl-2" /> */}
                 </div>
                 <div className=" ">
                   <label className="absolute top-1 text-sm text-gray-400 ml-6 inline-block bg-white">Trả phòng</label>
-                  <input id="endDate" type="date" placeholder="Trả phòng" className="h-12 w-52 rounded-md border-solid border-2 border-gray-300  pl-2" />
+                  <DatePicker
+                    className="outline-none border-b-2 border-gray-300"
+                    // type="datetime"
+                    selected={checkout}
+                    minDate={mincheckout}
+                    // maxDate={new Date("10-30-2023")}
+                    // onChange={(date: Date) => setStartDate(date)}
+                    onChange={(date: Date) => handleCheckNgayCO((date))}
+                    dateFormat="dd/MM/yyyy"
+                  />
+                  {/* <input id="endDate" type="date" placeholder="Trả phòng" className="h-12 w-52 rounded-md border-solid border-2 border-gray-300  pl-2" /> */}
                 </div>
+
+                <button type="button" onClick={()=>console.log(checkout)}>Check</button>
                 <div className="">
                   <input id="" type="number" placeholder="Số lượng khách" className=" h-12 xl:w-44 xs:w-52 rounded-md border-solid border-2 border-gray-300 pl-2" />
                 </div>
@@ -158,9 +335,9 @@ const index = () => {
         <div className="flex md:flex-row flex-col mt-10 w-11/12 h-[250px] ">
           <div className=" text-left pl-10 p-6 basis-5/12">
             {/* <div className="text-left w-11/12 float-right "> */}
-              <p className=" lg:text-5xl md:text-4xl text-3xl ">The Kupid</p>
-              <p className="text-[#33cc33] md:text-sm font-semibold pt-1 uppercase">D a L a t N o S i n g l e</p>
-              <p className="pt-10  leading-relaxed ">Kupid là tên của vị thần tình yêu vì thế nơi đây được xem là chốn hẹn hò lãng mạn.</p>
+            <p className=" lg:text-5xl md:text-4xl text-3xl ">The Kupid</p>
+            <p className="text-[#33cc33] md:text-sm font-semibold pt-1 uppercase">D a L a t N o S i n g l e</p>
+            <p className="pt-10  leading-relaxed ">Kupid là tên của vị thần tình yêu vì thế nơi đây được xem là chốn hẹn hò lãng mạn.</p>
             {/* </div> */}
           </div>
           <div className=" flex m-auto rounded-md space-x-3">
@@ -253,7 +430,7 @@ const index = () => {
         </div>
 
       </center>
-      
+
       <div className="grid grid-cols-2 gap-2 mt-16 h-[550px] w-[90%] max-w-[1170px] m-auto ">
         <div className="col-span-1 bg-cover bg-center bg-[url('../public/hinh6.jpg')] h-[550px] "></div>
         <div className="col-span-1 h-[550px] ">

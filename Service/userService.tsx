@@ -691,7 +691,7 @@ export async function Datphong(params:{
       hotenKH: string,
       ngaysinh: Date,
       gioitinh: string,
-      CMND: string,
+      CCCD: string,
       SDT: string,
       email: string,
       avt: string,
@@ -782,10 +782,19 @@ export async function Datphong(params:{
     return data;
   }
 
-  export async function LayPhieudat_ngay(): Promise<any> {
+  export async function Thongke_ngay(): Promise<any> {
     // const { } = params;
     const response = await fetch(
-      `http://localhost:8080/api/LayPhieudat_ngay`
+      `http://localhost:8080/api/Thongke_ngay`
+    );
+    const data = await response.json();
+    return data;
+  }
+
+  export async function Thongke_thang(): Promise<any> {
+    // const { } = params;
+    const response = await fetch(
+      `http://localhost:8080/api/Thongke_thang`
     );
     const data = await response.json();
     return data;
@@ -826,6 +835,67 @@ export async function Datphong(params:{
   const response = await fetch(`http://localhost:8080/order/refund`,
   {
     method:"POST",
+    headers: {
+      "Content-Type":"application/json",
+    },
+    body: JSON.stringify(params),
+  });
+  const data = await response.json();
+  return data;
+}
+
+export async function LayChitietSDDV(params: { id_sddv: any }): Promise<any> {
+  const { id_sddv } = params;
+  const response = await fetch(
+    `http://localhost:8080/api/LayChitietSDDV?keyword=${id_sddv}`
+  );
+  const data = await response.json();
+  return data;
+}
+
+export async function ThemChitietSDDV(params:{
+  id_PD: number;
+  id_DV: number;
+  solansudung: number;
+  soluong: number;
+  thanhtien: number;
+  }): Promise<any> {
+    const response = await fetch(`http://localhost:8080/api/ThemChitietSDDV`,
+    {
+      method:"POST",
+      headers: {
+        "Content-Type":"application/json",
+      },
+      body: JSON.stringify(params),
+    });
+    const data = await response.json();
+    return data;
+  }
+
+export async function SuaChitietSDDV(params:{
+  id: number;
+  id_PD: number;
+  id_DV: number;
+  solansudung: number;
+  soluong: number;
+  thanhtien: number;
+  }): Promise<any> {
+  const response = await fetch(`http://localhost:8080/api/SuaChitietSDDV`,
+  {
+    method:"POST",
+    headers: {
+      "Content-Type":"application/json",
+    },
+    body: JSON.stringify(params),
+  });
+  const data = await response.json();
+  return data;
+}
+
+export async function XoaChitietSDDV(params:{id: number;}): Promise<any> {
+  const response = await fetch(`http://localhost:8080/api/XoaChitietSDDV`,
+  {
+    method:"DELETE",
     headers: {
       "Content-Type":"application/json",
     },

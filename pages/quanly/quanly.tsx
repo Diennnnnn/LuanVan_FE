@@ -37,7 +37,9 @@ import WallpaperIcon from '@mui/icons-material/Wallpaper';
 import HinhanhPhong from '@/Components/quanly/HinhanhPhong';
 import Phieudat_QL from '@/Components/quanly/Phieudat_QL';
 import Thongke from '@/Components/quanly/Thongke';
-
+import ChecklistIcon from '@mui/icons-material/Checklist';
+import ChitietSDDV from '@/Components/quanly/ChitietSDDV';
+import Hoadon from '@/Components/quanly/Hoadon';
 export default function LabTabs() {
   interface Phong {
     //tên giống csdl
@@ -287,6 +289,8 @@ export default function LabTabs() {
             <Tab icon={<AssignmentIndIcon />} iconPosition="start" label="thông tin" sx={{ color: 'green' }} value="3" />
             <Tab icon={<ListIcon />} iconPosition="start" label="Phiếu đặt" sx={{ color: 'green' }} value="4" />
             <Tab icon={<ListIcon />} iconPosition="start" label="Thống kê" sx={{ color: 'green' }} value="5" />
+            <Tab icon={<ChecklistIcon />} iconPosition="start" label="Chi tiết SDDV" sx={{ color: 'green' }} value="6" />
+            <Tab icon={<ChecklistIcon />} iconPosition="start" label="Hóa đơn" sx={{ color: 'green' }} value="7" />
 
           </TabList>
         </Box>
@@ -446,6 +450,9 @@ export default function LabTabs() {
 
         <TabPanel value="4"><Phieudat_QL/></TabPanel>
         <TabPanel value="5"><Thongke/></TabPanel>
+
+        <TabPanel value="6"><ChitietSDDV/></TabPanel>
+        <TabPanel value="7"><Hoadon/></TabPanel>
       </TabContext>
     </Box>
   );

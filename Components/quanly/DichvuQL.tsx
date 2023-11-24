@@ -193,7 +193,7 @@ const DichvuQL = ({ dichvu }: Props) => {
                         <thead>
                             <tr>
                                 <th className="border border-slate-300 w-20 ">#</th>
-                                <th className="border border-slate-300">Tên CSVC</th>
+                                <th className="border border-slate-300">Tên dịch vụ</th>
                                 <th className="border border-slate-300">Giá</th>
                                 <th className="border border-slate-300 ">DVT</th>
                                 <th className="border border-slate-300 ">Ghi chú</th>

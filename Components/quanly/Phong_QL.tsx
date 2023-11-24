@@ -221,7 +221,7 @@ const Phong_QL = () => {
 
     }
     const handleXoaPhong = async (id: number) => {
-        ` `
+
         // console.log("mota", mota)
         // console.log("motaEN", motaEN)
 

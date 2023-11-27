@@ -177,12 +177,12 @@ const ChitietSDDV = () => {
             setValueTenDV('')
             handleLayCTSDDV()
             setStep('them')
-            alert("Cập nhật CTSDDV thành công")
+            alert("Cập nhật sử dụng dịch vụ thành công")
 
 
         } else {
             console.log(res)
-            alert("Cập nhật CTSDDV không thành công")
+            alert("Cập nhật sử dụng dịch vụ không thành công")
         };
 
     }

@@ -17,13 +17,13 @@ const thongtinKH = () => {
     hotenKH: string;
     gioitinh: string,
     ngaysinh: string,
-    CMND: string,
+    CCCD: string,
     SDT: string,
     email: string,
     avt: string
   }
   const [hotenKH, setHotenKH] = useState("")
-  const [CMND, setCMND] = useState("")
+  const [CCCD, setCCCD] = useState("")
   const [SDT, setSDT] = useState("")
   const [avt, setAvt] = useState("")
 
@@ -61,7 +61,7 @@ const thongtinKH = () => {
         setId_KH(res.id)
         setGioitinh(res.gioitinh)
         setNgaysinh(res.ngaysinh)
-        setCMND(res.CMND)
+        setCCCD(res.CCCD)
         setEmail(res.email)
         setSDT(res.SDT)
         if (res.avt != null) {
@@ -103,7 +103,7 @@ const thongtinKH = () => {
             </div>
             <div className="flex">
               <p className="basis-4/12">CCCD:</p>
-              <p className="w-4/5 border-b-2 border-gray-400" >{CMND} </p>
+              <p className="w-4/5 border-b-2 border-gray-400" >{CCCD} </p>
             </div>
             <div className="flex">
               <p className="basis-4/12">Số điện thoại:</p>

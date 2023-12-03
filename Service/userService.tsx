@@ -904,6 +904,82 @@ export async function XoaChitietSDDV(params:{id: number;}): Promise<any> {
   const data = await response.json();
   return data;
 }
+
+export async function Nhanphong(params:{
+  ngaynhan: Date
+  id_pd: number
+   }): Promise<any> {
+   const response = await fetch(`http://localhost:8080/api/nhanphong`,
+   {
+     method:"POST",
+     headers: {
+       "Content-Type":"application/json",
+     },
+     body: JSON.stringify(params),
+   });
+   const data = await response.json();
+   return data;
+ }
+ 
+ export async function Traphong(params:{
+   ngaytra: Date
+   id_pd: number
+    }): Promise<any> {
+    const response = await fetch(`http://localhost:8080/api/traphong`,
+    {
+      method:"POST",
+      headers: {
+        "Content-Type":"application/json",
+      },
+      body: JSON.stringify(params),
+    });
+    const data = await response.json();
+    return data;
+  }
+ 
+ export async function LayTTnhanphong(params: { id_pd: any }): Promise<any> {
+   const { id_pd } = params;
+   const response = await fetch(
+     `http://localhost:8080/api/Layttnhanphong?keyword=${id_pd}`
+   );
+   const data = await response.json();
+   return data;
+ }
+ export async function LayttCTSDDV(params: { id_pd: any }): Promise<any> {
+  const { id_pd } = params;
+  const response = await fetch(
+    `http://localhost:8080/api/LayttCTSDDV?keyword=${id_pd}`
+  );
+  const data = await response.json();
+  return data;
+}
+
+export async function CreateHoadon(params:{
+  id_kh: number,
+  id_pd: number,
+  id_nv: number,
+  tongtien: number
+   }): Promise<any> {
+   const response = await fetch(`http://localhost:8080/api/Taohoadon`,
+   {
+     method:"POST",
+     headers: {
+       "Content-Type":"application/json",
+     },
+     body: JSON.stringify(params),
+   });
+   const data = await response.json();
+   return data;
+ }
+ export async function LayTTHoadon(params: { id: any }): Promise<any> {
+  const { id } = params;
+  const response = await fetch(
+    `http://localhost:8080/api/LayHoadon?keyword=${id}`
+  );
+  const data = await response.json();
+  return data;
+}
+
 // export async function DangKy_KH(params: {
 //   hten_KH: string;
 //   Ngaysinh: string;

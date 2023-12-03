@@ -147,7 +147,7 @@ const KhachhangQL = ({ allkh }: Props) => {
                     ></div>
                 </div> */}
 
-                <button onClick={handleCapnhatTTKH}>ehjkl</button>
+                {/* <button onClick={handleCapnhatTTKH}>ehjkl</button> */}
                 <div className="mt-8">
                     <table className="border-separate border border-slate-400  m-auto text-center w-full">
                         <thead>

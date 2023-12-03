@@ -1,94 +1,22 @@
-import { Navbar } from "flowbite-react";
-import { useEffect, useState } from "react";
+
 const T = () => {
-  const arrp: number[] = []
-  const [dsphong, setDsphong] = useState([
-    {
-      id: 0,
 
-    },
-  ])
-  let x: number[] = [31]
-  // let n: number
-  let t: number[] = [31]
-  x[0] = 1
-  t[0] = 0
-
-  let finalCombinations: any[] = []
-  let currentCombination: any[] = []
-  let candidates = [1, 2, 3, 4, 5, 6]
-  let remainingSum: 5
-  let startFrom: 0
-
-
-  // const combinationSumRecursive = (candidates: string | any[], remainingSum: number, startFrom: any) => {
-
-  //   if (remainingSum < 0) {
-  //     return finalCombinations;
-  //   }
-  //   if (remainingSum === 0) {
-  //     finalCombinations.push(currentCombination.slice());
-  //     return finalCombinations;
-  //   }
-  //   for (let candidateIndex = startFrom; Number(candidateIndex) < Number(candidates.length); candidateIndex += 1) {
-  //     const currentCandidate = candidates[candidateIndex];
-  //     currentCombination.push(currentCandidate);
-  //     combinationSumRecursive(candidates, remainingSum - currentCandidate, candidateIndex);
-  //     currentCombination.pop();
-  //   }
-  //   return finalCombinations;
-
-
-  // }
-  let n = 5
-  let a: any[] = []
-
-  useEffect(() => {
-    const show = () => {
-      for (let i = 0; i < n; i++) {
-        console.log(a[i])
-      }
-    }
-    const handlee = (k: number) => {
-      for (let i = 0; i <= 1; i++) {
-        a[k] = i;
-        if (k == n - 1) {
-          show();
-        }
-        else {
-          handlee(k + 1);
-        }
-      }
-    }
-    handlee(0)
-    // const combinationSumRecursive = (candidates: string | any[], remainingSum: number,startFrom: any) => {
-
-    //   if (remainingSum < 0) {
-    //     return finalCombinations;
-    //   }
-    //   if (remainingSum === 0) {
-    //     finalCombinations.push(currentCombination.slice());
-    //     return finalCombinations;
-    //   }
-    //   for (let candidateIndex = startFrom; Number(candidateIndex) < Number(candidates.length); candidateIndex += 1) {
-    //     const currentCandidate = candidates[candidateIndex];
-    //     currentCombination.push(currentCandidate);
-    //     combinationSumRecursive(candidates,remainingSum - currentCandidate,candidateIndex);
-    //     currentCombination.pop();
-    //   }
-    //   console.log(finalCombinations , currentCombination)
-    //   return finalCombinations;
-
-
-    // }
-    // combinationSumRecursive(candidates,remainingSum,startFrom)
-  }, [])
   return (
-    <div>
-      <div>
-        <button onClick={() => console.log(a)}>check</button>
-      </div>
+    <div className="bg-gray-200 w-96 m-auto mt-10 pb-5 rounded-lg space-y-4 text-center">
+      <p className="uppercase font-semibold text-xl pt-5">đặt lại mật khẩu</p>
+      <p className="mx-5">Nhập lại mật khẩu mới cho tài khoản</p>
+      <input type="password" className=" border-2 border-black h-9 w-10/12 pl-1"  placeholder="Nhập mật khẩu mới"/>
+      <input type="email" className=" border-2 border-black h-9 w-10/12 pl-1" placeholder="Nhập lại mật khẩu" />
+      <button className=" bg-red-400 w-6/12 h-8 uppercase rounded-lg font-semibold">Xác nhận</button>
     </div>
+
+    // <div className="bg-gray-200 w-96 m-auto mt-10 pb-5 rounded-lg space-y-4 text-center">
+    //   <p className="uppercase font-semibold text-xl pt-5">Quên mật khẩu</p>
+    //   <p className="mx-5">Vui lòng nhập email của bạn để xác nhận lấy lại mật khẩu</p>
+    //   <input type="email" className=" border-2 border-black h-9 w-10/12 pl-1" />
+    //   <button className=" bg-red-400 w-6/12 h-8 uppercase rounded-lg font-semibold">lấy lại mật khẩu</button>
+    //   <p className="text-blue-500 text-sm">Quay lại đăng nhập</p>
+    // </div>
 
   );
 }

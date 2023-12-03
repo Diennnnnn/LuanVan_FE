@@ -66,12 +66,12 @@ const Header = () => {
     email: string,
     avt: string
   }
-
+  const [log, setLog] = useState(Boolean)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const [khachhang, setKhachhang] = useState<Khachhang[]>([]);
   const [hoten, setHoten] = useState("");
   const [id_KH, setId_KH] = useState(Number);
-  const [log, setLog] = useState(Boolean)
+  
   const [log11, setLog11] = useState(Boolean)
 
   const [id_phong, setId_phong] = useState(Number)
@@ -121,6 +121,10 @@ const Header = () => {
     localStorage.removeItem("khachhang");
     setAnchorElUser(null);
     setLog(false)
+    router.push({
+      pathname: '/',
+
+    })
   }
   const handleLogin = () => {
     router.push({

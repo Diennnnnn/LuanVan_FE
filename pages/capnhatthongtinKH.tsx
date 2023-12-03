@@ -272,7 +272,7 @@ const capnhatthongtinKH = () => {
                 <input type="radio" onChange={(e) => setGioitinh(e.target.value)} className="" value='Nam' name='gioitinh' checked={gioitinh === "Nam"} />  Nam
                 <input type="radio" onChange={(e) => setGioitinh(e.target.value)} className="" value='Nữ' name='gioitinh' checked={gioitinh === "Nữ"} />  Nữ
               </div>
-              <input type="text" className="outline-none w-4/5 border-b-2 border-gray-400" value={CCCD} onChange={(e) => setCCCD(e.target.value)} />
+              <input type="text" className="outline-none w-4/5 border-b-2 border-gray-400" minLength={12} maxLength={12} value={CCCD} onChange={(e) => setCCCD(e.target.value)} />
               <input type="" className="outline-none w-4/5 border-b-2 border-gray-400 " value={SDT} onChange={(e) => setSDT(e.target.value)} />
               <input type="" className="outline-none w-4/5 border-b-2 border-gray-400" placeholder="example@gmail.com" value={email} onChange={(e)=>handleErrorEmail(e.target.value)} />
               {errorEmail?<p className="text-red-500 text-xs">Lỗi Email không đúng định dạng</p>:''}

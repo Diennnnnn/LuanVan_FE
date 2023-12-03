@@ -388,7 +388,7 @@ const Phong_QL = () => {
             {step === "capnhat" &&
                 (
                     <div className=" text-right w-10/12">
-                        <button onClick={handleCapnhatPhong} className="bg-green-400 w-48 h-10 rounded-lg mt-5 hover:bg-green-500">Cập nhật thông tin phòng</button>
+                        <button onClick={handleCapnhatPhong} className="bg-green-400 w-60 h-10 rounded-lg mt-5 hover:bg-green-500">Cập nhật thông tin phòng</button>
                     </div>
                 )
             }

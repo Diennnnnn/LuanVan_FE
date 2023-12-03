@@ -12,6 +12,7 @@ import B1 from "@/Components/B1";
 import Blog from "@/Components/Blog";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import router, { Router } from "next/router";
 // import { faFaceRelieved } from '@fortawesome/pro-solid-svg-icons'
 const roboto = Montserrat({
   weight: '400',
@@ -46,6 +47,15 @@ const index = () => {
     maGD: number,
     thoigianGD: string
     // dieukien: string
+  }
+  interface Khachhang {
+    id: number;
+    hotenKH: string;
+    gioitinh: string,
+    ngaysinh: string,
+    CCCD: string,
+    SDT: string,
+    email: string
   }
   const [phong, setPhong] = useState<Phong[]>([]);
   const [id, setId] = useState(Number);
@@ -113,6 +123,23 @@ const index = () => {
     };
     handleCheckDate()
     handlePhong();
+
+    let khachhang1 = JSON.parse(localStorage.getItem('khachhang') || '{}');
+    // console.log("zxcvb", Object.keys(khachhang1).length)
+    if (Object.keys(khachhang1).length === 0) {
+      // setLog(false)
+    } else {
+      // setLog(true)
+      // setKhachhang(khachhang1);
+      const ressss: Khachhang[] = khachhang1;
+      ressss.map((i) => {
+       if(!i.CCCD || !i.SDT || !i.email || !i.gioitinh || !i.hotenKH || !i.ngaysinh){
+        alert('VUI LÒNG CẬP NHẬT THÔNG TIN TRƯỚC KHI ĐẶT VÉ')
+        router.push('/capnhatthongtinKH')
+       }
+
+      })
+    }
   }, [])
 
   const slides = [
@@ -286,7 +313,7 @@ const index = () => {
         <div className=" relative">
           <div style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
             className="h-[450px]  w-[90%] bg-cover bg-center bg-[url('../public/hinh2.jpg')] rounded-xl mt-4 ">
-            <div className="absolute inset-x-0 bottom-3">
+            {/* <div className="absolute inset-x-0 bottom-3">
               <form className="xl:flex xs:grid md:grid-cols-3 xs:grid-cols-2 justify-center items-center space-x-2  rounded-md bg-white xxl:w-[75%] w-[85%] xl:h-[80px] md:h-[130px] xs:h-[170px] shadow-xl ">
                 <div className="">
                   <label className="absolute top-1 text-sm text-gray-400 ml-6 inline-block bg-white">Nhận phòng</label>
@@ -300,7 +327,6 @@ const index = () => {
                     onChange={(date: Date) => handleCheckDate((date))}
                     dateFormat="dd/MM/yyyy"
                   />
-                  {/* <input id="startDate" type="date" placeholder="Nhận phòng " className="w-52 rounded-md h-12 border-solid border-gray-300 border-2 pl-2" /> */}
                 </div>
                 <div className=" ">
                   <label className="absolute top-1 text-sm text-gray-400 ml-6 inline-block bg-white">Trả phòng</label>
@@ -314,7 +340,6 @@ const index = () => {
                     onChange={(date: Date) => handleCheckNgayCO((date))}
                     dateFormat="dd/MM/yyyy"
                   />
-                  {/* <input id="endDate" type="date" placeholder="Trả phòng" className="h-12 w-52 rounded-md border-solid border-2 border-gray-300  pl-2" /> */}
                 </div>
 
                 <button type="button" onClick={()=>console.log(checkout)}>Check</button>
@@ -328,7 +353,7 @@ const index = () => {
                   <button className="w-52 border-solid border-2 border-[#33cc33] hover:bg-[#33cc33] h-12 rounded-md">Tìm phòng</button>
                 </div>
               </form>
-            </div>
+            </div> */}
           </div>
         </div>
 

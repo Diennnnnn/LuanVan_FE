@@ -39,7 +39,15 @@ import Phieudat_QL from '@/Components/quanly/Phieudat_QL';
 import Thongke from '@/Components/quanly/Thongke';
 import ChecklistIcon from '@mui/icons-material/Checklist';
 import ChitietSDDV from '@/Components/quanly/ChitietSDDV';
-import Hoadon from '@/Components/quanly/Hoadon';
+
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import router from 'next/router';
+import Hoadon_QL from '@/Components/quanly/Hoadon_QL';
+
+// import Hoadon from '@/Components/quanly/Hoadon';
+
 export default function LabTabs() {
   interface Phong {
     //tên giống csdl
@@ -95,7 +103,7 @@ export default function LabTabs() {
     CMND: string,
     SDT: string,
     email: string,
-    avt:string
+    avt: string
   }
   interface Vitri {
     id: number;
@@ -124,11 +132,24 @@ export default function LabTabs() {
   const [value, setValue] = React.useState('1');
   const [open, setOpen] = React.useState(false);
   const [option, setOption] = React.useState(0)
+
+  const [log, setLog] = useState(Boolean)
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   //   const anchorRef = React.useRef<HTMLButtonElement>(null);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
+  const handleOnClick = () => {
+    localStorage.removeItem("nhanvien");
+    // setAnchorElUser(null);
+    // setLog(false)
+    console.log("check check")
+    router.push({
+      pathname: '/',
+
+    })
+  }
   // const handleClick = () => {
   //   setOpen(!open);
   // };
@@ -280,7 +301,18 @@ export default function LabTabs() {
     handleLoaiphong();
   }, [])
   return (
+
     <Box sx={{ width: '100%', typography: 'body1' }}>
+      <SpeedDial
+      onClick={handleOnClick}
+      // className='bg-green-400 '
+        ariaLabel="dang xuat"
+        sx={{ position: 'absolute', bottom: 16, right: 16 }}
+        icon={<SpeedDialIcon  sx={{color:'green'}}/>}
+        // onChange={handleOnClick}
+      >
+      </SpeedDial>
+{/* <button onClick={handleOnClick}>sdfghj</button> */}
       <TabContext value={value} >
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example" centered variant="fullWidth">
@@ -448,11 +480,11 @@ export default function LabTabs() {
           </div>
         </TabPanel>
 
-        <TabPanel value="4"><Phieudat_QL/></TabPanel>
-        <TabPanel value="5"><Thongke/></TabPanel>
+        <TabPanel value="4"><Phieudat_QL /></TabPanel>
+        <TabPanel value="5"><Thongke /></TabPanel>
 
-        <TabPanel value="6"><ChitietSDDV/></TabPanel>
-        <TabPanel value="7"><Hoadon/></TabPanel>
+        <TabPanel value="6"><ChitietSDDV /></TabPanel>
+        <TabPanel value="7"><Hoadon_QL/></TabPanel>
       </TabContext>
     </Box>
   );

@@ -52,7 +52,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
     hotenKH: string;
     gioitinh: string,
     ngaysinh: string,
-    CMND: string,
+    CCCD: string,
     SDT: string,
     email: string
   }
@@ -61,7 +61,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
     hotenKH: string;
     gioitinh: string,
     ngaysinh: string,
-    CMND: string,
+    CCCD: string,
     SDT: string,
     email: string
   }
@@ -120,7 +120,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
 
   const [roll, setRoll] = useState('')
 
-  const [CMND, setCMND] = useState("")
+  const [CCCD, setCCCD] = useState("")
   const [SDT, setSDT] = useState("")
   const [email, setEmail] = useState("")
   const [id_KH, setId_KH] = useState(Number);
@@ -460,7 +460,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
         const response = await Loaiphong(params);
         const res2: Loaiphong[] = response.loaiphong;
         console.log(response)
-        setLoaiphong(res2);
+        // setLoaiphong(res2);
 
       })
 
@@ -498,16 +498,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
         res.map((res) => {
           dsphong.map((res2) => {
           if (res.id === res2.id) {
-          // console.log("arrp", arrp)
-          // console.log("arrp2", arrp2)
-          // console.log('id', res.id)
-          // let timvitri = arrp.includes(res.id)
-          // let timvitri2 = arrp2.includes(res.id)
-          // console.log("timvitri", timvitri)
-          // console.log("timvitri2", timvitri2)
-          // if (timvitri === false && timvitri2 === false) {
-            // arrp2.push(res.id)
-            // console.log("arrpush", arrp2)
+          
             const dsgheDD = {
               id: (res.id),
               id_LP: res.id_LP,
@@ -551,7 +542,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
       }
     }
     // console.log("phantramKM", phantramKM)
-    // console.log("giatemp", giatemp)
+    console.log("giatemp", giatemp)
 
   };
 
@@ -616,7 +607,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
       ressss.map((res) => {
         setHotenKH(res.hotenKH)
         setId_KH(res.id)
-        setCMND(res.CMND)
+        setCCCD(res.CCCD)
         setEmail(res.email)
         setSDT(res.SDT)
       })
@@ -855,8 +846,8 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                   </div>
 
                   <div className="flex">
-                    <p className=" font-semibold basis-3/12">Số CMND: </p>
-                    <input className="border-gray-300 outline-none  border-2 h-9 rounded-md pl-2 w-52" value={CMND} />
+                    <p className=" font-semibold basis-3/12">Số CCCD: </p>
+                    <input className="border-gray-300 outline-none  border-2 h-9 rounded-md pl-2 w-52" value={CCCD} />
                   </div>
 
                   <div className="flex">
@@ -903,7 +894,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                         </div>
                         <div className="flex">
                           <p className=" font-semibold basis-3/12">Số điện thoại:</p>
-                          <input type="tel" className="border-gray-300 border-2 h-9 rounded-md w-52 pl-2 outline-none"
+                        <input type="tel" className="border-gray-300 border-2 h-9 rounded-md w-52 pl-2 outline-none"
                             maxLength={10}
                             minLength={10}
                             value={SDTkhacho} onChange={(e) => handleErrorSDT(e.target.value)} />
@@ -1008,7 +999,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                     />
                   }
                 </div>
-                <button onClick={() => console.log(dsphong2)}>Check</button>
+                {/* <button onClick={() => console.log(dsphong2)}>Check</button> */}
 
                 <div className="font-semibold m-3 text-lg flex">
                   <p className="basis-32 ">Phòng</p>
@@ -1154,7 +1145,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                   </div>
                   <div className="flex space-x-2">
                     <p className="">CCCD:</p>
-                    <p className="">{CMND}</p>
+                    <p className="">{CCCD}</p>
                   </div>
                   <div className="flex space-x-2">
                     <p className="">Email:</p>

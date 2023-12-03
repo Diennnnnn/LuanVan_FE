@@ -254,7 +254,7 @@ const KhuyenmaiQL = ({ khuyenmai }: Props) => {
                                 <th className="border border-slate-300 ">Thời gian bắt đầu</th>
                                 <th className="border border-slate-300 ">Thời gian kết thúc</th>
                                 <th className="border border-slate-300 ">Điều kiện</th>
-                                <th className="border border-slate-300 ">Tác vụ</th>
+                                <th className="border border-slate-300 w-20">Tác vụ</th>
 
 
                             </tr>

@@ -210,7 +210,15 @@ const HinhanhPhong = () => {
     return (
         <div className={roboto.className}>
             <div className="w-11/12 m-auto">
-                <p className="mb-5 text-xl">Thêm hình ảnh: </p>
+                
+                {step === "them" &&
+                    (<p className="mb-5 text-xl">Thêm hình ảnh: </p>
+                    )
+                }
+                {step === "capnhat" &&
+                    (<p className="mt-5 text-xl">Cập nhật hình ảnh:</p>
+                    )
+                }
                 <div className="grid grid-cols-2">
                     <div className="flex space-x-4">
                         <div className="preview-img-container w-4/12 pt-4">
@@ -284,7 +292,7 @@ const HinhanhPhong = () => {
             </div>
 
             <div className="mt-8">
-                <table className="border-separate border border-slate-400 ...">
+                <table className="border-separate border border-slate-400 m-auto">
                     <thead>
                         <tr>
                             <th className="border border-slate-300 w-20 ">#</th>

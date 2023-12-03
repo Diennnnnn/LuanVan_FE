@@ -61,7 +61,7 @@ const ChitietSDDV = () => {
     const [soluong, setSoluong] = useState(Number);
     const [thanhtien, setThanhtien] = useState(Number);
     const [valueTenDV, setValueTenDV] = useState("");
-    let gia1: number
+    const [giaDV, setGiaDV] = useState(Number);
 
 
     const handleLayID_DV = (value: string) => {
@@ -72,6 +72,7 @@ const ChitietSDDV = () => {
         console.log(i)
         console.log("str1", str1)
         console.log(str2)
+        setGiaDV(Number(str2))
         dichvu.map((item) => {
             if (item.tenDV === str1 && item.gia === Number(str2)) {
                 setId_DV(item.id)
@@ -85,6 +86,7 @@ const ChitietSDDV = () => {
         console.log("id_DV", id_DV)
         console.log("solansudung", solansudung)
         console.log("soluong", soluong)
+        console.log(giaDV*solansudung*soluong)
         // console.log("motaEN", dientich)
         let res = await ThemChitietSDDV(
             {
@@ -92,7 +94,7 @@ const ChitietSDDV = () => {
                 id_DV: id_DV,
                 solansudung: solansudung,
                 soluong: soluong,
-                thanhtien: thanhtien
+                thanhtien: solansudung * soluong * giaDV
 
             }
         );
@@ -366,7 +368,7 @@ const ChitietSDDV = () => {
                                             )}
                                         </td>
                                         <td className="border border-slate-300 p-2">
-                                            {thanhtien}
+                                            {item.thanhtien}
                                             {/* {dichvu.map((item1) =>
                                                 item1.id === item.id_DV ? item.solansudung * item.soluong * item1.gia : null
                                             )} */}

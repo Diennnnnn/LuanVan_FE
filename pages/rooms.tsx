@@ -5,7 +5,7 @@ import { Console } from "console";
 import { Montserrat } from "next/font/google";
 import Router from "next/router";
 import { ppid } from "process";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 const roboto = Montserrat({
@@ -42,14 +42,23 @@ const rooms = () => {
         thoigianGD: string
         // dieukien: string
     }
+    interface Loaiphong {
+        id: number;
+        tenloaiphong: string;
+        songuoi: number;
+        gia: number;
+    }
     const [phong, setPhong] = useState<Phong[]>([]);
     const [phong1, setPhong1] = useState<Phong[]>([]);
     const [phieudat, setPhieudat] = useState<Phieudat[]>([]);
+    const [loaiphong, setLoaiphong] = useState<Loaiphong[]>([]);
 
     const [checkin, setCheckin] = useState(new Date())
     const [checkout, setCheckout] = useState(new Date())
     const [mincheckout, setMincheckout] = useState(new Date())
-
+    const [slkhach, setSlkhach] = useState(Number)
+    // const param = new URLSearchParams(window.location.search)
+    // console.log("ewfdx", param)
 
     const [dsphong, setDsphong] = useState([
         {
@@ -62,10 +71,56 @@ const rooms = () => {
         },
     ])
     const arrp: number[] = []
-
+    const [dsphong2, setDsphong2] = useState([
+        {
+            id: 0,
+            id_LP: 0,
+            id_VT: 0,
+            tenphong: '',
+            trangthai: '',
+            mota: ''
+        },
+    ])
+    const idlpp: number[] = []
     // const arrp: any[] = []
     // console.log("vkevk length", dsphong.length)
     // console.log("vkevk length", dsphong)
+
+
+
+    const handleLocLP = (song: number) => {
+        idlpp.splice(0, idlpp.length)
+        dsphong2.splice(0, dsphong2.length)
+        // console.log('dsphong2', dsphong2)
+
+        setSlkhach(song)
+        loaiphong.map((lp) => {
+            if (lp.songuoi <= song + 1) {
+                idlpp.push(lp.id)
+                dsphong.map((dsp) => {
+                    let timvitri2 = idlpp.findIndex((val) => val === dsp.id_LP)
+                    let timvitri = dsphong2.findIndex((val) => val.id === dsp.id)
+                    if (timvitri2 != -1 && timvitri === -1) {
+                        const dsgheDD = {
+                            id: (dsp.id),
+                            id_LP: dsp.id_LP,
+                            id_VT: dsp.id_VT,
+                            tenphong: dsp.tenphong,
+                            trangthai: dsp.trangthai,
+                            mota: dsp.mota
+                        }
+                        dsphong2.push(dsgheDD)
+                        setDsphong2([dsgheDD, ...dsphong2])
+                    }
+                })
+                console.log('dsphong2', dsphong2)
+
+
+            }
+        })
+        // console.log('song', songuoi)
+    }
+
 
     const handleCheckDate = (checki: Date) => {
         setCheckin(checki)
@@ -84,7 +139,7 @@ const rooms = () => {
     const handlephong = async (ci: Date, ck: Date) => {
         arrp.slice(0, arrp.length)
 
-                dsphong.splice(0, dsphong.length)
+        dsphong.splice(0, dsphong.length)
 
         setCheckout(ck)
         let start = new Date(ci)
@@ -208,10 +263,26 @@ const rooms = () => {
 
     }
     useEffect(() => {
+        const handleLayTTloaiphong = async () => {
+            try {
+                const params = {
+                    id_lp: 'ALL',
+                };
+                console.log(params)
+                const response = await Loaiphong(params);
+                const res2: Loaiphong[] = response.loaiphong;
+                console.log(response)
+                setLoaiphong(res2);
 
-       
-            dsphong.splice(0, dsphong.length)
-        
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        handleLayTTloaiphong()
+        dsphong.splice(0, dsphong.length)
+        dsphong2.splice(0, dsphong2.length)
+
         const handleCheckDate = (checki: Date) => {
             setCheckin(checki)
             let datecheckout = new Date(checki)
@@ -281,7 +352,7 @@ const rooms = () => {
         <div className={roboto.className}>
             <Header></Header>
             <div className="flex w-11/12 gap-2 bg-gray-50 pb-10 m-auto mt-8">
-                <div className="basis-2/12 p-3 space-y-2 mt-6">
+                <div className="basis-2/12 p-3 space-y-3 mt-6">
                     <p className="uppercase font-bold">bộ lọc tìm kiếm</p>
                     <p>Nhận phòng:</p>
                     <DatePicker
@@ -310,8 +381,13 @@ const rooms = () => {
                     value={check_out}
                     onChange={(event) => setCheck_out(event.target.value)}
                     /> */}
-                    <hr className=" border-black" />
                     <div className="flex ">
+                        <p className="pr-2">Số người:</p>
+                        <input type="number" className="w-2/5 pl-1 border-b-2 border-gray-300" value={slkhach} min={1} onChange={(e) => handleLocLP(e.target.valueAsNumber)}></input>
+
+                    </div>
+                    <hr className=" border-black" />
+                    {/* <div className="flex ">
                         <p className="basis-1/5 ">Phòng:</p>
                         <div className="space-y-2 pl-4">
                             <div><input type="checkbox" /> <label>2 người</label></div>
@@ -365,23 +441,36 @@ const rooms = () => {
                         </div>
                     </div>
 
-                    <hr className=" border-black" />
+                    <hr className=" border-black" /> */}
                 </div>
                 <div className="basis-10/12  mt-6 ">
                     <div className="grid xl:grid-cols-3 md:grid-cols-2 gap-3 pr-5">
                         {/* <button onClick={() => console.log(phong1)}>{dsphong.length}</button> */}
                         {
-                            dsphong.slice(1,dsphong.length).map((phongs, indexP) => {
-                                // if (arrp.includes(phongs.id)) {
-                                return (
-                                    <Rooms key={indexP} tenphong={phongs.tenphong} id_lp={phongs.id_LP} id_phong={phongs.id}
-                                        check_in={checkin.getDate() + "-" + (checkin.getMonth() + 1) + "-" + checkin.getFullYear()}
-                                        check_out={checkout.getDate() + "-" + (checkout.getMonth() + 1) + "-" + checkout.getFullYear()} />
-                                )
-                                // }
+                            dsphong2.length === 0 ?
+                                dsphong.slice(1, dsphong.length).map((phongs, indexP) => {
+                                    // if (arrp.includes(phongs.id)) {
+                                    return (
+                                        <Rooms key={indexP} tenphong={phongs.tenphong} id_lp={phongs.id_LP} id_phong={phongs.id}
+                                            check_in={checkin.getDate() + "-" + (checkin.getMonth() + 1) + "-" + checkin.getFullYear()}
+                                            check_out={checkout.getDate() + "-" + (checkout.getMonth() + 1) + "-" + checkout.getFullYear()} />
+                                    )
+                                    // }
 
 
-                            })
+                                })
+                                :
+                                dsphong2.slice(1, dsphong.length).map((phong2s, indexP2) => {
+                                    // if (arrp.includes(phongs.id)) {
+                                    return (
+                                        <Rooms key={indexP2} tenphong={phong2s.tenphong} id_lp={phong2s.id_LP} id_phong={phong2s.id}
+                                            check_in={checkin.getDate() + "-" + (checkin.getMonth() + 1) + "-" + checkin.getFullYear()}
+                                            check_out={checkout.getDate() + "-" + (checkout.getMonth() + 1) + "-" + checkout.getFullYear()} />
+                                    )
+                                    // }
+
+
+                                })
                         }
 
 

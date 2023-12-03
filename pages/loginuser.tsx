@@ -19,7 +19,7 @@ const SignInOTP = () => {
     hotenKH: string;
     gioitinh: string,
     ngaysinh: string,
-    CMND: string,
+    CCCD: string,
     SDT: string,
     email: string
   }
@@ -34,8 +34,7 @@ const SignInOTP = () => {
     diachi: string,
     chucvu: string
   }
-  // const SignInOTP = ({sdt}: Props) => {
-  // const SignInOTP = (this.props.phoneNumber) => {
+
   const [phoneNumber, setPhoneNumber] = useState("");
   const [sdt, setSdt] = useState("");
   const [otp, setOtp] = useState("");
@@ -43,6 +42,7 @@ const SignInOTP = () => {
   const [result, setResult] = useState<any>()
   const [khachhang, setKhachhang] = useState<Khachhang[]>([]);
   const [nhanvien, setNhanvien] = useState<Nhanvien[]>([]);
+  const [errorSDT, setErrorSDT] = useState(false)
 
   console.log("sdt1", phoneNumber)
 
@@ -69,17 +69,24 @@ const SignInOTP = () => {
   };
 
   const formatSDT = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value)
     setSdt(e.target.value)
-    if (e.target.value === "") return;
-    let temp: any
-    try {
-      temp = e.target.value?.slice(1, 10)
-      setPhoneNumber("+84" + temp)
-      console.log("temp", temp)
-    } catch (error) {
-      console.log(error);
+
+    if (e.target.value.match(/(0[3|5|7|8|9])+([0-9]{8})\b/g)) {
+      setErrorSDT(false)
+      console.log(e.target.value)
+      if (e.target.value === "") return;
+      let temp: any
+      try {
+        temp = e.target.value?.slice(1, 10)
+        setPhoneNumber("+84" + temp)
+        console.log("temp", temp)
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setErrorSDT(true)
     }
+
   };
 
   const signin = () => {
@@ -106,27 +113,14 @@ const SignInOTP = () => {
 
   const router = useRouter();
 
-  //   const handleLayNV_SDT = async () => {
-  //     try {
-  //         const params = {
-  //           nhanvien_sdt : SDT,
-  //         };
-  //         console.log(params)
-  //         const response = await Nhanvien_SDT(params);
-  //         const res: Nhanvien[] = response.nhanvien_sdt; //gán dữ liệu vào res
-  //         console.log(response)
-  //         setNhanvien(res); //gán res vào setPhong
-  //         // res.map((res) => {
-  //         //     setId_loaiphong(res.id_LP)
-  //         //     // console.log("id", id)
-  //         // })
-
-  //     } catch (error) {
-  //         console.log(error);
-  //     }
-
-
-  // };
+  // const handleErrorSDT = (val: string) => {
+  //   set(val)
+  //   if (val.match(/(0[3|5|7|8|9])+([0-9]{8})\b/g)) {
+  //     setErrorSDT(false)
+  //   } else {
+  //     setErrorSDT(true)
+  //   }
+  // }
 
   const ValidateOtp = (phoneNumber: string) => {
     if (otp === null) return;
@@ -135,7 +129,7 @@ const SignInOTP = () => {
       .confirm(otp)
       .then(async (result: any) => {
         setStep("VERIFY_SUCCESS");
-       
+
         // handleKhachhang(sdt)
         try {
           const params = {
@@ -146,14 +140,13 @@ const SignInOTP = () => {
           const res1: Nhanvien[] = response1.nhanvien_sdt; //gán dữ liệu vào res
           console.log(response1)
           setNhanvien(res1); //gán res vào setPhong
-          if (res1.length === 1) 
-          {
+          if (res1.length === 1) {
             localStorage.setItem('nhanvien', JSON.stringify(res1));
             router.push({
               pathname: '/quanly/quanly',
               // query: { phoneNumber: phoneNumber },
             })
-          } 
+          }
           else {
             try {
               const params = {
@@ -235,10 +228,12 @@ const SignInOTP = () => {
       <center>
 
         {step === "INPUT_PHONE_NUMBER" && (
-          <div className="form bg-gray-100 w-80 h-48">
+          <div className="form bg-gray-100 w-80 ">
             <h1 className="pt-2">Vui lòng đăng nhập</h1>
             <div className="mb-4">
               <input
+              minLength={10}
+              maxLength={10}
                 value={sdt}
                 // onChange={(e) => {
                 //   setSdt(e.target.value);
@@ -247,17 +242,17 @@ const SignInOTP = () => {
                 placeholder="Số điện thoại"
                 className=" h-10 w-60 mt-4 border-gray-400 bg-gray-100 border-solid outline-none  border-b-2"
               />
-              <br />
-              <br />
+              {errorSDT ? <p className="text-red-500 text-xs pt-3">Vui lòng nhập đúng số điện thoại</p> : ''}
+
               <div id="recaptcha-container"></div>
               <button
                 onClick={signin}
-                className="bg-green-700 w-60 h-10 rounded-3xl font-semibold text-white outline-none hover:bg-indigo-700"
+                className="bg-green-700 w-60 h-10 mt-5 rounded-3xl font-semibold text-white outline-none hover:bg-indigo-700"
               >
                 Send OTP
               </button>
               <div>
-                <button onClick={() => Router.back()} className="text-right pt-3 ">Trở về</button>
+                <button onClick={() => Router.back()} className="text-right pt-3 pb-3">Trở về</button>
               </div>
             </div>
           </div>
@@ -272,7 +267,7 @@ const SignInOTP = () => {
               onChange={(e) => {
                 setOtp(e.target.value);
               }}
-              className="h-10 w-60 mt-4 border-gray-400 border-solid bg-gray-100 border-b-2"
+              className="h-10 w-60 outline-none mt-4 border-gray-400 border-solid bg-gray-100 border-b-2"
             />
             <br />
             <br />

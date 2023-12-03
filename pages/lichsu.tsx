@@ -273,7 +273,7 @@ const lichsu = () => {
     if (res && res.errCode === 0) {
       setTrangthai('')
       handleLayLichsu()
-      alert("Cập nhật nội quy thành công")
+      alert("Cập nhật trạng thái thành công")
 
     } else {
       console.log(res)
@@ -515,7 +515,7 @@ const lichsu = () => {
                         </DialogTitle>
                         <DialogContent>
                           <DialogContentText>
-                            <p>Chúng tôi sẽ gửi email xác nhận hủy đặt phòng đến <label className='font-semibold'>duyen@gmail.com</label> và hoàn tiền phòng nếu bạn đủ điều kiện. </p>
+                            <p>Chúng tôi sẽ gửi email xác nhận hủy đặt phòng đến <label className='font-semibold'>{khachhang[0].email}</label> và hoàn tiền phòng nếu bạn đủ điều kiện. </p>
                           </DialogContentText>
                         </DialogContent>
                         <DialogActions>

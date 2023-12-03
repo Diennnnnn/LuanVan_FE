@@ -81,6 +81,15 @@ const chitiet = ({ id_phong, id_lp, check_in, check_out }: codeProductProps) => 
     id_Phong: number;
 
   }
+  interface Khachhang {
+    id: number;
+    hotenKH: string;
+    gioitinh: string,
+    ngaysinh: string,
+    CCCD: string,
+    SDT: string,
+    email: string
+  }
   const [phong, setPhong] = useState<Phong[]>([]);
   const [loaiphong, setLoaiphong] = useState<Loaiphong[]>([]);
   const [vitri, setVitri] = useState<Vitri[]>([]);
@@ -112,11 +121,32 @@ const chitiet = ({ id_phong, id_lp, check_in, check_out }: codeProductProps) => 
     slidesToScroll: 1,
   }
   const handleDatphong = async () => {
+    let khachhang1 = JSON.parse(localStorage.getItem('khachhang') || '{}');
+    // console.log("zxcvb", Object.keys(khachhang1).length)
+    if (Object.keys(khachhang1).length === 0) {
+      alert('ĐĂNG NHẬP PLSSSSS')
+    } else {
+      // setLog(true)
+      // setKhachhang(khachhang1);
+      const ressss: Khachhang[] = khachhang1;
+      ressss.map((i) => {
+       if(!i.CCCD || !i.SDT || !i.email || !i.gioitinh || !i.hotenKH || !i.ngaysinh){
+        alert('VUI LÒNG CẬP NHẬT THÔNG TIN TRƯỚC KHI ĐẶT VÉ')
+        router.push('/capnhatthongtinKH')
+       }
+       else{
+        
     router.push({
       pathname: '/datphong',
       query: { id_phong: id_phong, tenphong: tenphong, gia: gia, songuoi: songuoi, tenloaiphong: tenloaiphong, check_in: check_in, check_out: check_out } //ten bien: gia tri truyen vao
 
     })
+       }
+
+      })
+    }
+
+
   }
 
   useEffect(() => {

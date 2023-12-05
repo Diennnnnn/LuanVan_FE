@@ -314,7 +314,7 @@ const lichsu = () => {
           alert("Hoàn tiền thành công")
 
         } else {
-          console.log(res)
+          console.log(res.response)
           alert("Hoàn tiền KHÔNG thành công")
         };
       }
@@ -409,7 +409,7 @@ const lichsu = () => {
               console.log(res)
               handleLayLichsu()
               // localStorage.removeItem('phieudat')
-              alert("Đặt phòng không thành công")
+              alert("Đặt phòng không thành công") 
             };
           }
         })
@@ -539,7 +539,7 @@ const lichsu = () => {
 
           </tbody>
         </table>
-        <button onClick={handleThemnoiquy}>{ttphieudat_idKH.map((i) => i.id_KH)}</button>
+        {/* <button onClick={()=>handleCapnhatTrangthai()}>ấdasdadadsadsdas</button> */}
 
       </div>
 

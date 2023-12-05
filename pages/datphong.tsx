@@ -118,8 +118,8 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const [activeStep, setActiveStep] = React.useState(0);
 
-  const [roll, setRoll] = useState('')
-
+  const [roll, setRoll] = useState('datchominh')
+  const [checkbox, setCheckbox] = useState(Boolean)
   const [CCCD, setCCCD] = useState("")
   const [SDT, setSDT] = useState("")
   const [email, setEmail] = useState("")
@@ -911,7 +911,8 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                 }
                 <div className="flex mt-5">
                   <p className="font-semibold basis-3/12 text-xl" >Ghi chú:</p>
-                  <textarea placeholder="Note yêu cầu" className="bg-gray-100 w-full h-28 outline-none p-3" value={ghichu} onChange={(e) => setGhichu(e.target.value)} />
+                  <textarea placeholder="Bạn có muốn thuê xe, trang trí tiệc hay có yêu cầu gì đối với home không ạ? Hãy ghi chú tại đây để home có thể chuẩn bị tốt nhất!" 
+                  className="bg-gray-100 w-full h-28 outline-none p-3" value={ghichu} onChange={(e) => setGhichu(e.target.value)} />
                 </div>
 
               </div>
@@ -1236,7 +1237,8 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
                 </div>
               </div>
 
-              <input type="checkbox" className="mt-6 ml-5 mr-2 text-slate-700 font-bold" /><label className="text-slate-500 font-bold">Chắn chắn rằng tất cả thông tin trên trang này là chính xác trước khi thanh toán.</label>
+              <input type="checkbox" onClick={()=> setCheckbox(!checkbox)} className="mt-6 ml-5 mr-2 text-slate-700 font-bold" />
+              <label className="text-red-500 font-bold">Chắn chắn rằng tất cả thông tin trên trang này là chính xác trước khi thanh toán.</label>
 
               {/* <Link href={`http://localhost:8080/order/create_payment_url?keyword=${tongtien}`}>
                 <button onClick={handleDatphong}>ÁDFGHJ</button>
@@ -1255,9 +1257,12 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
               <Box sx={{ flex: '1 1 auto' }} />
               <Button onClick={handleNext} sx={{ color: '#33cc33' }}>
                 {activeStep === steps.length - 1 ? 'Finish' :
-                  <Link href={`http://localhost:8080/order/create_payment_url?keyword=${tongtien}`} className="uppercase" onClick={handleDatphong}>
-                    {/* <button className="uppercase" onClick={handleDatphong}>Thanh toán</button> */}Thanh toán
-                  </Link>}
+                  checkbox ? <Link  href={`http://localhost:8080/order/create_payment_url?keyword=${tongtien}`} className="uppercase" onClick={handleDatphong}>
+                  Thanh toán
+                </Link> : 
+                <button className="uppercase text-gray-500" disabled>thanh toán</button>
+                  
+                  }
               </Button>
             </Box>
           </div>

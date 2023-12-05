@@ -176,10 +176,10 @@ const Phieudat_QL = () => {
                 const res: ChitietSDDV[] = response.ctsddv;
                 console.log(response.ctsddv[0].total_amount)
                 console.log("chi tiet sddv", res)
-                res.map((im)=>{
-                    if(im.id_PD === id){
+                res.map((im) => {
+                    if (im.id_PD === id) {
                         sddvv = im.total_amount
-                    console.log('im.total_amount', im.total_amount)
+                        console.log('im.total_amount', im.total_amount)
 
                     }
                 })
@@ -267,7 +267,7 @@ const Phieudat_QL = () => {
             if (res2 && res2.errCode === 0) {
                 router.push({
                     pathname: '/hoadon',
-                    query: { id_pd: id, checkinsom: checkinsom, checkouttre: checkouttre, tiendv: sddvv}
+                    query: { id_pd: id, checkinsom: checkinsom, checkouttre: checkouttre, tiendv: sddvv }
 
                 })
                 console.log('in hoa don')
@@ -397,7 +397,7 @@ const Phieudat_QL = () => {
     }, [])
     return (
         <div className={roboto.className}>
-            <div className="w-11/12 m-auto">
+            <div className="m-auto">
                 <p className="font-semibold uppercase text-2xl text-center mt-5">Danh sách khách đặt phòng</p>
                 <div className="mt-5">
                     <table className="border-separate border border-slate-400 m-auto text-center w-full">
@@ -426,8 +426,11 @@ const Phieudat_QL = () => {
                         <tbody>
                             {
                                 phieudat.map((item, index) => {
+                                    let i = item.trangthai.slice(0, 6) === 'Đã hủy'
+                                    let i1 = item.trangthai === 'Đã nhận phòng'
+                                    let i2 = item.trangthai === 'Đã trả phòng'
                                     return (
-                                        <tr key={index}>
+                                        <tr key={index} className="hover:bg-gray-100">
                                             <td className="border border-slate-300 text-center">{item.id}</td>
                                             <td className="border border-slate-300 p-2">
                                                 {allkh.map((item2) =>
@@ -452,7 +455,11 @@ const Phieudat_QL = () => {
                                             <td className="border border-slate-300 p-2">{item.songuoi}</td>
                                             <td className="border border-slate-300 p-2">{item.tongtien}</td>
                                             <td className="border border-slate-300 p-2">{item.thanhtoan}</td>
-                                            <td className="border border-slate-300 p-2">{item.trangthai}</td>
+                                            <td className={`border border-slate-300 p-2
+                                                ${i ? 'text-red-600 font-semibold' : null}
+                                                ${i1 ? 'text-blue-700 font-semibold' : null}
+                                                ${i2 ? 'text-green-700 font-semibold' : null}`}>
+                                                {item.trangthai}</td>
                                             <td className="border border-slate-300 p-2">{item.ghichu}</td>
                                             <td className="border border-slate-300 p-2">{item.hotennguoio}</td>
                                             <td className="border border-slate-300 p-2">{item.SDT_nguoio}</td>

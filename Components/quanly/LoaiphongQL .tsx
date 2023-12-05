@@ -166,12 +166,12 @@ const LoaiphongQL = ({ loaiphong }: Props) => {
                     </div>
                     <div className="flex ">
                         <p className="w-4/12 ">Số người:</p>
-                        <input type="number" className="w-72 border-b-2 border-gray-400 outline-none"
+                        <input type="number" min={1} className="w-72 border-b-2 border-gray-400 outline-none"
                             value={songuoi} onChange={(e) => setSonguoi(e.target.valueAsNumber)} />
                     </div>
                     <div className="flex ">
                         <p className="w-4/12">Giá:</p>
-                        <input type="number" className="w-72 border-b-2 border-gray-400 outline-none"
+                        <input type="number" min={1} className="w-72 border-b-2 border-gray-400 outline-none"
                             value={gia} onChange={(e) => setGia(e.target.valueAsNumber)} />
                     </div>
 

@@ -329,35 +329,35 @@ export default function LabTabs() {
         <TabPanel value="1">
           <div className="flex">
             <div className="w-2/12 border-r-2 border-black uppercase text-xl space-y-5">
-              <ListItemButton onClick={() => setOption(1)} >
+              <ListItemButton onClick={() => setOption(1)} className={`${option === 1 ? ' bg-gray-100' : ''}`}>
                 <ListItemIcon>
                   <CategoryIcon />
                 </ListItemIcon>
                 <ListItemText primary="cơ sở vật chất" />
               </ListItemButton>
 
-              <ListItemButton onClick={() => setOption(2)}>
+              <ListItemButton onClick={() => setOption(2)} className={`${option === 2 ? ' bg-gray-100' : ''}`}>
                 <ListItemIcon>
                   <ExtensionIcon />
                 </ListItemIcon>
                 <ListItemText primary="Thiết bị" />
               </ListItemButton>
 
-              <ListItemButton onClick={() => setOption(3)}>
+              <ListItemButton onClick={() => setOption(3)} className={`${option === 3 ? ' bg-gray-100' : ''}`}>
                 <ListItemIcon>
                   <RoomServiceIcon />
                 </ListItemIcon>
                 <ListItemText primary="Dịch vụ" />
               </ListItemButton>
 
-              <ListItemButton onClick={() => setOption(4)}>
+              <ListItemButton onClick={() => setOption(4)} className={`${option === 4 ? ' bg-gray-100' : ''}`}>
                 <ListItemIcon>
                   <DiscountIcon />
                 </ListItemIcon>
                 <ListItemText primary="Khuyến mãi" />
               </ListItemButton>
 
-              <ListItemButton onClick={() => setOption(5)}>
+              <ListItemButton onClick={() => setOption(5)} className={`${option === 5 ? ' bg-gray-100' : ''}`}>
                 <ListItemIcon>
                   <GavelIcon />
                 </ListItemIcon>
@@ -397,28 +397,28 @@ export default function LabTabs() {
           <div className="flex">
             <div className="w-2/12 border-r-2 border-black uppercase text-xl space-y-5">
 
-              <ListItemButton onClick={() => setOption(5)}>
+              <ListItemButton onClick={() => setOption(5)} className={`${option === 5 ? ' bg-gray-100' : ''}`}>
                 <ListItemIcon>
                   <MyLocationIcon />
                 </ListItemIcon>
                 <ListItemText primary="Vị trí" />
               </ListItemButton>
 
-              <ListItemButton onClick={() => setOption(6)}>
+              <ListItemButton onClick={() => setOption(6)} className={`${option === 6 ? ' bg-gray-100' : ''}`}>
                 <ListItemIcon>
                   <WallpaperIcon />
                 </ListItemIcon>
                 <ListItemText primary="loại phòng" />
               </ListItemButton>
 
-              <ListItemButton onClick={() => setOption(7)}>
+              <ListItemButton onClick={() => setOption(7)} className={`${option === 7 ? ' bg-gray-100' : ''}`}>
                 <ListItemIcon>
                   <RoomPreferencesIcon />
                 </ListItemIcon>
                 <ListItemText primary="phòng" />
               </ListItemButton>
 
-              <ListItemButton onClick={() => setOption(10)}>
+              <ListItemButton onClick={() => setOption(10)} className={`${option === 10 ? ' bg-gray-100' : ''}`}>
                 <ListItemIcon>
                   <PanoramaIcon />
                 </ListItemIcon>
@@ -452,14 +452,14 @@ export default function LabTabs() {
         <TabPanel value="3">
           <div className="flex">
             <div className="w-2/12 border-r-2 border-black uppercase text-xl space-y-5">
-              <ListItemButton onClick={() => setOption(8)}>
+              <ListItemButton onClick={() => setOption(8)} className={`${option === 8 ? ' bg-gray-100' : ''}`}>
                 <ListItemIcon>
                   <GroupIcon />
                 </ListItemIcon>
                 <ListItemText primary="nhân viên" />
               </ListItemButton>
 
-              <ListItemButton onClick={() => setOption(9)}>
+              <ListItemButton onClick={() => setOption(9)} className={`${option === 9 ? ' bg-gray-100' : ''}`}>
                 <ListItemIcon>
                   <AccountBoxIcon />
                 </ListItemIcon>

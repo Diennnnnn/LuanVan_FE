@@ -319,6 +319,16 @@ const ReportTemplate = ({ id_pd, checkinsom, checkouttre, tiendv }: Props) => {
                         <p style={{ fontWeight: "bold" }} className="w-10/12 pl-40">Tong tien dich vu:</p>
                         <p className=" w-20 text-right pr-2 ">{tiendv}</p>
                     </div>
+                    
+                    <div className="flex ">
+                        <p style={{ fontWeight: "bold" }} className="w-10/12  pl-40">Phi nhan phong som:</p>
+                        <p className="w-20 text-right pr-2 ">{checkinsom}</p>
+                    </div>
+                    <div className="flex ">
+                        <p style={{ fontWeight: "bold" }} className="w-10/12  pl-40">Tong tra phong tre:</p>
+                        <p className="w-20 text-right pr-2 ">{checkouttre}</p>
+                    </div>
+
                     <div className="flex ">
                         <p style={{ fontWeight: "bold" }} className="w-10/12  pl-40">Tong tien phong:</p>
                         <p className="w-20 text-right pr-2 ">{tienphong}</p>

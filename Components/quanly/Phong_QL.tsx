@@ -325,7 +325,7 @@ const Phong_QL = () => {
 
                     <div className="flex  ">
                         <p className="w-3/12">Diện tích:</p>
-                        <input type="number" className="w-72 border-b-2 border-gray-400 outline-none pl-1"
+                        <input type="number" min={1} className="w-72 border-b-2 border-gray-400 outline-none pl-1"
                             value={dientich} onChange={(e) => setDientich(e.target.valueAsNumber)}
                         />
                     </div>

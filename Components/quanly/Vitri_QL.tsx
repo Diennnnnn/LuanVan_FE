@@ -157,7 +157,7 @@ const Vitri_QL = ({ vitri }: Props) => {
 
                     <div className="flex ">
                         <p className="w-4/12">Tầng:</p>
-                        <input type="number" className="w-72 border-b-2 border-gray-400 outline-none"
+                        <input type="number" min={1} className="w-72 border-b-2 border-gray-400 outline-none"
                             value={tang} onChange={(e) => setTang(e.target.valueAsNumber)} />
                     </div>
 

@@ -292,7 +292,7 @@ const Thietbi_QL = ({ csvc, phong }: Props) => {
 
                     <div className="flex  ">
                         <p className="w-3/12">Số lượng:</p>
-                        <input type="number" className="w-72 border-b-2 border-gray-400 outline-none pl-1"
+                        <input type="number" min={1} className="w-72 border-b-2 border-gray-400 outline-none pl-1"
                             value={soluong} onChange={(e) => setSoluong(e.target.valueAsNumber)}
                         />
                     </div>

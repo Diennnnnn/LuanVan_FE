@@ -194,7 +194,7 @@ const KhuyenmaiQL = ({ khuyenmai }: Props) => {
                     </div>
                     <div className="flex ">
                         <p className="w-4/12 ">Phần trăm KH:</p>
-                        <input type="number" className="w-72 border-b-2 border-gray-400 outline-none"
+                        <input type="number" min={1} className="w-72 border-b-2 border-gray-400 outline-none"
                             value={phantram} onChange={(e) => setPhantram(e.target.valueAsNumber)} />
                     </div>
                     <div className="flex ">

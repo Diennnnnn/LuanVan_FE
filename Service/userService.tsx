@@ -125,7 +125,7 @@ export async function Khuyenmai(params: { id_km: any }): Promise<any> {
 
 export async function Datphong(params:{
   id_KH: number;
-  id_phong: number;
+  id_phong: any;
   ngaydat: Date;
   check_in: string;
   check_out: string;

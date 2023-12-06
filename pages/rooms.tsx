@@ -8,6 +8,8 @@ import { ppid } from "process";
 import React, { use, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Checkbox from '@mui/material/Checkbox';
+
 const roboto = Montserrat({
     weight: '400',
     subsets: ['latin'],
@@ -52,11 +54,14 @@ const rooms = () => {
     const [phong1, setPhong1] = useState<Phong[]>([]);
     const [phieudat, setPhieudat] = useState<Phieudat[]>([]);
     const [loaiphong, setLoaiphong] = useState<Loaiphong[]>([]);
+    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
     const [checkin, setCheckin] = useState(new Date())
     const [checkout, setCheckout] = useState(new Date())
     const [mincheckout, setMincheckout] = useState(new Date())
     const [slkhach, setSlkhach] = useState(Number)
+    const [datnhieuphong, setDatnhieuphong] = useState(Boolean)
+
     // const param = new URLSearchParams(window.location.search)
     // console.log("ewfdx", param)
 
@@ -82,11 +87,39 @@ const rooms = () => {
         },
     ])
     const idlpp: number[] = []
+    let idpArr: number[] = []
+
     // const arrp: any[] = []
     // console.log("vkevk length", dsphong.length)
     // console.log("vkevk length", dsphong)
+    const handleTest = () => {
+        idpArr.push(1)
+        console.log(idpArr)
+    }
 
+    const handleChonnhieuphong = (idp: number) => {
+        // idpArr.splice(0, idpArr.length)
+        // setDsdoans(arr)
+        // const res1: DSDichVu[] = arr;
+        console.log("idp", idp)
 
+        // phong.map((item) => {
+        //     //   sumsum2 = sumsum2 + item.sl * item.gia
+        // if (idpArr.includes(idp) === false) {
+        idpArr.push(idp)
+        // }
+        // })
+        console.log("idpArr", idpArr)
+        // setTienDA(sumsum2)
+    }
+    const handleDatnhieuphong = () => {
+        console.log('checkkk', idpArr)
+        Router.push({
+            pathname:'/datnhieuphong',
+            query: { id_phong: idpArr, check_in: String(checkin), check_out: String(checkout) } //ten bien: gia tri truyen vao
+
+        })
+    }
 
     const handleLocLP = (song: number) => {
         idlpp.splice(0, idlpp.length)
@@ -386,7 +419,15 @@ const rooms = () => {
                         <input type="number" className="w-2/5 pl-1 border-b-2 border-gray-300" value={slkhach} min={1} onChange={(e) => handleLocLP(e.target.valueAsNumber)}></input>
 
                     </div>
+                    <div className="flex ">
+                        <p className="pr-2">Đặt nhiều phòng:</p>
+                        <Checkbox onClick={() => setDatnhieuphong(!datnhieuphong)} {...label} />
+                    </div>
+                    {datnhieuphong  ? <button onClick={()=>handleDatnhieuphong()}>Đặt phòng</button> : null}
+                    {/* {idpArr.length > 0  ? <button onClick={(()=>console.log(idpArr.length))}>Đặt phòng</button> : null} */}
+
                     <hr className=" border-black" />
+                    
                     {/* <div className="flex ">
                         <p className="basis-1/5 ">Phòng:</p>
                         <div className="space-y-2 pl-4">
@@ -451,9 +492,9 @@ const rooms = () => {
                                 dsphong.slice(1, dsphong.length).map((phongs, indexP) => {
                                     // if (arrp.includes(phongs.id)) {
                                     return (
-                                        <Rooms key={indexP} tenphong={phongs.tenphong} id_lp={phongs.id_LP} id_phong={phongs.id}
+                                        <Rooms key={indexP} datnhieuphong={datnhieuphong} tenphong={phongs.tenphong} id_lp={phongs.id_LP} id_phong={phongs.id}
                                             check_in={checkin.getDate() + "-" + (checkin.getMonth() + 1) + "-" + checkin.getFullYear()}
-                                            check_out={checkout.getDate() + "-" + (checkout.getMonth() + 1) + "-" + checkout.getFullYear()} />
+                                            check_out={checkout.getDate() + "-" + (checkout.getMonth() + 1) + "-" + checkout.getFullYear()} handleChonnhieuphong={handleChonnhieuphong} />
                                     )
                                     // }
 
@@ -463,7 +504,8 @@ const rooms = () => {
                                 dsphong2.slice(1, dsphong.length).map((phong2s, indexP2) => {
                                     // if (arrp.includes(phongs.id)) {
                                     return (
-                                        <Rooms key={indexP2} tenphong={phong2s.tenphong} id_lp={phong2s.id_LP} id_phong={phong2s.id}
+                                        <Rooms key={indexP2} handleChonnhieuphong={handleChonnhieuphong}
+                                            datnhieuphong={datnhieuphong} tenphong={phong2s.tenphong} id_lp={phong2s.id_LP} id_phong={phong2s.id}
                                             check_in={checkin.getDate() + "-" + (checkin.getMonth() + 1) + "-" + checkin.getFullYear()}
                                             check_out={checkout.getDate() + "-" + (checkout.getMonth() + 1) + "-" + checkout.getFullYear()} />
                                     )
@@ -475,7 +517,7 @@ const rooms = () => {
 
 
 
-                        {/* <button onClick={() => handleCheck()}>{dsphong.length}</button> */}
+                        {/* <button onClick={() => console.log(idpArr.length)}>{idpArr.length}</button> */}
 
                     </div>
                 </div>

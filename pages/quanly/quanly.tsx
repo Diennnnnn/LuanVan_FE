@@ -323,7 +323,6 @@ export default function LabTabs() {
             <Tab icon={<ListIcon />} iconPosition="start" label="Thống kê" sx={{ color: 'green' }} value="5" />
             <Tab icon={<ChecklistIcon />} iconPosition="start" label="Chi tiết SDDV" sx={{ color: 'green' }} value="6" />
             <Tab icon={<ChecklistIcon />} iconPosition="start" label="Hóa đơn" sx={{ color: 'green' }} value="7" />
-
           </TabList>
         </Box>
         <TabPanel value="1">

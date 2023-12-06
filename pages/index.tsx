@@ -13,6 +13,7 @@ import Blog from "@/Components/Blog";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import router, { Router } from "next/router";
+import Modal from "@/Components/Modal";
 // import { faFaceRelieved } from '@fortawesome/pro-solid-svg-icons'
 const roboto = Montserrat({
   weight: '400',
@@ -62,7 +63,7 @@ const index = () => {
   const [mincheckout, setMincheckout] = useState(new Date())
   const [checkin, setCheckin] = useState(new Date())
   const [checkout, setCheckout] = useState(new Date())
-  // console.log(phong)
+  const [showModal, setShowModal] = useState(true);
   const arrp: number[] = []
   const [dsphong, setDsphong] = useState([
     {
@@ -95,7 +96,7 @@ const index = () => {
       datecheckout.setDate(datecheckout.getDate() + 1)
       setMincheckout(datecheckout)
       setCheckout(datecheckout)
-      handlekiemtrangay(new Date(),datecheckout)
+      handlekiemtrangay(new Date(), datecheckout)
     }
     // const handleTinhsoNg = (sn: number, sp: number) =>{
     //     for(let i = 0; i<=)
@@ -133,10 +134,10 @@ const index = () => {
       // setKhachhang(khachhang1);
       const ressss: Khachhang[] = khachhang1;
       ressss.map((i) => {
-       if(!i.CCCD || !i.SDT || !i.email || !i.gioitinh || !i.hotenKH || !i.ngaysinh){
-        alert('VUI LÒNG CẬP NHẬT THÔNG TIN TRƯỚC KHI ĐẶT VÉ')
-        router.push('/capnhatthongtinKH')
-       }
+        if (!i.CCCD || !i.SDT || !i.email || !i.gioitinh || !i.hotenKH || !i.ngaysinh) {
+          alert('VUI LÒNG CẬP NHẬT THÔNG TIN TRƯỚC KHI ĐẶT VÉ')
+          router.push('/capnhatthongtinKH')
+        }
 
       })
     }
@@ -447,9 +448,9 @@ const index = () => {
           <label className="uppercase text-3xl font-semibold">phòng</label>
           <Link href='/rooms' className="uppercase text-lg  flex justify-end pr-32 hover:text-[#33cc33]">xem đầy đủ</Link>
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10 m-auto  md:w-10/12 w-8/12">
-            <Rooms id_lp={1} tenphong={"A101"} id_phong={1} check_in={""} check_out={""} />
-            <Rooms id_lp={2} tenphong={"A302"} id_phong={2} check_in={""} check_out={""} />
-            <Rooms id_lp={2} tenphong={"A301"} id_phong={3} check_in={""} check_out={""} />
+            <Rooms id_lp={1} tenphong={"A101"} id_phong={1} check_in={""} check_out={""} datnhieuphong={false} handleChonnhieuphong={undefined} />
+            <Rooms id_lp={2} tenphong={"A302"} id_phong={2} check_in={""} check_out={""} datnhieuphong={false} handleChonnhieuphong={undefined} />
+            <Rooms id_lp={2} tenphong={"A301"} id_phong={3} check_in={""} check_out={""} datnhieuphong={false} handleChonnhieuphong={undefined} />
 
           </div>
         </div>
@@ -476,6 +477,10 @@ const index = () => {
 
       <hr className="border-black mt-20" />
       <Footer></Footer>
+      <Modal
+        onClose={() => setShowModal(false)}
+        show={showModal}
+      ></Modal>
     </div>
   );
 }

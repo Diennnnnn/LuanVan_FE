@@ -160,7 +160,6 @@ const KhachhangQL = ({ allkh }: Props) => {
                                 <th className="border border-slate-300 w-20">Số điện thoại</th>
                                 <th className="border border-slate-300 w-20">Email</th>
                                 <th className="border border-slate-300 w-20">Avata</th>
-                                <th className="border border-slate-300 w-20">Tác vụ</th>
 
                             </tr>
                         </thead>
@@ -195,11 +194,7 @@ const KhachhangQL = ({ allkh }: Props) => {
 
                                                 }
                                             </td>
-                                            <td className="border border-slate-300 p-2">
-                                                <button>
-                                                    <EditIcon onClick={() => handleSuaTTKH(item.id, item.hotenKH, item.gioitinh, item.ngaysinh, item.CCCD, item.SDT, item.email, item.avt)} />
-                                                </button>
-                                            </td>
+                                            
 
 
                                             {/* <td className="border border-slate-300 text-center">

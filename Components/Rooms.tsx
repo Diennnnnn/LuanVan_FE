@@ -5,6 +5,7 @@ import router from "next/router";
 import { type } from "os";
 import { useEffect, useState } from "react";
 import Image from 'next/image'
+import Checkbox from '@mui/material/Checkbox';
 
 
 const roboto = Montserrat({
@@ -18,9 +19,12 @@ type Props = {
   tenphong: string,
   id_phong: number,
   check_in: string,
-  check_out: string
+  check_out: string,
+  datnhieuphong: boolean,
+  handleChonnhieuphong: any
+
 };
-const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
+const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out, datnhieuphong, handleChonnhieuphong }: Props) => {
   // console.log("checkin", check_in)
   // console.log("check_out", check_out)
 
@@ -60,6 +64,16 @@ const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
   const [songuoi, setSonguoi] = useState(Number);
   const [tenLP, setTenLP] = useState('');
   const [idlp, setIdlp] = useState(Number);
+  const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
+  const IdpArr: number[] = []
+
+
+
+
+
+
+
 
   useEffect(() => {
     const handleLoaiphong = async () => {
@@ -105,26 +119,10 @@ const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
         const params = {
           id_phong: id_phong,
         };
-        // console.log(params)
         const response = await Phong(params);
         const res: Phong[] = response.phong; //gán dữ liệu vào res
-        setPhong(res); //gán res vào setPhong
-        // res.map(async (p) => {
-        // const params1 = {
-        //   id_lp: res[0].id_LP,
-        // };
+        setPhong(res); //gán res vào setPhong        
         setIdlp(res[0].id_LP)
-        // console.log(params)
-        // const response1 = await Loaiphong(params1);
-        // const res1: Loaiphong[] = response1.loaiphong;
-        // console.log(response)
-        // setLoaiphong(res1);
-        // res1.map((res) => {
-        //   setGia(res.gia)
-        //   setSonguoi(res.songuoi)
-        //   setTenLP(res.tenloaiphong)
-        // })
-        // })
       } catch (error) {
         console.log(error);
       }
@@ -158,6 +156,7 @@ const Rooms = ({ id_lp, tenphong, id_phong, check_in, check_out }: Props) => {
                   {/* <p>{id_phong}</p> */}
                   {/* <p>{id_lp}</p> */}
                   {/* <p>{id_phong}</p> */}
+                  {datnhieuphong ? <Checkbox onClick={()=>handleChonnhieuphong(id_phong)} {...label} /> : null}
 
                   <p className="text-center ">{tenphong}</p>
                   <div className="flex justify-center">

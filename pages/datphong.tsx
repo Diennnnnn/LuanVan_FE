@@ -745,7 +745,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
             d4.setSeconds(0)
             d4.setMilliseconds(0)
             // console.log("d", d)
-            // console.log("check_in", check_in)
+            console.log("check_in", check_in)
 
             d1.setHours(0)
             d1.setMinutes(0)
@@ -776,6 +776,7 @@ const datphong = ({ id_phong, tenphong, gia, songuoi, tenloaiphong, check_in, ch
               }
 
             } else {
+              console.log('check =>>>:',d1)
               setTongtien(gia * temp)
               console.log("temp", temp)
               console.log("d", temp)
